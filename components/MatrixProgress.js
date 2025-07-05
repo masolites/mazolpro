@@ -1,4 +1,4 @@
-const STAGES = [
+ const STAGES = [
   { id: 1, payout: 14700 },
   { id: 2, payout: 3675 },
   { id: 3, payout: 13505 },
@@ -12,9 +12,14 @@ export default function MatrixProgress({ stage }) {
   const currentStage = STAGES.find(s => s.id === stage) || STAGES[0];
   
   return (
-    <section style={styles.section}>
+    <section style={{ marginBottom: '20px' }}>
       <h2>Matrix Progress: Stage {stage}</h2>
-      <div style={styles.card}>
+      <div style={{
+        padding: '15px',
+        border: '1px solid #ddd',
+        borderRadius: '8px',
+        background: '#f9f9f9'
+      }}>
         <p>Amount Due: <b>₦{(currentStage.payout * 0.5).toLocaleString()}</b></p>
         {currentStage.deduction && (
           <p>Re-entry Deduction: ₦{currentStage.deduction.toLocaleString()}</p>
@@ -22,16 +27,4 @@ export default function MatrixProgress({ stage }) {
       </div>
     </section>
   );
-}
-
-const styles = {
-  section: {
-    marginBottom: '20px'
-  },
-  card: {
-    padding: '15px',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    background: '#f9f9f9'
-  }
 }
