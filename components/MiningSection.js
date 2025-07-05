@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+ import { useState, useEffect } from 'react';
 
 export default function MiningSection({ userData }) {
   const [isMining, setIsMining] = useState(false);
@@ -14,7 +14,6 @@ export default function MiningSection({ userData }) {
       timer = setInterval(() => {
         const elapsed = Date.now() - startTime;
         setTime(elapsed);
-        
         if (elapsed % 60000 < 100) {
           setMined(prev => prev + miningSpeed);
         }
@@ -30,37 +29,54 @@ export default function MiningSection({ userData }) {
   };
 
   return (
-    <section style={{
-      marginBottom: '20px',
-      padding: '15px',
-      border: '1px solid #ddd',
-      borderRadius: '8px'
-    }}>
-      <h2>Token Mining</h2>
-      <p>Speed: {miningSpeed}x (Silver)</p>
+    <section style={styles.section}>
+      <h2 style={styles.heading}>Token Mining</h2>
+      <p style={styles.speed}>Speed: {miningSpeed}x (Silver)</p>
       
       <button 
-        style={{ 
-          width: '100%',
-          padding: '15px',
-          color: 'white',
-          fontWeight: 'bold',
-          fontSize: '18px',
-          border: 'none',
-          borderRadius: '4px',
-          margin: '10px 0',
-          cursor: 'pointer',
-          background: isMining ? 'green' : 'orange' 
+        style={{
+          ...styles.button,
+          backgroundColor: isMining ? '#27ae60' : '#e67e22'
         }}
         onClick={() => setIsMining(!isMining)}
       >
         {isMining ? 'MINING...' : 'START MINING'}
       </button>
       
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+      <div style={styles.stats}>
         <p>Session: {formatTime(time)}</p>
         <p>Total Mined: {mined} MAZOL</p>
       </div>
     </section>
   );
+}
+
+const styles = {
+  section: {
+    backgroundColor: '#f8f9fa',
+    padding: '15px',
+    borderRadius: '8px',
+    marginBottom: '20px'
+  },
+  heading: {
+    fontSize: '20px',
+    marginBottom: '5px'
+  },
+  speed: {
+    marginBottom: '15px'
+  },
+  button: {
+    color: 'white',
+    padding: '12px',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '16px',
+    cursor: 'pointer',
+    width: '100%',
+    marginBottom: '15px'
+  },
+  stats: {
+    display: 'flex',
+    justifyContent: 'space-between'
   }
+};
