@@ -1,5 +1,4 @@
-import { connectToDatabase } from "../../lib/mongodb";
-import Flutterwave from "flutterwave-node-v3";
+ import Flutterwave from "flutterwave-node-v3";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -42,15 +41,8 @@ export default async function handler(req, res) {
 
     const response = await flw.Payment.initialize(payload);
 
-    // In production: Store transaction in DB with status 'pending'
-    // const { db } = await connectToDatabase();
-    // await db.collection('transactions').insertOne({
-    //   ...payload,
-    //   status: 'pending',
-    //   createdAt: new Date(),
-    // });
+    // No database logic here
 
-    // Return payment link to frontend
     res.status(200).json({
       success: true,
       paymentLink: response.data.link,
