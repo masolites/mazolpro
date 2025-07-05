@@ -1,3 +1,4 @@
 export default async function handler(req, res) {
-  res.status(200).json({ message: "Fixed purchase started!" });
+  // Placeholder for payment processing
+  res.status(200).json({ success: true });
 }
