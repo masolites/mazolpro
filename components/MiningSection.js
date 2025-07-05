@@ -30,13 +30,26 @@ export default function MiningSection({ userData }) {
   };
 
   return (
-    <section style={styles.section}>
+    <section style={{
+      marginBottom: '20px',
+      padding: '15px',
+      border: '1px solid #ddd',
+      borderRadius: '8px'
+    }}>
       <h2>Token Mining</h2>
       <p>Speed: {miningSpeed}x (Silver)</p>
       
       <button 
         style={{ 
-          ...styles.miningButton, 
+          width: '100%',
+          padding: '15px',
+          color: 'white',
+          fontWeight: 'bold',
+          fontSize: '18px',
+          border: 'none',
+          borderRadius: '4px',
+          margin: '10px 0',
+          cursor: 'pointer',
           background: isMining ? 'green' : 'orange' 
         }}
         onClick={() => setIsMining(!isMining)}
@@ -44,35 +57,10 @@ export default function MiningSection({ userData }) {
         {isMining ? 'MINING...' : 'START MINING'}
       </button>
       
-      <div style={styles.stats}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
         <p>Session: {formatTime(time)}</p>
         <p>Total Mined: {mined} MAZOL</p>
       </div>
     </section>
   );
-}
-
-const styles = {
-  section: {
-    marginBottom: '20px',
-    padding: '15px',
-    border: '1px solid #ddd',
-    borderRadius: '8px'
-  },
-  miningButton: {
-    width: '100%',
-    padding: '15px',
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: '18px',
-    border: 'none',
-    borderRadius: '4px',
-    margin: '10px 0',
-    cursor: 'pointer'
-  },
-  stats: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginTop: '10px'
   }
-};
