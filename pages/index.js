@@ -1,4 +1,4 @@
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+ import { ThirdwebProvider } from "@thirdweb-dev/react";
 import Head from 'next/head';
 import Dashboard from '../components/Dashboard';
 
