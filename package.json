@@ -1,5 +1,5 @@
- {
-  "name": "mazolpro",
+{
+  "name": "mazol-ecommerce",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
@@ -14,8 +14,6 @@
     "flutterwave-node-v3": "^1.0.5",
     "axios": "^1.6.2",
     "web3": "^4.2.1",
-    "@thirdweb-dev/react": "^3.14.0",
-    "@thirdweb-dev/sdk": "^3.14.0",
-    "node-cron": "^3.0.2"
+    "thirdweb": "^5.0.0"
   }
 }
