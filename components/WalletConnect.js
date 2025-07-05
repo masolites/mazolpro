@@ -1,4 +1,5 @@
- import {
+import React, { useEffect } from "react";
+import {
   useActiveAccount,
   useConnect,
 } from "thirdweb/react";
@@ -11,8 +12,7 @@ export default function WalletConnect({
   const account = useActiveAccount();
   const connect = useConnect();
 
-  // Update parent state when account changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (account && account.address) {
       updateUserData({ address: account.address });
     }
