@@ -1,4 +1,4 @@
- import { connectToDatabase } from "../../lib/mongodb";
+import { connectToDatabase } from "../../lib/mongodb";
 import Flutterwave from "flutterwave-node-v3";
 
 export default async function handler(req, res) {
