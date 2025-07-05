@@ -1,7 +1,6 @@
- import { useState, useEffect } from "react";
-import {
+ import {
+  useActiveAccount,
   useConnect,
-  useConnectionStatus,
 } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 
@@ -9,29 +8,25 @@ export default function WalletConnect({
   userData,
   updateUserData,
 }) {
-  const connectionStatus = useConnectionStatus();
+  const account = useActiveAccount();
   const connect = useConnect();
-  const [address, setAddress] = useState(null);
 
-  // Listen for wallet connection
-  useEffect(() => {
-    if (connectionStatus === "connected") {
-      // Get the address from the wallet provider
-      // For demo, we'll just set a placeholder
-      // In production, use thirdweb's wallet API to get the address
-      // e.g., useActiveAccount() from thirdweb/react if available
-      setAddress("0xYourWalletAddress"); // Replace with actual address logic
-      updateUserData({ address: "0xYourWalletAddress" });
+  // Update parent state when account changes
+  React.useEffect(() => {
+    if (account && account.address) {
+      updateUserData({ address: account.address });
     }
-  }, [connectionStatus, updateUserData]);
+  }, [account, updateUserData]);
 
   return (
     <div style={styles.container}>
-      {connectionStatus === "connected" && address ? (
+      {account && account.address ? (
         <div style={styles.connected}>
           <p style={styles.address}>
-            {address.substring(0, 6)}...
-            {address.substring(address.length - 4)}
+            {account.address.substring(0, 6)}...
+            {account.address.substring(
+              account.address.length - 4,
+            )}
           </p>
           <p style={styles.status}>Connected ✅</p>
         </div>
