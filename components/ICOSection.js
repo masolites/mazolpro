@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+ import { useState, useEffect } from 'react';
 
-export default function ICOSection({ userData }) {
+export default function ICOSection() {
   const [countdown, setCountdown] = useState('90:00:00:00');
   const [amount, setAmount] = useState(200);
   
@@ -22,36 +22,44 @@ export default function ICOSection({ userData }) {
   }, []);
 
   const handleFixedBuy = async () => {
-    try {
-      const res = await fetch('/api/purchase/fixed', { method: 'POST' });
-      if (res.ok) alert('Fixed purchase started!');
-    } catch (error) {
-      alert('Purchase failed');
-    }
+    alert('Fixed purchase started!');
   };
 
   const handleCustomBuy = async () => {
     if (amount < 200) return alert('Minimum ₦200');
-    try {
-      const res = await fetch('/api/purchase/custom', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount })
-      });
-      if (res.ok) alert('Custom purchase started!');
-    } catch (error) {
-      alert('Purchase failed');
-    }
+    alert(`Custom purchase of ₦${amount} started!`);
   };
 
   return (
-    <section style={styles.section}>
+    <section style={{
+      marginBottom: '20px',
+      padding: '15px',
+      border: '1px solid #ddd',
+      borderRadius: '8px'
+    }}>
       <h2>ICO Purchase</h2>
-      <p style={styles.countdown}>Time Remaining: {countdown}</p>
+      <p style={{
+        fontSize: '1.2em',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        margin: '10px 0',
+        color: '#e74c3c'
+      }}>
+        Time Remaining: {countdown}
+      </p>
       
-      <div style={styles.buttonGroup}>
+      <div style={{ textAlign: 'center', margin: '15px 0' }}>
         <button 
-          style={styles.buyButton}
+          style={{
+            background: '#3498db',
+            color: 'white',
+            border: 'none',
+            padding: '12px',
+            borderRadius: '4px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            width: '100%'
+          }}
           onClick={handleFixedBuy}
         >
           Fixed Price: ₦1000
@@ -59,17 +67,30 @@ export default function ICOSection({ userData }) {
         <p>Auto-stage progression</p>
       </div>
       
-      <div style={styles.customGroup}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <input 
           type="number"
           value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
+          onChange={(e) => setAmount(e.target.value)}
           min="200"
-          style={styles.input}
+          style={{
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '4px',
+            fontSize: '16px'
+          }}
           placeholder="₦200 minimum"
         />
         <button 
-          style={styles.buyButton}
+          style={{
+            background: '#3498db',
+            color: 'white',
+            border: 'none',
+            padding: '12px',
+            borderRadius: '4px',
+            fontSize: '16px',
+            cursor: 'pointer'
+          }}
           onClick={handleCustomBuy}
         >
           Buy Custom Amount
@@ -77,44 +98,4 @@ export default function ICOSection({ userData }) {
       </div>
     </section>
   );
-}
-
-const styles = {
-  section: {
-    marginBottom: '20px',
-    padding: '15px',
-    border: '1px solid #ddd',
-    borderRadius: '8px'
-  },
-  countdown: {
-    fontSize: '1.2em',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    margin: '10px 0',
-    color: '#e74c3c'
-  },
-  buttonGroup: {
-    textAlign: 'center',
-    margin: '15px 0'
-  },
-  customGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px'
-  },
-  input: {
-    padding: '10px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '16px'
-  },
-  buyButton: {
-    background: '#3498db',
-    color: 'white',
-    border: 'none',
-    padding: '12px',
-    borderRadius: '4px',
-    fontSize: '16px',
-    cursor: 'pointer'
-  }
-};
+                  }
