@@ -1,4 +1,4 @@
-{
+ {
   "name": "mazolpro",
   "version": "1.0.0",
   "scripts": {
@@ -7,13 +7,12 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "14.1.4",
+    "next": "13.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "mongodb": "5.7.0",
-    "flutterwave-node-v3": "1.0.5",
-    "axios": "1.6.8",
-    "@thirdweb-dev/react": "3.14.8",
+    "mongodb": "4.17.0",
+    "axios": "1.6.0",
+    "@thirdweb-dev/react": "3.14.0",
     "node-cron": "3.0.2"
   }
 }
