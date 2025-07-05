@@ -1,9 +1,16 @@
- export default async function handler(req, res) {
-  // For demo, return test user data
-  res.status(200).json({
-    tokens: 1500,
-    stage: 3,
-    isBuyer: true,
-    address: null,
-  });
+ import { connectToDatabase } from "../lib/db";
+
+export default async function handler(req, res) {
+  if (req.method !== "GET") return res.status(405).end();
+
+  const { email } = req.query;
+  if (!email)
+    return res.status(400).json({ error: "Missing email" });
+
+  const { db } = await connectToDatabase();
+  const user = await db
+    .collection("users")
+    .findOne({ email });
+
+  res.status(200).json(user || {});
 }
