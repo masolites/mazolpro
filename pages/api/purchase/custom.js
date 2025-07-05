@@ -1,5 +1,4 @@
- import { connectToDatabase } from "../../lib/mongodb";
-import Flutterwave from "flutterwave-node-v3";
+ import Flutterwave from "flutterwave-node-v3";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -53,14 +52,7 @@ export default async function handler(req, res) {
     // Calculate tokens (₦1 = 1 token)
     const tokens = amount;
 
-    // In production: Store transaction in DB with status 'pending'
-    // const { db } = await connectToDatabase();
-    // await db.collection('transactions').insertOne({
-    //   ...payload,
-    //   tokens,
-    //   status: 'pending',
-    //   createdAt: new Date(),
-    // });
+    // No database logic here
 
     res.status(200).json({
       success: true,
