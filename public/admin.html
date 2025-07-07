@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MAZOL-Pro Admin</title>
   <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
@@ -14,13 +15,13 @@
     <section>
       <h3>Approve Manual Deposits</h3>
       <button onclick="approveDeposit()">Approve</button>
-      <div id="approve-result"></div>
+      <div id="approve-result" class="result"></div>
     </section>
     <section>
       <h3>Set Withdrawal Fee</h3>
       <input type="number" id="withdrawal-fee" step="0.01" placeholder="Fee (e.g. 0.05 for 5%)"/>
       <button onclick="setWithdrawalFee()">Set Fee</button>
-      <div id="fee-result"></div>
+      <div id="fee-result" class="result"></div>
     </section>
     <!-- Add more admin controls as needed -->
   </main>
