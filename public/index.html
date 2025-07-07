@@ -1,0 +1,51 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MAZOL-Pro | E-commerce & Blockchain</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1>MAZOL-Pro</h1>
+    <h2>E-commerce & Blockchain</h2>
+  </header>
+  <main>
+    <section id="private-sale">
+      <h3>Private Sale</h3>
+      <form id="purchase-form">
+        <label>Amount: <input type="number" id="amount" required /></label>
+        <select id="purchase-type">
+          <option value="fixed">Fixed Amount (Seniors)</option>
+          <option value="flexible">Flexible Amount (Flex)</option>
+        </select>
+        <button type="submit">Buy</button>
+      </form>
+      <div id="purchase-result"></div>
+    </section>
+    <section id="mining">
+      <h3>Mining</h3>
+      <button onclick="startMining()">Start Mining</button>
+      <div id="mining-status"></div>
+    </section>
+    <section id="voting">
+      <h3>Voting</h3>
+      <form id="vote-form">
+        <label>Vote for next price: <input type="number" id="vote-price" step="0.01" required /></label>
+        <button type="submit">Vote</button>
+      </form>
+      <div id="vote-result"></div>
+    </section>
+    <section id="wallet">
+      <h3>Wallet</h3>
+      <button onclick="withdraw()">Withdraw</button>
+      <div id="withdraw-result"></div>
+    </section>
+  </main>
+  <footer>
+    <a href="admin.html">Admin Dashboard</a>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
