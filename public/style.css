@@ -1,4 +1,4 @@
-:root {
+ :root {
   --primary: #2b6cb0;
   --primary-dark: #1a365d;
   --accent: #f6ad55;
@@ -97,6 +97,31 @@ button:hover, button:focus {
   background: var(--primary-dark);
 }
 
+.counter-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #edf2f7;
+  border-radius: 10px;
+  padding: 1.2rem 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.06);
+}
+.counter-main {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  display: block;
+  text-align: center;
+}
+.counter-label {
+  font-size: 0.95rem;
+  color: #4a5568;
+  text-align: center;
+  display: block;
+  margin-top: 0.2rem;
+}
+
 .result, .status, .info {
   margin-top: 0.5rem;
   padding: 0.7rem 1rem;
@@ -132,4 +157,4 @@ a:hover {
   header h1 {
     font-size: 2rem;
   }
-  }
+}
