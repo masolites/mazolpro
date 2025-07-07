@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -15,6 +15,20 @@
   <main>
     <section id="private-sale">
       <h3>Private Sale</h3>
+      <div class="counter-card">
+        <div>
+          <span id="sale-tokens-sold" class="counter-main">0</span>
+          <span class="counter-label">Tokens Sold</span>
+        </div>
+        <div>
+          <span id="sale-tokens-goal" class="counter-main">0</span>
+          <span class="counter-label">Goal</span>
+        </div>
+        <div>
+          <span id="sale-timer" class="counter-main">00:00:00</span>
+          <span class="counter-label">Time Left</span>
+        </div>
+      </div>
       <form id="purchase-form" class="form-group">
         <label>
           Amount
@@ -33,6 +47,16 @@
     </section>
     <section id="mining">
       <h3>Mining</h3>
+      <div class="counter-card">
+        <div>
+          <span id="mining-timer" class="counter-main">00:00:00</span>
+          <span class="counter-label">Session Time</span>
+        </div>
+        <div>
+          <span id="mining-speed" class="counter-main">—</span>
+          <span class="counter-label">Speed</span>
+        </div>
+      </div>
       <button onclick="startMining()">Start Mining</button>
       <div id="mining-status" class="status"></div>
     </section>
