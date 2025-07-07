@@ -1,10 +1,11 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MAZOL-Pro | E-commerce & Blockchain</title>
   <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
@@ -14,37 +15,46 @@
   <main>
     <section id="private-sale">
       <h3>Private Sale</h3>
-      <form id="purchase-form">
-        <label>Amount: <input type="number" id="amount" required /></label>
-        <select id="purchase-type">
-          <option value="fixed">Fixed Amount (Seniors)</option>
-          <option value="flexible">Flexible Amount (Flex)</option>
-        </select>
-        <button type="submit">Buy</button>
+      <form id="purchase-form" class="form-group">
+        <label>
+          Amount
+          <input type="number" id="amount" min="1" required placeholder="Enter amount"/>
+        </label>
+        <label>
+          Purchase Type
+          <select id="purchase-type">
+            <option value="fixed">Fixed Amount (Seniors)</option>
+            <option value="flexible">Flexible Amount (Flex)</option>
+          </select>
+        </label>
+        <button type="submit">Buy Now</button>
       </form>
-      <div id="purchase-result"></div>
+      <div id="purchase-result" class="result"></div>
     </section>
     <section id="mining">
       <h3>Mining</h3>
       <button onclick="startMining()">Start Mining</button>
-      <div id="mining-status"></div>
+      <div id="mining-status" class="status"></div>
     </section>
     <section id="voting">
       <h3>Voting</h3>
-      <form id="vote-form">
-        <label>Vote for next price: <input type="number" id="vote-price" step="0.01" required /></label>
+      <form id="vote-form" class="form-group">
+        <label>
+          Vote for next price
+          <input type="number" id="vote-price" step="0.01" required placeholder="e.g. 0.15"/>
+        </label>
         <button type="submit">Vote</button>
       </form>
-      <div id="vote-result"></div>
+      <div id="vote-result" class="result"></div>
     </section>
     <section id="wallet">
       <h3>Wallet</h3>
       <button onclick="withdraw()">Withdraw</button>
-      <div id="withdraw-result"></div>
+      <div id="withdraw-result" class="result"></div>
     </section>
   </main>
   <footer>
-    <a href="admin.html">Admin Dashboard</a>
+    <a href="admin.html">Admin Dashboard</a> &nbsp;|&nbsp; &copy; 2024 MAZOL-Pro
   </footer>
   <script src="script.js"></script>
 </body>
