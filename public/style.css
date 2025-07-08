@@ -1,12 +1,12 @@
-:root {
+ :root {
   --primary: #2b6cb0;
   --primary-dark: #1a365d;
   --accent: #f6ad55;
   --bg: #f7fafc;
   --card-bg: #fff;
   --text: #2d3748;
-  --border-radius: 6px;
-  --shadow: 0 1px 4px rgba(44, 62, 80, 0.06);
+  --border-radius: 10px;
+  --shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
 }
 
 body {
@@ -21,61 +21,61 @@ body {
 header {
   background: linear-gradient(90deg, var(--primary), var(--primary-dark));
   color: #fff;
-  padding: 0.7rem 0 0.4rem 0;
+  padding: 1.2rem 0 0.7rem 0;
   text-align: center;
   box-shadow: var(--shadow);
 }
 
 header h1 {
-  font-size: 1.2rem;
+  font-size: 2rem;
   margin: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 header h2 {
   font-weight: 400;
-  margin: 0.2rem 0 0 0;
-  font-size: 0.85rem;
+  margin: 0.3rem 0 0 0;
+  font-size: 1.1rem;
   color: var(--accent);
 }
 
 main {
-  max-width: 98vw;
-  margin: 0.7rem auto;
+  max-width: 420px;
+  margin: 1.2rem auto;
   background: var(--card-bg);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
-  padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+  padding: 1.2rem 1.2rem 1rem 1.2rem;
 }
 
 section {
-  margin-bottom: 0.7rem;
+  margin-bottom: 1.5rem;
 }
 
 h3 {
   margin-top: 0;
   color: var(--primary);
-  font-size: 0.95rem;
-  letter-spacing: 0.2px;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
 }
 
 form, .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.7rem;
 }
 
 input, select {
-  padding: 0.2rem;
-  border-radius: 3px;
+  padding: 0.7rem;
+  border-radius: 6px;
   border: 1px solid #cbd5e1;
-  font-size: 0.85rem;
+  font-size: 1rem;
   background: #f9fafb;
   transition: border 0.2s;
 }
 
 input:focus, select:focus {
-  border: 1.2px solid var(--primary);
+  border: 1.5px solid var(--primary);
   outline: none;
 }
 
@@ -83,14 +83,19 @@ button {
   background: var(--primary);
   color: #fff;
   border: none;
-  padding: 0.3rem 0;
-  border-radius: 3px;
-  font-size: 0.9rem;
+  padding: 0.7rem 0.7rem;
+  border-radius: 24px;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
   margin-top: 0.2rem;
-  box-shadow: 0 1px 2px rgba(44, 62, 80, 0.06);
+  margin-bottom: 0.2rem;
+  width: 60%;
+  align-self: center;
+  box-shadow: 0 1px 4px rgba(44, 62, 80, 0.08);
+  min-width: 120px;
+  max-width: 200px;
 }
 
 button:hover, button:focus {
@@ -102,41 +107,50 @@ button:hover, button:focus {
   justify-content: space-between;
   align-items: center;
   background: #edf2f7;
-  border-radius: 4px;
-  padding: 0.3rem 0.2rem;
-  margin-bottom: 0.4rem;
-  box-shadow: var(--shadow);
+  border-radius: 10px;
+  padding: 1rem 0.7rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.06);
 }
 .counter-main {
-  font-size: 0.9rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--primary);
   display: block;
   text-align: center;
 }
 .counter-label {
-  font-size: 0.7rem;
+  font-size: 0.95rem;
   color: #4a5568;
   text-align: center;
   display: block;
-  margin-top: 0.05rem;
+  margin-top: 0.2rem;
 }
 
 .result, .status, .info {
-  margin-top: 0.15rem;
-  padding: 0.2rem 0.3rem;
-  border-radius: 3px;
+  margin-top: 0.5rem;
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
   background: #e6f7ff;
   color: var(--primary-dark);
-  font-size: 0.8rem;
-  box-shadow: 0 1px 1px rgba(44, 62, 80, 0.03);
+  font-size: 1rem;
+  box-shadow: 0 1px 4px rgba(44, 62, 80, 0.04);
+}
+
+.price-display {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #e67e22;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 footer {
   text-align: center;
-  padding: 0.3rem 0 0.1rem 0;
+  padding: 1.2rem 0 0.5rem 0;
   color: #888;
-  font-size: 0.7rem;
+  font-size: 0.95rem;
 }
 
 a {
@@ -147,4 +161,23 @@ a {
 
 a:hover {
   text-decoration: underline;
- }
+}
+
+@media (max-width: 480px) {
+  main {
+    max-width: 98vw;
+    padding: 0.7rem 0.5rem;
+  }
+  header h1 {
+    font-size: 1.3rem;
+  }
+  .counter-main {
+    font-size: 1.05rem;
+  }
+  button {
+    font-size: 1rem;
+    min-width: 90px;
+    max-width: 140px;
+    padding: 0.5rem 0.5rem;
+  }
+}
