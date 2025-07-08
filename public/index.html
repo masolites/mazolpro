@@ -118,3 +118,35 @@
     document.getElementById('deposit-result').innerText = data.message || data.error || '';
   });
 </script>
+
+<section id="flutterwave-payment">
+  <h3>Pay with Flutterwave</h3>
+  <form id="flutterwave-form" class="form-group">
+    <label>
+      Amount
+      <input type="number" id="fw-amount" min="1" required placeholder="Enter amount"/>
+    </label>
+    <button type="submit">Pay Now</button>
+  </form>
+  <div id="fw-result" class="result"></div>
+</section>
+<script>
+  document.getElementById('flutterwave-form')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const wallet = localStorage.getItem('wallet');
+    if (!wallet) {
+      document.getElementById('fw-result').innerText = "Please login first.";
+      return;
+    }
+    const amount = document.getElementById('fw-amount').value;
+    // You may want to open a Flutterwave payment modal here, or redirect to payment page
+    // For now, just call backend to initiate payment
+    const res = await fetch('/api/flutterwave_pay', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ wallet, amount })
+    });
+    const data = await res.json();
+    document.getElementById('fw-result').innerText = data.message || data.error || '';
+  });
+</script>
