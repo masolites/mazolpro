@@ -1,4 +1,4 @@
- :root {
+:root {
   --primary: #2b6cb0;
   --primary-dark: #1a365d;
   --accent: #f6ad55;
@@ -184,4 +184,4 @@ a:hover {
     max-width: 140px;
     padding: 0.7rem 0.5rem;
   }
-}
+ }
