@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+ const { MongoClient } = require("mongodb");
 
 module.exports = async (req, res) => {
   const { action, wallet, email } =
