@@ -135,3 +135,32 @@ function withdraw() {
         data.message || data.error || "";
     });
 }
+
+// User Login
+document
+  .getElementById("login-form")
+  ?.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const wallet =
+      document.getElementById("login-wallet").value;
+    localStorage.setItem("wallet", wallet);
+    document.getElementById("login-result").innerText =
+      "Logged in as: " + wallet;
+  });
+
+// Token Price Display (fetch from backend or set statically)
+async function updateTokenPrice() {
+  // Example: fetch from backend
+  try {
+    const res = await fetch("/api/private_sale_status");
+    const data = await res.json();
+    document.getElementById("token-price").textContent =
+      `₦${data.tokenPrice || "0.00"}`;
+  } catch {
+    document.getElementById("token-price").textContent =
+      "₦0.00";
+  }
+}
+updateTokenPrice();
+
+// ... (rest of your counter and purchase code)
