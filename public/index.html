@@ -13,8 +13,25 @@
     <h2>E-commerce & Blockchain</h2>
   </header>
   <main>
+    <!-- User Login -->
+    <section id="user-login">
+      <h3>Login</h3>
+      <form id="login-form" class="form-group">
+        <label>
+          Wallet Address or Email
+          <input type="text" id="login-wallet" required placeholder="Enter wallet or email"/>
+        </label>
+        <button type="submit">Login</button>
+      </form>
+      <div id="login-result" class="result"></div>
+    </section>
+
+    <!-- Private Sale Section -->
     <section id="private-sale">
       <h3>Private Sale</h3>
+      <div class="price-display">
+        Token Price: <span id="token-price">₦0.00</span>
+      </div>
       <div class="counter-card">
         <div>
           <span id="sale-tokens-sold" class="counter-main">0</span>
@@ -29,53 +46,6 @@
           <span class="counter-label">Time Left</span>
         </div>
       </div>
-     <section id="user-login">
-  <h3>Login</h3>
-  <form id="login-form" class="form-group">
-    <label>
-      Wallet Address or Email
-      <input type="text" id="login-wallet" required placeholder="Enter wallet or email"/>
-    </label>
-    <button type="submit">Login</button>
-  </form>
-  <div id="login-result" class="result"></div>
-</section>
-
-<section id="private-sale">
-  <h3>Private Sale</h3>
-  <div class="price-display">
-    Token Price: <span id="token-price">₦0.00</span>
-  </div>
-  <div class="counter-card">
-    <div>
-      <span id="sale-tokens-sold" class="counter-main">0</span>
-      <span class="counter-label">Tokens Sold</span>
-    </div>
-    <div>
-      <span id="sale-tokens-goal" class="counter-main">0</span>
-      <span class="counter-label">Goal</span>
-    </div>
-    <div>
-      <span id="sale-timer" class="counter-main">00:00:00</span>
-      <span class="counter-label">Time Left</span>
-    </div>
-  </div>
-  <form id="purchase-form" class="form-group">
-    <label>
-      Amount
-      <input type="number" id="amount" min="1" required placeholder="Enter amount"/>
-    </label>
-    <label>
-      Purchase Type
-      <select id="purchase-type">
-        <option value="fixed">Fixed Amount (Seniors)</option>
-        <option value="flexible">Flexible Amount (Flex)</option>
-      </select>
-    </label>
-    <button type="submit">Buy Now</button>
-  </form>
-  <div id="purchase-result" class="result"></div>
-</section>
       <form id="purchase-form" class="form-group">
         <label>
           Amount
@@ -92,6 +62,38 @@
       </form>
       <div id="purchase-result" class="result"></div>
     </section>
+
+    <!-- Manual Deposit Section -->
+    <section id="manual-deposit">
+      <h3>Manual Deposit</h3>
+      <form id="manual-deposit-form" class="form-group">
+        <label>
+          Amount
+          <input type="number" id="deposit-amount" min="1" required placeholder="Enter amount"/>
+        </label>
+        <label>
+          Bank Reference/Proof
+          <input type="text" id="deposit-proof" required placeholder="Enter bank reference or upload proof"/>
+        </label>
+        <button type="submit">Submit Deposit</button>
+      </form>
+      <div id="deposit-result" class="result"></div>
+    </section>
+
+    <!-- Flutterwave Payment Section -->
+    <section id="flutterwave-payment">
+      <h3>Pay with Flutterwave</h3>
+      <form id="flutterwave-form" class="form-group">
+        <label>
+          Amount
+          <input type="number" id="fw-amount" min="1" required placeholder="Enter amount"/>
+        </label>
+        <button type="submit">Pay Now</button>
+      </form>
+      <div id="fw-result" class="result"></div>
+    </section>
+
+    <!-- Mining Section -->
     <section id="mining">
       <h3>Mining</h3>
       <div class="counter-card">
@@ -107,6 +109,8 @@
       <button onclick="startMining()">Start Mining</button>
       <div id="mining-status" class="status"></div>
     </section>
+
+    <!-- Voting Section -->
     <section id="voting">
       <h3>Voting</h3>
       <form id="vote-form" class="form-group">
@@ -118,6 +122,8 @@
       </form>
       <div id="vote-result" class="result"></div>
     </section>
+
+    <!-- Withdraw Section -->
     <section id="wallet">
       <h3>Wallet</h3>
       <button onclick="withdraw()">Withdraw</button>
@@ -130,70 +136,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-<section id="manual-deposit">
-  <h3>Manual Deposit</h3>
-  <form id="manual-deposit-form" class="form-group">
-    <label>
-      Amount
-      <input type="number" id="deposit-amount" min="1" required placeholder="Enter amount"/>
-    </label>
-    <label>
-      Bank Reference/Proof
-      <input type="text" id="deposit-proof" required placeholder="Enter bank reference or upload proof"/>
-    </label>
-    <button type="submit">Submit Deposit</button>
-  </form>
-  <div id="deposit-result" class="result"></div>
-</section>
-<script>
-  document.getElementById('manual-deposit-form')?.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const wallet = localStorage.getItem('wallet');
-    if (!wallet) {
-      document.getElementById('deposit-result').innerText = "Please login first.";
-      return;
-    }
-    const amount = document.getElementById('deposit-amount').value;
-    const proof = document.getElementById('deposit-proof').value;
-    const res = await fetch('/api/manual_deposit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ wallet, amount, proof })
-    });
-    const data = await res.json();
-    document.getElementById('deposit-result').innerText = data.message || data.error || '';
-  });
-</script>
-
-<section id="flutterwave-payment">
-  <h3>Pay with Flutterwave</h3>
-  <form id="flutterwave-form" class="form-group">
-    <label>
-      Amount
-      <input type="number" id="fw-amount" min="1" required placeholder="Enter amount"/>
-    </label>
-    <button type="submit">Pay Now</button>
-  </form>
-  <div id="fw-result" class="result"></div>
-</section>
-<script>
-  document.getElementById('flutterwave-form')?.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const wallet = localStorage.getItem('wallet');
-    if (!wallet) {
-      document.getElementById('fw-result').innerText = "Please login first.";
-      return;
-    }
-    const amount = document.getElementById('fw-amount').value;
-    // You may want to open a Flutterwave payment modal here, or redirect to payment page
-    // For now, just call backend to initiate payment
-    const res = await fetch('/api/flutterwave_pay', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ wallet, amount })
-    });
-    const data = await res.json();
-    document.getElementById('fw-result').innerText = data.message || data.error || '';
-  });
-</script>
