@@ -1,18 +1,15 @@
 const { MongoClient } = require("mongodb");
 
 module.exports = async (req, res) => {
-  if (req.method !== "POST")
-    return res
-      .status(405)
-      .json({ error: "Method not allowed" });
-  const { wallet, amount, method, proof } =
+  const { type, wallet, amount, method, proof } =
     req.body || JSON.parse(req.body || "{}");
   const client = await MongoClient.connect(
     process.env.MONGODB_URI,
   );
   const db = client.db();
-  if (method === "flutterwave" || method === "usdt") {
-    // For real payment, verify and credit user
+
+  if (type === "flutterwave") {
+    // Verify Flutterwave payment, credit nairaBalance
     await db
       .collection("users")
       .updateOne(
@@ -22,9 +19,10 @@ module.exports = async (req, res) => {
     client.close();
     return res
       .status(200)
-      .json({ message: "Deposit successful." });
+      .json({ message: "Flutterwave deposit successful." });
   }
-  if (method === "manual") {
+
+  if (type === "manual") {
     await db.collection("deposits").insertOne({
       wallet,
       amount,
@@ -40,8 +38,21 @@ module.exports = async (req, res) => {
           "Manual deposit submitted, pending admin approval.",
       });
   }
+
+  if (type === "usdt") {
+    // Verify USDT tx, credit usdtBalance
+    await db
+      .collection("users")
+      .updateOne(
+        { wallet },
+        { $inc: { usdtBalance: parseFloat(amount) } },
+      );
+    client.close();
+    return res
+      .status(200)
+      .json({ message: "USDT deposit successful." });
+  }
+
   client.close();
-  res
-    .status(400)
-    .json({ error: "Invalid deposit method." });
+  res.status(400).json({ error: "Invalid deposit type." });
 };
