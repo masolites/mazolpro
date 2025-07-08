@@ -29,6 +29,53 @@
           <span class="counter-label">Time Left</span>
         </div>
       </div>
+     <section id="user-login">
+  <h3>Login</h3>
+  <form id="login-form" class="form-group">
+    <label>
+      Wallet Address or Email
+      <input type="text" id="login-wallet" required placeholder="Enter wallet or email"/>
+    </label>
+    <button type="submit">Login</button>
+  </form>
+  <div id="login-result" class="result"></div>
+</section>
+
+<section id="private-sale">
+  <h3>Private Sale</h3>
+  <div class="price-display">
+    Token Price: <span id="token-price">₦0.00</span>
+  </div>
+  <div class="counter-card">
+    <div>
+      <span id="sale-tokens-sold" class="counter-main">0</span>
+      <span class="counter-label">Tokens Sold</span>
+    </div>
+    <div>
+      <span id="sale-tokens-goal" class="counter-main">0</span>
+      <span class="counter-label">Goal</span>
+    </div>
+    <div>
+      <span id="sale-timer" class="counter-main">00:00:00</span>
+      <span class="counter-label">Time Left</span>
+    </div>
+  </div>
+  <form id="purchase-form" class="form-group">
+    <label>
+      Amount
+      <input type="number" id="amount" min="1" required placeholder="Enter amount"/>
+    </label>
+    <label>
+      Purchase Type
+      <select id="purchase-type">
+        <option value="fixed">Fixed Amount (Seniors)</option>
+        <option value="flexible">Flexible Amount (Flex)</option>
+      </select>
+    </label>
+    <button type="submit">Buy Now</button>
+  </form>
+  <div id="purchase-result" class="result"></div>
+</section>
       <form id="purchase-form" class="form-group">
         <label>
           Amount
