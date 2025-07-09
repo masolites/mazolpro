@@ -1,9 +1,11 @@
  :root {
-  --primary: #008080; /* Deep turquoise */
+  --background: #3a001e;      /* Dark maroon red */
+  --card-bg: #fffbe6;         /* Cream */
+  --primary: #008080;         /* Deep turquoise */
   --primary-dark: #005f5f;
   --accent: #00b3b3;
-  --background: #f7f8fa;
-  --text: #222;
+  --text: #fffbe6;            /* Cream for text */
+  --subtitle: #ffd6e0;        /* Light pinkish for subtitle */
 }
 
 body {
@@ -11,6 +13,7 @@ body {
   background: var(--background);
   margin: 0;
   color: var(--text);
+  min-height: 100vh;
 }
 .container {
   max-width: 900px;
@@ -33,10 +36,11 @@ body {
 .auth-modal {
   max-width: 400px;
   margin: 2rem auto;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 12px;
-  box-shadow: 0 2px 8px #0001;
+  box-shadow: 0 2px 8px #0003;
   padding: 2rem;
+  color: #3a001e;
 }
 input, button, select {
   display: block;
@@ -47,9 +51,13 @@ input, button, select {
   border: 1px solid #ccc;
   font-size: 1rem;
 }
+input, select {
+  background: #fff;
+  color: #3a001e;
+}
 button {
   background: var(--primary);
-  color: #fff;
+  color: var(--card-bg);
   font-weight: 600;
   cursor: pointer;
   border: none;
@@ -61,28 +69,44 @@ button:hover {
 button.logout-btn {
   background: #e53935;
   margin-left: 1rem;
+  color: #fff;
 }
 .error {
   color: #e53935;
   margin-top: 0.5rem;
 }
+.intro h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--card-bg);
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
 .intro h2 {
-  font-size: 1.3rem;
-  color: var(--primary);
-  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--subtitle);
   margin-bottom: 2rem;
+  margin-top: 0;
+  letter-spacing: 1px;
 }
 .card {
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 12px;
-  box-shadow: 0 2px 8px #0001;
+  box-shadow: 0 2px 8px #0003;
   padding: 2rem;
   margin-bottom: 2rem;
   flex: 1 1 350px;
   min-width: 320px;
   max-width: 400px;
+  color: #3a001e;
 }
 .result {
   color: var(--primary-dark);
   margin-top: 0.5rem;
+}
+.footer {
+  color: var(--subtitle);
+  font-size: 1rem;
+  margin-top: 2rem;
 }
