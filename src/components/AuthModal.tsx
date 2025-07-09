@@ -55,8 +55,8 @@ export default function AuthModal({ onAuth }: Props) {
   };
 
   return (
-    <div className="auth-modal-overlay">
-      <div className="auth-modal">
+    <div className="auth-modal-glass-oblong">
+      <div className="auth-modal-small">
         <h3>{isLogin ? "Sign In" : "Sign Up"}</h3>
         <form onSubmit={handleSubmit}>
           <input
