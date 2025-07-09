@@ -133,7 +133,7 @@ export default function Mining({
       <div className="digital-clock-row">
         <span className="digital-clock">{timer}</span>
         <button
-          className="mining-toggle-btn"
+          className="mining-toggle-btn big-3d-btn"
           onClick={handleToggleMining}
           style={{
             background: mining ? "#1db954" : "#ff9800",
@@ -141,7 +141,7 @@ export default function Mining({
             fontWeight: 700,
             letterSpacing: 1,
             marginLeft: "1.2rem",
-            minWidth: "60px",
+            minWidth: "80px",
           }}
         >
           {mining ? "ON" : "OFF"}
