@@ -28,6 +28,8 @@ export default function Home() {
   return (
     <div className="container">
       <PlatformIntro />
+      <div style={{ height: "120px" }} />{" "}
+      {/* Spacer to push mining card lower */}
       <div className="main">
         <Mining user={user} onRequireAuth={requireAuth} />
         {/* Add more features here as you build them */}
