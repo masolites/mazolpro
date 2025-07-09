@@ -56,9 +56,12 @@ export default function AuthModal({ onAuth }: Props) {
 
   return (
     <div className="auth-modal-glass-oblong">
-      <div className="auth-modal-card">
+      <div className="ico-card auth-modal-card">
         <h3>{isLogin ? "Sign In" : "Sign Up"}</h3>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ width: "100%" }}
+        >
           <input
             type="email"
             placeholder="Email"
