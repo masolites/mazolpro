@@ -1,27 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AuthModal from "../components/AuthModal";
-import AdminPanel from "../components/AdminPanel";
-import PrivateSale from "../components/PrivateSale";
-import Mining from "../components/Mining";
-import Voting from "../components/Voting";
-import Wallet from "../components/Wallet";
 import PlatformIntro from "../components/PlatformIntro";
-import styles from "../styles/globals.css";
+import "../styles/globals.css";
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
-  const [admin, setAdmin] = useState<boolean>(false);
-  const [showAuth, setShowAuth] = useState<boolean>(true);
+  const [showAuth, setShowAuth] = useState(true);
 
-  useEffect(() => {
-    // Optionally, check for existing session
-    const stored = localStorage.getItem("mazolpro_user");
-    if (stored) setUser(JSON.parse(stored));
-  }, []);
-
-  const handleAuth = (user: any, isAdmin = false) => {
+  const handleAuth = (user: any) => {
     setUser(user);
-    setAdmin(isAdmin);
     setShowAuth(false);
     localStorage.setItem(
       "mazolpro_user",
@@ -31,7 +18,6 @@ export default function Home() {
 
   const handleLogout = () => {
     setUser(null);
-    setAdmin(false);
     setShowAuth(true);
     localStorage.removeItem("mazolpro_user");
   };
@@ -56,16 +42,14 @@ export default function Home() {
               Logout
             </button>
           </header>
-          {admin ? (
-            <AdminPanel />
-          ) : (
-            <main className="main">
-              <PrivateSale user={user} />
-              <Mining user={user} />
-              <Voting user={user} />
-              <Wallet user={user} />
-            </main>
-          )}
+          <main className="main">
+            <h2>Welcome, {user?.email || user?.wallet}!</h2>
+            {/* You will add more components here (PrivateSale, Mining, Voting, Wallet, etc.) */}
+            <p>
+              Platform features will appear here after
+              login.
+            </p>
+          </main>
         </>
       )}
       <footer className="footer">
