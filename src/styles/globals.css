@@ -30,16 +30,26 @@ body {
 }
 .main {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.auth-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(58,0,30,0.85);
+  z-index: 1000;
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 .auth-modal {
-  max-width: 400px;
-  margin: 2rem auto;
+  max-width: 350px;
+  width: 100%;
   background: var(--card-bg);
   border-radius: 12px;
-  box-shadow: 0 2px 8px #0003;
-  padding: 2rem;
+  box-shadow: 0 2px 16px #0006;
+  padding: 2rem 1.5rem;
   color: #3a001e;
 }
 input, button, select {
@@ -90,25 +100,70 @@ button.logout-btn {
   margin-top: 0;
   letter-spacing: 1px;
 }
-.intro p {
+.platform-desc {
   color: #ffd6e0;
-  font-size: 1.1rem;
-  margin: 1rem auto 2rem auto;
+  font-size: 0.7rem;
+  margin: 0.5rem auto 1.5rem auto;
   max-width: 600px;
   text-align: center;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.5px;
+  line-height: 1.5;
 }
-.card {
+.ico-card {
   background: var(--card-bg);
   border-radius: 12px;
   box-shadow: 0 2px 8px #0003;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  flex: 1 1 350px;
-  min-width: 320px;
-  max-width: 400px;
+  padding: 1.2rem 1.2rem 1.5rem 1.2rem;
+  margin-bottom: 1.5rem;
+  min-width: 270px;
+  max-width: 320px;
   color: #3a001e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ico-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+.ico-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.ico-countdown {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.ico-label {
+  font-size: 0.8rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+.ico-timer {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 1px;
+}
+.ico-stats {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+.ico-main {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3a001e;
+  display: block;
 }
 .result {
   color: var(--primary-dark);
@@ -118,4 +173,4 @@ button.logout-btn {
   color: var(--subtitle);
   font-size: 1rem;
   margin-top: 2rem;
- }
+  }
