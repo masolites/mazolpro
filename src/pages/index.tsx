@@ -26,6 +26,7 @@ export default function Home() {
     <div className="container">
       <PlatformIntro />
       {showAuth && <AuthModal onAuth={handleAuth} />}
+      <PrivateSale user={user} />
       {!showAuth && (
         <>
           <header className="header">
@@ -42,7 +43,6 @@ export default function Home() {
             </button>
           </header>
           <main className="main">
-            <PrivateSale user={user} />
             {/* More features will be added here */}
           </main>
         </>
