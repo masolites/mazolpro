@@ -38,7 +38,7 @@ body {
 .auth-modal-glass-oblong {
   position: fixed;
   left: 0; right: 0;
-  top: 60px; /* Raised higher */
+  top: 140px; /* Lowered to uncover description */
   bottom: 0;
   z-index: 1500;
   display: flex;
@@ -53,24 +53,24 @@ body {
   transform: translateX(-50%);
   width: 420px;
   max-width: 90vw;
-  height: 220px;
-  border-radius: 24px;
-  background: rgba(255, 251, 230, 0.13);
-  box-shadow: 0 8px 32px 0 rgba(58,0,30,0.13);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(255,255,255,0.13);
+  height: 320px;
+  border-radius: 100px / 300px;
+  background: rgba(255, 251, 230, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(58,0,30,0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255,255,255,0.18);
   z-index: 1;
   pointer-events: none;
 }
-.auth-modal-rect {
+.auth-modal-card {
   position: relative;
   z-index: 2;
   width: 320px;
   min-width: 0;
   max-width: 90vw;
   background: rgba(255,251,230,0.92);
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: 0 2px 16px #0006;
   padding: 1.2rem 1.2rem;
   color: #3a001e;
@@ -79,25 +79,19 @@ body {
   align-items: center;
   justify-content: center;
 }
-.auth-modal-inner-rect {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.auth-modal-rect h3 {
+.auth-modal-card h3 {
   font-size: 1.1rem;
   margin-bottom: 0.7rem;
   text-align: center;
 }
-.auth-modal-rect input, .auth-modal-rect button {
+.auth-modal-card input, .auth-modal-card button {
   font-size: 0.95rem;
   padding: 0.5rem;
   margin: 0.3rem 0 0.7rem 0;
   border-radius: 6px;
   text-align: center;
 }
-.auth-modal-rect button {
+.auth-modal-card button {
   font-size: 1rem;
 }
 input, button, select {
