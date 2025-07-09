@@ -56,8 +56,8 @@ export default function AuthModal({ onAuth }: Props) {
 
   return (
     <div className="auth-modal-glass-oblong">
-      <div className="auth-modal-small">
-        <div className="auth-modal-inner">
+      <div className="auth-modal-rect">
+        <div className="auth-modal-inner-rect">
           <h3>{isLogin ? "Sign In" : "Sign Up"}</h3>
           <form onSubmit={handleSubmit}>
             <input
