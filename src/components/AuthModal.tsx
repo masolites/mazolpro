@@ -19,7 +19,7 @@ export default function AuthModal({ onAuth }: Props) {
         const res = await axios.post("/api/auth", {
           action: "login",
           email,
-          wallet: email, // send email as wallet too
+          wallet: email,
           password,
         });
         if (res.data.user) {
@@ -31,7 +31,7 @@ export default function AuthModal({ onAuth }: Props) {
         const res = await axios.post("/api/auth", {
           action: "register",
           email,
-          wallet: email, // send email as wallet too
+          wallet: email,
           password,
         });
         if (res.data.message) {
@@ -55,35 +55,37 @@ export default function AuthModal({ onAuth }: Props) {
   };
 
   return (
-    <div className="auth-modal">
-      <h3>{isLogin ? "Sign In" : "Sign Up"}</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">
-          {isLogin ? "Sign In" : "Sign Up"}
-        </button>
-      </form>
-      <div className="auth-links">
-        <button onClick={() => setIsLogin(!isLogin)}>
-          {isLogin
-            ? "Need an account? Sign Up"
-            : "Already have an account? Sign In"}
-        </button>
+    <div className="auth-modal-overlay">
+      <div className="auth-modal">
+        <h3>{isLogin ? "Sign In" : "Sign Up"}</h3>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">
+            {isLogin ? "Sign In" : "Sign Up"}
+          </button>
+        </form>
+        <div className="auth-links">
+          <button onClick={() => setIsLogin(!isLogin)}>
+            {isLogin
+              ? "Need an account? Sign Up"
+              : "Already have an account? Sign In"}
+          </button>
+        </div>
+        {error && <div className="error">{error}</div>}
       </div>
-      {error && <div className="error">{error}</div>}
     </div>
   );
 }
