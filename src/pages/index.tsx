@@ -1,4 +1,4 @@
- import React, { useState } from "react";
+import React, { useState } from "react";
 import AuthModal from "../components/AuthModal";
 import PlatformIntro from "../components/PlatformIntro";
 import PrivateSale from "../components/PrivateSale";
@@ -34,7 +34,6 @@ export default function Home() {
               alt="MAZOL-Pro"
               className="logo"
             />
-            <h1>MAZOL-Pro</h1>
             <button
               className="logout-btn"
               onClick={handleLogout}
@@ -43,7 +42,6 @@ export default function Home() {
             </button>
           </header>
           <main className="main">
-            <h2>Welcome, {user?.email || user?.wallet}!</h2>
             <PrivateSale user={user} />
             {/* More features will be added here */}
           </main>
