@@ -1,4 +1,4 @@
- export default function PlatformIntro() {
+export default function PlatformIntro() {
   return (
     <section
       className="intro"
