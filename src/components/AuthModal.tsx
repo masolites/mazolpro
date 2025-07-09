@@ -56,38 +56,37 @@ export default function AuthModal({ onAuth }: Props) {
 
   return (
     <div className="auth-modal-glass-oblong">
-      <div className="ico-card auth-modal-card">
-        <h3>{isLogin ? "Sign In" : "Sign Up"}</h3>
-        <form
-          onSubmit={handleSubmit}
-          style={{ width: "100%" }}
-        >
-          <input
-            type="email"
-            placeholder="Email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">
-            {isLogin ? "Sign In" : "Sign Up"}
-          </button>
-        </form>
-        <div className="auth-links">
-          <button onClick={() => setIsLogin(!isLogin)}>
-            {isLogin
-              ? "Need an account? Sign Up"
-              : "Already have an account? Sign In"}
-          </button>
+      <div className="auth-modal-small">
+        <div className="auth-modal-inner">
+          <h3>{isLogin ? "Sign In" : "Sign Up"}</h3>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              placeholder="Email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="submit">
+              {isLogin ? "Sign In" : "Sign Up"}
+            </button>
+          </form>
+          <div className="auth-links">
+            <button onClick={() => setIsLogin(!isLogin)}>
+              {isLogin
+                ? "Need an account? Sign Up"
+                : "Already have an account? Sign In"}
+            </button>
+          </div>
+          {error && <div className="error">{error}</div>}
         </div>
-        {error && <div className="error">{error}</div>}
       </div>
     </div>
   );
