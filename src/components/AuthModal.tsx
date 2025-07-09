@@ -2,32 +2,20 @@ import React, { useState } from "react";
 import axios from "axios";
 
 type Props = {
-  onAuth: (user: any, isAdmin?: boolean) => void;
+  onAuth: (user: any) => void;
 };
 
 export default function AuthModal({ onAuth }: Props) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [adminMode, setAdminMode] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     try {
-      if (adminMode) {
-        const res = await axios.post("/api/admin", {
-          action: "login",
-          username: email,
-          password,
-        });
-        if (res.data.success) {
-          onAuth({ username: email }, true);
-        } else {
-          setError(res.data.error || "Admin login failed");
-        }
-      } else if (isLogin) {
+      if (isLogin) {
         const res = await axios.post("/api/auth", {
           action: "login",
           email,
@@ -65,13 +53,7 @@ export default function AuthModal({ onAuth }: Props) {
 
   return (
     <div className="auth-modal">
-      <h3>
-        {adminMode
-          ? "Admin Login"
-          : isLogin
-            ? "Sign In"
-            : "Sign Up"}
-      </h3>
+      <h3>{isLogin ? "Sign In" : "Sign Up"}</h3>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -88,23 +70,14 @@ export default function AuthModal({ onAuth }: Props) {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">
-          {adminMode
-            ? "Login as Admin"
-            : isLogin
-              ? "Sign In"
-              : "Sign Up"}
+          {isLogin ? "Sign In" : "Sign Up"}
         </button>
       </form>
       <div className="auth-links">
-        {!adminMode && (
-          <button onClick={() => setIsLogin(!isLogin)}>
-            {isLogin
-              ? "Need an account? Sign Up"
-              : "Already have an account? Sign In"}
-          </button>
-        )}
-        <button onClick={() => setAdminMode(!adminMode)}>
-          {adminMode ? "User Login" : "Admin Login"}
+        <button onClick={() => setIsLogin(!isLogin)}>
+          {isLogin
+            ? "Need an account? Sign Up"
+            : "Already have an account? Sign In"}
         </button>
       </div>
       {error && <div className="error">{error}</div>}
