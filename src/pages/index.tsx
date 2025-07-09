@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AuthModal from "../components/AuthModal";
 import PlatformIntro from "../components/PlatformIntro";
-import PrivateSale from "../components/PrivateSale";
+import Mining from "../components/Mining";
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
@@ -22,34 +22,35 @@ export default function Home() {
     localStorage.removeItem("mazolpro_user");
   };
 
+  // This function is passed to Mining to trigger auth modal if needed
+  const requireAuth = () => setShowAuth(true);
+
   return (
     <div className="container">
       <PlatformIntro />
-      {showAuth && <AuthModal onAuth={handleAuth} />}
-      <PrivateSale user={user} />
+      <div className="main">
+        <Mining user={user} onRequireAuth={requireAuth} />
+        {/* Add more features here as you build them */}
+      </div>
       {!showAuth && (
-        <>
-          <header className="header">
-            <img
-              src="/logo.png"
-              alt="MAZOL-Pro"
-              className="logo"
-            />
-            <button
-              className="logout-btn"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </header>
-          <main className="main">
-            {/* More features will be added here */}
-          </main>
-        </>
+        <header className="header">
+          <img
+            src="/logo.png"
+            alt="MAZOL-Pro"
+            className="logo"
+          />
+          <button
+            className="logout-btn"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </header>
       )}
       <footer className="footer">
         &copy; {new Date().getFullYear()} MAZOL-Pro
       </footer>
+      {showAuth && <AuthModal onAuth={handleAuth} />}
     </div>
   );
 }
