@@ -1,9 +1,10 @@
- import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 const MINING_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 function formatTime(ms: number) {
+  if (!ms || ms <= 0) return "000";
   const totalSeconds = Math.max(0, Math.floor(ms / 1000));
   const hours = String(
     Math.floor(totalSeconds / 3600),
@@ -69,7 +70,7 @@ export default function Mining({
     };
   }, []);
 
-  const handleStartMining = async () => {
+  const handleToggleMining = async () => {
     setResult("");
     if (!user) {
       setResult(
@@ -78,49 +79,73 @@ export default function Mining({
       onRequireAuth();
       return;
     }
-    try {
-      const res = await axios.post("/api/mining", {
-        wallet: user.wallet || user.email,
-      });
-      if (res.data.session) {
-        setMining(true);
-        setStartTime(new Date(res.data.session.start));
-        setSpeed(res.data.session.speed);
-        setResult(res.data.message || "Mining started!");
-        // Set timeout to auto-end mining after 24 hours
-        if (miningTimeout.current)
-          clearTimeout(miningTimeout.current);
-        miningTimeout.current = setTimeout(() => {
-          setMining(false);
-          setTimer("000");
+    if (!mining) {
+      try {
+        const res = await axios.post("/api/mining", {
+          wallet: user.wallet || user.email,
+        });
+        if (res.data.session) {
+          setMining(true);
+          setStartTime(new Date(res.data.session.start));
+          setSpeed(res.data.session.speed);
+          setResult(res.data.message || "Mining started!");
+          // Set timeout to auto-end mining after 24 hours
+          if (miningTimeout.current)
+            clearTimeout(miningTimeout.current);
+          miningTimeout.current = setTimeout(() => {
+            setMining(false);
+            setTimer("000");
+            setResult(
+              "Mining session ended. Please restart to mine again.",
+            );
+            setStartTime(null);
+            setSpeed(null);
+          }, MINING_DURATION_MS);
+        } else {
           setResult(
-            "Mining session ended. Please restart to mine again.",
+            res.data.error || "Could not start mining.",
           );
-          setStartTime(null);
-          setSpeed(null);
-        }, MINING_DURATION_MS);
-      } else {
+        }
+      } catch (err: any) {
         setResult(
-          res.data.error || "Could not start mining.",
+          err.response?.data?.error || "Error occurred",
         );
       }
-    } catch (err: any) {
-      setResult(
-        err.response?.data?.error || "Error occurred",
-      );
+    } else {
+      // Optionally, allow user to stop mining early
+      setMining(false);
+      setTimer("000");
+      setResult("Mining stopped.");
+      setStartTime(null);
+      setSpeed(null);
+      if (miningTimeout.current)
+        clearTimeout(miningTimeout.current);
     }
   };
 
   return (
-    <section className="ico-card">
+    <section className="ico-card mining-card">
       <div className="ico-header">
         <span className="ico-title">
           Start FREE MAZOL mining
         </span>
       </div>
-      <div className="ico-countdown">
-        <span className="ico-label">Session Time</span>
-        <span className="ico-timer">{timer}</span>
+      <div className="digital-clock-row">
+        <span className="digital-clock">{timer}</span>
+        <button
+          className="mining-toggle-btn"
+          onClick={handleToggleMining}
+          style={{
+            background: mining ? "#1db954" : "#ff9800",
+            color: "#fffbe6",
+            fontWeight: 700,
+            letterSpacing: 1,
+            marginLeft: "1.2rem",
+            minWidth: "60px",
+          }}
+        >
+          {mining ? "ON" : "OFF"}
+        </button>
       </div>
       <div className="ico-stats">
         <div>
@@ -134,19 +159,6 @@ export default function Mining({
           <span className="ico-label">Speed</span>
         </div>
       </div>
-      <button
-        onClick={handleStartMining}
-        style={{
-          marginTop: "0.5rem",
-          background: mining ? "#1db954" : "#ff9800",
-          color: "#fffbe6",
-          fontWeight: 700,
-          letterSpacing: 1,
-          transition: "background 0.2s",
-        }}
-      >
-        {mining ? "ON" : "OFF"}
-      </button>
       {result && <div className="result">{result}</div>}
     </section>
   );
