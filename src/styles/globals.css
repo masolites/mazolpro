@@ -37,27 +37,29 @@ body {
 }
 .auth-modal-glass-oblong {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  left: 0; right: 0;
+  top: 60px; /* Raised higher */
+  bottom: 0;
   z-index: 1500;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   pointer-events: auto;
 }
 .auth-modal-glass-oblong::before {
   content: "";
   position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
+  left: 50%; top: 0;
+  transform: translateX(-50%);
   width: 420px;
   max-width: 90vw;
-  height: 80vh;
+  height: 340px;
   border-radius: 100px / 300px;
-  background: rgba(255, 251, 230, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(58,0,30,0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255, 251, 230, 0.13);
+  box-shadow: 0 8px 32px 0 rgba(58,0,30,0.13);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255,255,255,0.13);
   z-index: 1;
   pointer-events: none;
 }
@@ -75,16 +77,26 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+}
+.auth-modal-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .auth-modal-small h3 {
   font-size: 1.1rem;
   margin-bottom: 0.7rem;
+  text-align: center;
 }
 .auth-modal-small input, .auth-modal-small button {
   font-size: 0.9rem;
   padding: 0.5rem;
   margin: 0.3rem 0 0.7rem 0;
   border-radius: 6px;
+  text-align: center;
 }
 .auth-modal-small button {
   font-size: 1rem;
@@ -165,6 +177,9 @@ button.logout-btn {
   flex-direction: column;
   align-items: center;
 }
+.mining-card {
+  margin-top: 120px; /* Push mining card lower */
+}
 .ico-header {
   width: 100%;
   display: flex;
@@ -177,23 +192,33 @@ button.logout-btn {
   font-weight: 700;
   color: var(--primary);
 }
-.ico-countdown {
+.digital-clock-row {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.7rem;
 }
-.ico-label {
-  font-size: 0.8rem;
-  color: var(--primary-dark);
-  font-weight: 600;
-}
-.ico-timer {
-  font-size: 1.1rem;
+.digital-clock {
+  font-family: 'Roboto Mono', 'Consolas', monospace;
+  font-size: 2.1rem;
   font-weight: 700;
-  color: var(--primary);
-  letter-spacing: 1px;
+  color: #222;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 0.2rem 1.1rem;
+  letter-spacing: 0.1em;
+  box-shadow: 0 1px 4px #0001;
+}
+.mining-toggle-btn {
+  border-radius: 8px;
+  border: none;
+  font-size: 1.1rem;
+  padding: 0.5rem 1.2rem;
+  margin-left: 1.2rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 .ico-stats {
   width: 100%;
