@@ -1,7 +1,8 @@
- import React, { useState } from "react";
+import React, { useState } from "react";
 import AuthModal from "../components/AuthModal";
 import PlatformIntro from "../components/PlatformIntro";
 import Mining from "../components/Mining";
+import PrivateSale from "../components/PrivateSale";
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
@@ -22,17 +23,15 @@ export default function Home() {
     localStorage.removeItem("mazolpro_user");
   };
 
-  // This function is passed to Mining to trigger auth modal if needed
   const requireAuth = () => setShowAuth(true);
 
   return (
-    <div className="container">
+    <div className="landing-flex">
       <PlatformIntro />
-      <div style={{ height: "120px" }} />{" "}
-      {/* Spacer to push mining card lower */}
+      {showAuth && <AuthModal onAuth={handleAuth} />}
       <div className="main">
+        <PrivateSale user={user} />
         <Mining user={user} onRequireAuth={requireAuth} />
-        {/* Add more features here as you build them */}
       </div>
       {!showAuth && (
         <header className="header">
@@ -52,7 +51,6 @@ export default function Home() {
       <footer className="footer">
         &copy; {new Date().getFullYear()} MAZOL-Pro
       </footer>
-      {showAuth && <AuthModal onAuth={handleAuth} />}
     </div>
   );
 }
