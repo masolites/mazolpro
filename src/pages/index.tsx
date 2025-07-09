@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import AuthModal from "../components/AuthModal";
 import PlatformIntro from "../components/PlatformIntro";
 import PrivateSale from "../components/PrivateSale";
