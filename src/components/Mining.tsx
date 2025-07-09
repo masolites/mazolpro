@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 const MINING_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
