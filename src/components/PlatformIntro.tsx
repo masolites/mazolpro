@@ -1,6 +1,9 @@
 export default function PlatformIntro() {
   return (
-    <section className="intro">
+    <section
+      className="intro"
+      style={{ zIndex: 2000, position: "relative" }}
+    >
       <h1>MAZOL Pro</h1>
       <h2>E-commerce & Blockchain</h2>
       <p className="platform-desc">
