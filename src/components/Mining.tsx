@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 const MINING_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 function formatTime(ms: number) {
-  if (!ms || ms <= 0) return "000";
+  if (!ms || ms <= 0) return "00:00:00";
   const totalSeconds = Math.max(0, Math.floor(ms / 1000));
   const hours = String(
     Math.floor(totalSeconds / 3600),
@@ -31,7 +31,7 @@ export default function Mining({
     null,
   );
   const [speed, setSpeed] = useState<number | null>(null);
-  const [timer, setTimer] = useState("000");
+  const [timer, setTimer] = useState("00:00:00");
   const [result, setResult] = useState("");
   const miningTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -44,7 +44,7 @@ export default function Mining({
         const diff = now - startTime.getTime();
         if (diff >= MINING_DURATION_MS) {
           setMining(false);
-          setTimer("000");
+          setTimer("00:00:00");
           setResult(
             "Mining session ended. Please restart to mine again.",
           );
@@ -57,7 +57,7 @@ export default function Mining({
       updateTimer();
       interval = setInterval(updateTimer, 1000);
     } else {
-      setTimer("000");
+      setTimer("00:00:00");
     }
     return () => clearInterval(interval);
   }, [mining, startTime]);
@@ -94,7 +94,7 @@ export default function Mining({
             clearTimeout(miningTimeout.current);
           miningTimeout.current = setTimeout(() => {
             setMining(false);
-            setTimer("000");
+            setTimer("00:00:00");
             setResult(
               "Mining session ended. Please restart to mine again.",
             );
@@ -114,7 +114,7 @@ export default function Mining({
     } else {
       // Optionally, allow user to stop mining early
       setMining(false);
-      setTimer("000");
+      setTimer("00:00:00");
       setResult("Mining stopped.");
       setStartTime(null);
       setSpeed(null);
