@@ -1,4 +1,4 @@
- import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function PrivateSale({
@@ -31,11 +31,15 @@ export default function PrivateSale({
   const handlePurchase = async (e: React.FormEvent) => {
     e.preventDefault();
     setResult("");
+    if (!user) {
+      setResult("Please sign in to purchase.");
+      return;
+    }
     try {
       const res = await axios.post(
         "/api/purchase_" + type,
         {
-          wallet: user.wallet,
+          wallet: user.wallet || user.email,
           amount,
         },
       );
