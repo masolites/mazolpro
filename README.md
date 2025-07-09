@@ -1,20 +1,16 @@
-# MAZOL-Pro Frontend
+# Mazol-Pro Frontend
 
-- Next.js + Tailwind CSS
-- User authentication (email, wallet, password)
-- Personalized dashboard: Matrix, Earnings, Wallet, Private Sale, Mining, Voting, Withdraw
-- Secure, no admin link in UI
-- Admin dashboard at `/admin-secret-xyz`
+Mazol-Pro is a Blockchain supported Platform promoting a Better Society Together by offering Trusted Systems, Goods & Services to people.
 
-## Setup
+## Features
 
-1. `npm install`
-2. Copy `.env.local.example` to `.env.local` and set your backend API URL.
-3. `npm run dev` to start locally.
-4. Deploy to Vercel.
+- Email/password authentication
+- Dashboard shell (expandable)
+- Modern, responsive UI
+- Connects to existing backend API endpoints
 
-## Security
+## Getting Started
 
-- No sensitive data in frontend.
-- All API calls use secure POST.
-- Admin dashboard is only at `/admin-secret-xyz`.
+1. Copy your backend files into `/api/` at the root.
+2. `npm install`
+3. `npm run dev`
