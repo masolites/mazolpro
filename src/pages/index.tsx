@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AuthModal from "../components/AuthModal";
 import PlatformIntro from "../components/PlatformIntro";
-import "../styles/globals.css";
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
