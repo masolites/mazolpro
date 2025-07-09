@@ -1,4 +1,4 @@
- :root {
+:root {
   --background: #3a001e;      /* Dark maroon red */
   --card-bg: #fffbe6;         /* Cream */
   --primary: #008080;         /* Deep turquoise */
@@ -63,21 +63,22 @@ body {
   z-index: 1;
   pointer-events: none;
 }
-.auth-modal-card {
-  position: relative;
-  z-index: 2;
-  width: 320px;
-  min-width: 0;
-  max-width: 90vw;
-  background: rgba(255,251,230,0.92);
+.ico-card {
+  background: var(--card-bg);
   border-radius: 12px;
-  box-shadow: 0 2px 16px #0006;
-  padding: 1.2rem 1.2rem;
+  box-shadow: 0 2px 8px #0003;
+  padding: 1.2rem 1.2rem 1.5rem 1.2rem;
+  margin-bottom: 1.5rem;
+  min-width: 270px;
+  max-width: 320px;
   color: #3a001e;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+.auth-modal-card {
+  /* Inherits all from .ico-card for identical size and style */
+  margin: 0;
 }
 .auth-modal-card h3 {
   font-size: 1.1rem;
@@ -157,19 +158,6 @@ button.logout-btn {
   letter-spacing: 0.5px;
   line-height: 1.5;
 }
-.ico-card {
-  background: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px #0003;
-  padding: 1.2rem 1.2rem 1.5rem 1.2rem;
-  margin-bottom: 1.5rem;
-  min-width: 270px;
-  max-width: 320px;
-  color: #3a001e;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 .mining-card {
   margin-top: 120px; /* Push mining card lower */
 }
@@ -203,15 +191,22 @@ button.logout-btn {
   letter-spacing: 0.1em;
   box-shadow: 0 1px 4px #0001;
 }
-.mining-toggle-btn {
-  border-radius: 8px;
+.mining-toggle-btn.big-3d-btn {
+  border-radius: 12px;
   border: none;
-  font-size: 1.1rem;
-  padding: 0.5rem 1.2rem;
+  font-size: 1.3rem;
+  padding: 0.7rem 2.2rem;
   margin-left: 1.2rem;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s;
+  font-weight: 800;
+  box-shadow: 0 4px 16px #0003, 0 2px 8px #ff9800aa;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  text-shadow: 0 2px 8px #0002;
+}
+.mining-toggle-btn.big-3d-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px #0002;
 }
 .ico-stats {
   width: 100%;
@@ -233,4 +228,4 @@ button.logout-btn {
   color: var(--subtitle);
   font-size: 1rem;
   margin-top: 2rem;
-}
+ }
