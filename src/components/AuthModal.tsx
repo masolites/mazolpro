@@ -19,6 +19,7 @@ export default function AuthModal({ onAuth }: Props) {
         const res = await axios.post("/api/auth", {
           action: "login",
           email,
+          wallet: email, // send email as wallet too
           password,
         });
         if (res.data.user) {
@@ -30,6 +31,7 @@ export default function AuthModal({ onAuth }: Props) {
         const res = await axios.post("/api/auth", {
           action: "register",
           email,
+          wallet: email, // send email as wallet too
           password,
         });
         if (res.data.message) {
@@ -37,6 +39,7 @@ export default function AuthModal({ onAuth }: Props) {
           const loginRes = await axios.post("/api/auth", {
             action: "login",
             email,
+            wallet: email,
             password,
           });
           onAuth(loginRes.data.user);
