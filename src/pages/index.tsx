@@ -1,61 +1,74 @@
-import React, { useState } from "react";
-import AuthForm from "../components/AuthForm";
-import Dashboard from "../components/Dashboard";
+import React, { useState, useEffect } from "react";
+import AuthModal from "../components/AuthModal";
+import AdminPanel from "../components/AdminPanel";
+import PrivateSale from "../components/PrivateSale";
+import Mining from "../components/Mining";
+import Voting from "../components/Voting";
+import Wallet from "../components/Wallet";
+import PlatformIntro from "../components/PlatformIntro";
+import styles from "../styles/globals.css";
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
+  const [admin, setAdmin] = useState<boolean>(false);
+  const [showAuth, setShowAuth] = useState<boolean>(true);
+
+  useEffect(() => {
+    // Optionally, check for existing session
+    const stored = localStorage.getItem("mazolpro_user");
+    if (stored) setUser(JSON.parse(stored));
+  }, []);
+
+  const handleAuth = (user: any, isAdmin = false) => {
+    setUser(user);
+    setAdmin(isAdmin);
+    setShowAuth(false);
+    localStorage.setItem(
+      "mazolpro_user",
+      JSON.stringify(user),
+    );
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setAdmin(false);
+    setShowAuth(true);
+    localStorage.removeItem("mazolpro_user");
+  };
 
   return (
-    <div>
-      <header
-        style={{
-          textAlign: "center",
-          padding: "2rem 0 1rem 0",
-          background: "#fff",
-          borderBottom: "1px solid #eee",
-        }}
-      >
-        <h1
-          style={{
-            margin: 0,
-            fontSize: "2.5rem",
-            fontWeight: 700,
-            color: "#1a237e",
-          }}
-        >
-          MAZOL-Pro
-        </h1>
-        <h2
-          style={{
-            margin: "0.5rem 0 0 0",
-            fontSize: "1.2rem",
-            fontWeight: 400,
-            color: "#333",
-          }}
-        >
-          Mazol-Pro is a Blockchain supported Platform
-          promoting a Better Society Together by offering
-          Trusted Systems, Goods & Services to people
-        </h2>
-      </header>
-      <main>
-        {!user ? (
-          <AuthForm onAuth={setUser} />
-        ) : (
-          <Dashboard
-            user={user}
-            onLogout={() => setUser(null)}
-          />
-        )}
-      </main>
-      <footer
-        style={{
-          textAlign: "center",
-          padding: "2rem 0 1rem 0",
-          color: "#888",
-          fontSize: "0.95rem",
-        }}
-      >
+    <div className="container">
+      <PlatformIntro />
+      {showAuth && <AuthModal onAuth={handleAuth} />}
+      {!showAuth && (
+        <>
+          <header className="header">
+            <img
+              src="/logo.png"
+              alt="MAZOL-Pro"
+              className="logo"
+            />
+            <h1>MAZOL-Pro</h1>
+            <button
+              className="logout-btn"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </header>
+          {admin ? (
+            <AdminPanel />
+          ) : (
+            <main className="main">
+              <PrivateSale user={user} />
+              <Mining user={user} />
+              <Voting user={user} />
+              <Wallet user={user} />
+            </main>
+          )}
+        </>
+      )}
+      <footer className="footer">
         &copy; {new Date().getFullYear()} MAZOL-Pro
       </footer>
     </div>
