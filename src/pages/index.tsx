@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AuthModal from "../components/AuthModal";
 import PlatformIntro from "../components/PlatformIntro";
+import PrivateSale from "../components/PrivateSale";
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
@@ -43,11 +44,8 @@ export default function Home() {
           </header>
           <main className="main">
             <h2>Welcome, {user?.email || user?.wallet}!</h2>
-            {/* You will add more components here (PrivateSale, Mining, Voting, Wallet, etc.) */}
-            <p>
-              Platform features will appear here after
-              login.
-            </p>
+            <PrivateSale user={user} />
+            {/* More features will be added here */}
           </main>
         </>
       )}
