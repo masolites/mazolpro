@@ -1,4 +1,4 @@
-import React, {
+ import React, {
   createContext,
   useContext,
   useState,
@@ -11,6 +11,7 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [admin, setAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -20,9 +21,11 @@ export function AuthProvider({ children }) {
       setUser(parsed.user);
       setAdmin(parsed.admin);
     }
+    setLoading(false);
   }, []);
 
   const login = async (email, password) => {
+    setLoading(true);
     const res = await fetch("/api/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -33,22 +36,21 @@ export function AuthProvider({ children }) {
       }),
     });
     const data = await res.json();
+    setLoading(false);
     if (data.error) throw new Error(data.error);
     setUser(data.user);
-    setAdmin(
+    const isAdmin =
       data.user?.role === "admin" ||
-        email === process.env.NEXT_PUBLIC_ADMIN_EMAIL,
-    );
+      email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+    setAdmin(isAdmin);
     localStorage.setItem(
       "mazol_user",
-      JSON.stringify({
-        user: data.user,
-        admin: data.user?.role === "admin",
-      }),
+      JSON.stringify({ user: data.user, admin: isAdmin }),
     );
   };
 
   const signup = async (email, password) => {
+    setLoading(true);
     const res = await fetch("/api/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -59,6 +61,7 @@ export function AuthProvider({ children }) {
       }),
     });
     const data = await res.json();
+    setLoading(false);
     if (data.error) throw new Error(data.error);
     setUser({ email });
     setAdmin(false);
@@ -77,7 +80,14 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, admin, login, signup, logout }}
+      value={{
+        user,
+        admin,
+        loading,
+        login,
+        signup,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>
