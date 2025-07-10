@@ -1,16 +1,14 @@
-/* src/styles/globals.css */
-
-html, body {
+ html, body {
   min-height: 100%;
-  background: #f7fafc; /* Chakra's gray.50 */
-  color: #1a202c;      /* Chakra's gray.800 */
+  background: #FFF5E1; /* Cream */
+  color: #800000;      /* Maroon */
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 a {
-  color: #2563eb; /* Chakra's blue.600 */
+  color: #2563eb; /* Turquoise blue for links */
   text-decoration: none;
 }
 
@@ -24,9 +22,9 @@ button, input, select, textarea {
 
 ::-webkit-scrollbar {
   width: 8px;
-  background: #e2e8f0; /* Chakra's gray.200 */
+  background: #ffe4ec; /* Light pink */
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1; /* Chakra's gray.300 */
+  background: #FF69B4; /* Pink */
   border-radius: 4px;
 }
