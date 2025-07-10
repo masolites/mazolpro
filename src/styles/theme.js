@@ -1,4 +1,4 @@
-// src/styles/theme.js
+ // src/styles/theme.js
 import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
@@ -25,12 +25,26 @@ const theme = extendTheme({
     },
     turquoise: {
       500: "#1DE9B6",
+      600: "#13bfa6",
     },
     pink: {
       500: "#FF69B4",
+      600: "#e055a0",
+    },
+    lilac: {
+      100: "#f3e8ff",
+      200: "#e9d5ff",
+      300: "#d8b4fe",
+      400: "#c084fc",
+      500: "#a21caf",
     },
     blue: {
       500: "#2563eb",
+    },
+    gray: {
+      700: "#2d3748",
+      600: "#4a5568",
+      500: "#718096",
     },
   },
   fonts: {
@@ -41,15 +55,15 @@ const theme = extendTheme({
     global: {
       body: {
         bg: "maroon.500",
-        color: "white",
+        color: "cream.100",
       },
     },
   },
   components: {
     Card: {
       baseStyle: {
-        bg: "white",
-        color: "maroon.500",
+        bg: "cream.100",
+        color: "maroon.700",
         borderRadius: "lg",
         boxShadow: "lg",
         p: 4,
@@ -62,23 +76,36 @@ const theme = extendTheme({
       variants: {
         maroon: {
           bg: "maroon.500",
-          color: "white",
+          color: "cream.100",
           _hover: { bg: "maroon.600" },
         },
         turquoise: {
           bg: "turquoise.500",
           color: "maroon.700",
-          _hover: { bg: "turquoise.500", opacity: 0.85 },
+          _hover: { bg: "turquoise.600" },
         },
         pink: {
           bg: "pink.500",
+          color: "cream.100",
+          _hover: { bg: "pink.600" },
+        },
+        lilac: {
+          bg: "lilac.200",
           color: "maroon.700",
-          _hover: { bg: "pink.500", opacity: 0.85 },
+          _hover: { bg: "lilac.300" },
         },
         cream: {
           bg: "cream.100",
           color: "maroon.700",
           _hover: { bg: "cream.200" },
+        },
+      },
+    },
+    Input: {
+      baseStyle: {
+        field: {
+          bg: "cream.100",
+          color: "maroon.700",
         },
       },
     },
