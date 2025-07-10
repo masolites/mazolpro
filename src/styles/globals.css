@@ -1,8 +1,7 @@
- /* src/styles/globals.css */
-html, body {
+ html, body {
   min-height: 100%;
   background: #800000; /* Maroon base */
-  color: #fff;
+  color: #fff5e1;      /* Cream text */
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
