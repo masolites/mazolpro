@@ -24,7 +24,8 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
+  // No password required
+  const login = async (email, wallet) => {
     setLoading(true);
     const res = await fetch("/api/auth", {
       method: "POST",
@@ -32,24 +33,21 @@ export function AuthProvider({ children }) {
       body: JSON.stringify({
         action: "login",
         email,
-        password,
+        wallet,
       }),
     });
     const data = await res.json();
     setLoading(false);
     if (data.error) throw new Error(data.error);
     setUser(data.user);
-    const isAdmin =
-      data.user?.role === "admin" ||
-      email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-    setAdmin(isAdmin);
+    setAdmin(false); // No admin logic for now
     localStorage.setItem(
       "mazol_user",
-      JSON.stringify({ user: data.user, admin: isAdmin }),
+      JSON.stringify({ user: data.user, admin: false }),
     );
   };
 
-  const signup = async (email, password) => {
+  const signup = async (email, wallet) => {
     setLoading(true);
     const res = await fetch("/api/auth", {
       method: "POST",
@@ -57,17 +55,20 @@ export function AuthProvider({ children }) {
       body: JSON.stringify({
         action: "register",
         email,
-        password,
+        wallet,
       }),
     });
     const data = await res.json();
     setLoading(false);
     if (data.error) throw new Error(data.error);
-    setUser({ email });
+    setUser({ email, wallet });
     setAdmin(false);
     localStorage.setItem(
       "mazol_user",
-      JSON.stringify({ user: { email }, admin: false }),
+      JSON.stringify({
+        user: { email, wallet },
+        admin: false,
+      }),
     );
   };
 
