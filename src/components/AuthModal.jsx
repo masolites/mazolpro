@@ -10,7 +10,6 @@
   VStack,
   useToast,
   Text,
-  Spinner,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
@@ -54,7 +53,7 @@ export default function AuthModal({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader bg="maroon.500" color="cream.100">
+        <ModalHeader bg="maroon.800" color="cream.100">
           {isSignup ? "Sign Up" : "Sign In"}
         </ModalHeader>
         <ModalCloseButton />
