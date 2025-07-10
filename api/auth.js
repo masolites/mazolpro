@@ -1,5 +1,4 @@
  const { MongoClient } = require("mongodb");
-const bcrypt = require("bcryptjs");
 
 module.exports = async (req, res) => {
   const { action, wallet, email, password } =
@@ -27,11 +26,10 @@ module.exports = async (req, res) => {
           error: "Password must be at least 6 characters",
         });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
     await db.collection("users").insertOne({
       wallet,
       email,
-      password: hashedPassword,
+      password, // WARNING: Plaintext, for demo only!
       isGold: false,
       hasPurchased: false,
       nairaBalance: 0,
@@ -54,19 +52,15 @@ module.exports = async (req, res) => {
         .status(404)
         .json({ error: "User not found" });
     }
-    // Check password
-    const valid = await bcrypt.compare(
-      password || "",
-      user.password || "",
-    );
-    client.close();
-    if (!valid) {
+    if (!password || user.password !== password) {
+      client.close();
       return res
         .status(401)
         .json({ error: "Invalid password" });
     }
     // Don't send password back to frontend
     const { password: _, ...userSafe } = user;
+    client.close();
     return res
       .status(200)
       .json({
