@@ -1,4 +1,4 @@
-import {
+ import {
   Modal,
   ModalOverlay,
   ModalContent,
@@ -39,7 +39,10 @@ export default function AuthModal({ isOpen, onClose }) {
       }
       onClose();
     } catch (err) {
-      toast({ title: err.message, status: "error" });
+      toast({
+        title: err.message || "Error",
+        status: "error",
+      });
     }
   };
 
@@ -47,7 +50,7 @@ export default function AuthModal({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>
+        <ModalHeader bg="#800000" color="#FFF5E1">
           {isSignup ? "Sign Up" : "Sign In"}
         </ModalHeader>
         <ModalCloseButton />
@@ -59,6 +62,8 @@ export default function AuthModal({ isOpen, onClose }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                bg="#FFF5E1"
+                color="#800000"
               />
               <Input
                 placeholder="Password"
@@ -68,9 +73,13 @@ export default function AuthModal({ isOpen, onClose }) {
                   setPassword(e.target.value)
                 }
                 required
+                bg="#FFF5E1"
+                color="#800000"
               />
               <Button
-                colorScheme="blue"
+                colorScheme={
+                  isSignup ? "pink" : "turquoise"
+                }
                 type="submit"
                 w="100%"
               >
@@ -83,6 +92,7 @@ export default function AuthModal({ isOpen, onClose }) {
                 <Button
                   variant="link"
                   size="sm"
+                  colorScheme="maroon"
                   onClick={() => setIsSignup(!isSignup)}
                 >
                   {isSignup ? "Sign In" : "Sign Up"}
