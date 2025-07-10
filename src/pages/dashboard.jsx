@@ -1,8 +1,30 @@
- import MiningCard from "../components/MiningCard";
-// ...other imports
+ import {
+  Box,
+  SimpleGrid,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
+import { useAuth } from "../contexts/AuthContext";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import FeatureCard from "../components/FeatureCard";
+import PrivateSaleCard from "../components/PrivateSaleCard";
+import MiningCard from "../components/MiningCard";
 
 export default function Dashboard() {
-  // ...auth logic
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace("/");
+    }
+  }, [user, loading, router]);
+
+  if (loading || !user) return null;
+
   return (
     <Box minH="100vh" bg="maroon.800">
       <Header />
@@ -24,7 +46,7 @@ export default function Dashboard() {
           <FeatureCard>
             <MiningCard />
           </FeatureCard>
-          {/* ...other cards */}
+          {/* Add more cards here as you build more features */}
         </SimpleGrid>
       </Box>
       <Footer />
