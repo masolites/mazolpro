@@ -19,7 +19,7 @@ export default function AuthModal({ isOpen, onClose }) {
   const { login, signup } = useAuth();
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [wallet, setWallet] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const toast = useToast();
 
@@ -28,13 +28,13 @@ export default function AuthModal({ isOpen, onClose }) {
     setSubmitting(true);
     try {
       if (isSignup) {
-        await signup(email, password);
+        await signup(email, wallet);
         toast({
           title: "Signup successful!",
           status: "success",
         });
       } else {
-        await login(email, password);
+        await login(email, wallet);
         toast({
           title: "Login successful!",
           status: "success",
@@ -67,18 +67,14 @@ export default function AuthModal({ isOpen, onClose }) {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 bg="cream.100"
-                color="maroon.700"
+                color="maroon.800"
               />
               <Input
-                placeholder="Password"
-                type="password"
-                value={password}
-                onChange={(e) =>
-                  setPassword(e.target.value)
-                }
-                required
+                placeholder="Wallet Address (optional)"
+                value={wallet}
+                onChange={(e) => setWallet(e.target.value)}
                 bg="cream.100"
-                color="maroon.700"
+                color="maroon.800"
               />
               <Button
                 colorScheme={
