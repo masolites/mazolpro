@@ -1,4 +1,4 @@
-import PrivateSaleCard from "../components/PrivateSaleCard";
+ import MiningCard from "../components/MiningCard";
 // ...other imports
 
 export default function Dashboard() {
@@ -20,6 +20,9 @@ export default function Dashboard() {
         >
           <FeatureCard>
             <PrivateSaleCard />
+          </FeatureCard>
+          <FeatureCard>
+            <MiningCard />
           </FeatureCard>
           {/* ...other cards */}
         </SimpleGrid>
