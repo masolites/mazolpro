@@ -1,6 +1,6 @@
- html, body {
+html, body {
   min-height: 100%;
-  background: #800000; /* Maroon base */
+  background: #2a0000; /* Deep maroon */
   color: #fff5e1;      /* Cream text */
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   margin: 0;
@@ -19,7 +19,7 @@ a:hover {
 
 ::-webkit-scrollbar {
   width: 8px;
-  background: #ffeccc; /* Cream */
+  background: #800000; /* Maroon */
 }
 ::-webkit-scrollbar-thumb {
   background: #FF69B4; /* Pink */
