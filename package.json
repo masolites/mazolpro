@@ -1,4 +1,4 @@
-{
+ {
   "name": "mazolpro-frontend",
   "version": "1.0.0",
   "private": true,
@@ -12,8 +12,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "axios": "^1.6.7",
-    "thirdweb": "^5.21.2",
-    "mongodb": "^6.7.0"
+    "mongodb": "^6.7.0",
+    "thirdweb": "^5.21.2"
   },
   "devDependencies": {
     "typescript": "^5.4.0",
