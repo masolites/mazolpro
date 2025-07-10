@@ -1,19 +1,35 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+ import { Box, Heading, Text } from "@chakra-ui/react";
 
 export default function LandingIntro() {
   return (
-    <Box textAlign="center" py={8}>
-      <Heading as="h1" size="2xl" color="blue.700" mb={2}>
+    <Box textAlign="center" py={10} px={4}>
+      <Heading
+        as="h1"
+        size="2xl"
+        color="maroon.500"
+        mb={2}
+        letterSpacing="tight"
+      >
         Mazol Pro
       </Heading>
-      <Heading as="h2" size="lg" color="gray.600" mb={4}>
+      <Heading
+        as="h2"
+        size="lg"
+        color="gray.600"
+        mb={4}
+        fontWeight="medium"
+      >
         E-commerce & Blockchain
       </Heading>
       <Text
-        fontSize="xl"
+        fontSize={{ base: "lg", md: "xl" }}
         color="gray.700"
         maxW="600px"
         mx="auto"
+        bg="cream.100"
+        p={4}
+        borderRadius="md"
+        boxShadow="sm"
       >
         Mazol-Pro is a Blockchain supported Platform
         promoting a Better Society Together by offering
