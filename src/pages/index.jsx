@@ -28,6 +28,7 @@ export default function Home() {
             mt={8}
             size="lg"
             boxShadow="md"
+            onClick={() => setAuthOpen(true)}
           >
             Sign Up / Sign In
           </Button>
