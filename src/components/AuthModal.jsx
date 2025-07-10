@@ -10,6 +10,7 @@
   VStack,
   useToast,
   Text,
+  Spinner,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
@@ -19,10 +20,12 @@ export default function AuthModal({ isOpen, onClose }) {
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const toast = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
       if (isSignup) {
         await signup(email, password);
@@ -44,13 +47,14 @@ export default function AuthModal({ isOpen, onClose }) {
         status: "error",
       });
     }
+    setSubmitting(false);
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader bg="#800000" color="#FFF5E1">
+        <ModalHeader bg="maroon.500" color="cream.100">
           {isSignup ? "Sign Up" : "Sign In"}
         </ModalHeader>
         <ModalCloseButton />
@@ -62,8 +66,8 @@ export default function AuthModal({ isOpen, onClose }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                bg="#FFF5E1"
-                color="#800000"
+                bg="cream.100"
+                color="maroon.700"
               />
               <Input
                 placeholder="Password"
@@ -73,8 +77,8 @@ export default function AuthModal({ isOpen, onClose }) {
                   setPassword(e.target.value)
                 }
                 required
-                bg="#FFF5E1"
-                color="#800000"
+                bg="cream.100"
+                color="maroon.700"
               />
               <Button
                 colorScheme={
@@ -82,6 +86,12 @@ export default function AuthModal({ isOpen, onClose }) {
                 }
                 type="submit"
                 w="100%"
+                isLoading={submitting}
+                loadingText={
+                  isSignup
+                    ? "Signing up..."
+                    : "Signing in..."
+                }
               >
                 {isSignup ? "Sign Up" : "Sign In"}
               </Button>
