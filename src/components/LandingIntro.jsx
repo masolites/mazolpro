@@ -6,7 +6,7 @@ export default function LandingIntro() {
       <Heading
         as="h1"
         size="2xl"
-        color="maroon.500"
+        color="cream.100"
         mb={2}
         letterSpacing="tight"
       >
@@ -15,7 +15,7 @@ export default function LandingIntro() {
       <Heading
         as="h2"
         size="lg"
-        color="gray.600"
+        color="cream.100"
         mb={4}
         fontWeight="medium"
       >
@@ -23,10 +23,10 @@ export default function LandingIntro() {
       </Heading>
       <Text
         fontSize={{ base: "lg", md: "xl" }}
-        color="gray.700"
+        color="cream.100"
         maxW="600px"
         mx="auto"
-        bg="cream.100"
+        bg="maroon.700"
         p={4}
         borderRadius="md"
         boxShadow="sm"
