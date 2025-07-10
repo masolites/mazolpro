@@ -1,12 +1,5 @@
-// src/pages/index.js
-import { useState } from "react";
-import {
-  Box,
-  Container,
-  Button,
-  Spinner,
-  useToast,
-} from "@chakra-ui/react";
+ import { useState } from "react";
+import { Box, Container, Button } from "@chakra-ui/react";
 import Header from "../components/Header";
 import LandingIntro from "../components/LandingIntro";
 import AuthModal from "../components/AuthModal";
@@ -18,28 +11,22 @@ export default function Home() {
   const { user, loading } = useAuth();
   const [authOpen, setAuthOpen] = useState(false);
   const router = useRouter();
-  const toast = useToast();
 
-  // Redirect to dashboard if logged in
   if (user && typeof window !== "undefined") {
     router.replace("/dashboard");
-    return <Spinner size="xl" color="maroon.500" mt={20} />;
+    return null;
   }
 
   return (
-    <Box
-      minH="100vh"
-      bgGradient="linear(to-br, maroon.500, cream.100)"
-    >
+    <Box minH="100vh" bg="maroon.800">
       <Header onAuth={() => setAuthOpen(true)} />
-      <Container maxW="container.md" py={8}>
+      <Container maxW="container.md" py={12}>
         <LandingIntro />
         {!user && !loading && (
           <Button
-            colorScheme="maroon"
-            mt={6}
+            variant="maroon"
+            mt={8}
             size="lg"
-            onClick={() => setAuthOpen(true)}
             boxShadow="md"
           >
             Sign Up / Sign In
