@@ -7,19 +7,14 @@
       style={{
         background:
           "linear-gradient(135deg, #fff5e1 80%, #e9d5ff 100%)",
-        borderRadius: 24,
-        boxShadow:
-          "0 8px 24px 0 #b22234, 0 2px 8px #FFA726",
-        margin: "0 auto",
-        maxWidth: 300, // reduced size
+        borderRadius: 18,
+        boxShadow: "0 4px 16px 0 #FF69B4",
+        minWidth: 260,
+        maxWidth: 320,
         padding: "1.2rem",
         textAlign: "center",
-        color: "#b22234",
-        transform: "perspective(600px) rotateX(6deg)",
-        transition: "box-shadow 0.2s",
-        cursor: isAuthenticated ? "pointer" : "not-allowed",
-        opacity: isAuthenticated ? 1 : 0.85,
-        position: "relative",
+        color: "#800000",
+        margin: "0 auto",
       }}
       onClick={() => {
         if (!isAuthenticated) {
@@ -29,31 +24,30 @@
         }
       }}
     >
-      <h3 style={{ margin: 0, color: "#FF69B4" }}>
+      <h3 style={{ margin: 0, color: "#1DE9B6" }}>
         Start Free Mining
       </h3>
       <div
         style={{
-          fontSize: "2.2rem",
+          fontSize: "2rem",
           fontWeight: "bold",
           margin: "1rem 0",
-          color: "#1DE9B6",
-          textShadow:
-            "0 2px 8px #FFA726, 0 0 8px #D4FF00, 0 0 2px #e9d5ff",
+          color: "#FF69B4",
+          textShadow: "0 2px 8px #e9d5ff",
         }}
       >
         00:00:00
       </div>
       <button
         style={{
-          background: "#D4FF00",
-          color: "#b22234",
+          background: "#1DE9B6",
+          color: "#800000",
           border: "none",
           borderRadius: 12,
           padding: "0.8rem 2rem",
           fontSize: "1.1rem",
           fontWeight: "bold",
-          boxShadow: "0 2px 8px #FFA726",
+          boxShadow: "0 2px 8px #d8b4fe",
           cursor: isAuthenticated
             ? "pointer"
             : "not-allowed",
