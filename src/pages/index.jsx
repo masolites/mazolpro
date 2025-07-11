@@ -1,26 +1,18 @@
  import { useState } from "react";
 import Features from "../components/Features";
 import MiningCard from "../components/MiningCard";
-import AuthOverlay from "../components/AuthOverlay";
+import AuthCard from "../components/AuthCard";
 
 export default function Home() {
   const [isAuthenticated, setIsAuthenticated] =
     useState(false);
-  const [showOverlay, setShowOverlay] = useState(true);
 
   // Simulate authentication (replace with real logic)
-  const handleAuth = () => {
-    setIsAuthenticated(true);
-    setShowOverlay(false);
-  };
+  const handleAuth = () => setIsAuthenticated(true);
 
   return (
     <div
-      style={{
-        minHeight: "100vh",
-        position: "relative",
-        background: "#7a1420",
-      }}
+      style={{ minHeight: "100vh", background: "#e6d3b3" }}
     >
       {/* Header */}
       <header
@@ -35,7 +27,7 @@ export default function Home() {
             fontWeight: 700,
             fontSize: "2.5rem",
             letterSpacing: "0.05em",
-            color: "#fff5e1",
+            color: "#800000",
           }}
         >
           Mazol Pro
@@ -45,29 +37,62 @@ export default function Home() {
             margin: 0,
             fontWeight: 400,
             fontSize: "1.2rem",
-            color: "#e9d5ff",
+            color: "#e75480",
           }}
         >
           E-commerce & Blockchain
         </h2>
       </header>
 
-      {/* Features Section */}
+      {/* Description */}
+      <section
+        style={{
+          maxWidth: 700,
+          margin: "0 auto",
+          textAlign: "center",
+          color: "#4d0000",
+          marginBottom: "1.5rem",
+        }}
+      >
+        <p>
+          Welcome to Mazol Pro, your gateway to seamless
+          e-commerce and blockchain-powered rewards. Sign up
+          to unlock mining, private sales, and more. Enjoy a
+          secure, mobile-optimized experience with fast
+          transactions and exclusive features.
+        </p>
+      </section>
+
+      {/* Features */}
       <Features />
 
-      {/* Mining Card at Bottom */}
+      {/* Auth Card */}
+      {!isAuthenticated && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "2rem 0",
+          }}
+        >
+          <AuthCard onAuth={handleAuth} />
+        </div>
+      )}
+
+      {/* Mining Card */}
       <div
         style={{
-          position: "fixed",
-          left: 0,
-          right: 0,
-          bottom: 60,
-          zIndex: 5,
+          display: "flex",
+          justifyContent: "center",
+          margin: "2rem 0",
         }}
       >
         <MiningCard
           isAuthenticated={isAuthenticated}
-          onRequireAuth={() => setShowOverlay(true)}
+          onRequireAuth={() => {
+            if (!isAuthenticated)
+              alert("Please sign up or sign in first!");
+          }}
         />
       </div>
 
@@ -75,11 +100,6 @@ export default function Home() {
       <footer className="footer">
         <p>© 2025 Mazol Pro</p>
       </footer>
-
-      {/* Auth Overlay */}
-      {showOverlay && !isAuthenticated && (
-        <AuthOverlay onAuth={handleAuth} />
-      )}
     </div>
   );
 }
