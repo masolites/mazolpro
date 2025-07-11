@@ -1,4 +1,4 @@
- import { Box, Link } from "@chakra-ui/react";
+ import { Box, Text } from "@chakra-ui/react";
 
 export default function Footer() {
   return (
@@ -6,13 +6,14 @@ export default function Footer() {
       as="footer"
       py={4}
       textAlign="center"
-      color="cream.100"
       bg="maroon.900"
+      color="cream.100"
+      mt={8}
     >
-      <Link href="/admin" color="turquoise.500" mr={2}>
-        Admin Dashboard
-      </Link>
-      &copy; {new Date().getFullYear()} Mazol Pro
+      <Text>
+        Admin Dashboard © {new Date().getFullYear()} Mazol
+        Pro
+      </Text>
     </Box>
   );
 }
