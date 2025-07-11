@@ -1,4 +1,4 @@
-export default function Admin() {
+ export default function Admin() {
   // Add authentication/authorization logic here!
   return (
     <div style={{ padding: "2rem" }}>
