@@ -10,9 +10,11 @@ export default function LandingIntro() {
       p={6}
       mb={8}
       textAlign="center"
+      maxW="700px"
+      mx="auto"
     >
       <Heading fontSize="2xl" mb={2}>
-        Mazol Pro E-commerce & Blockchain
+        Welcome to Mazol Pro
       </Heading>
       <Text
         fontSize={{ base: "lg", md: "xl" }}
