@@ -1,62 +1,129 @@
- export default function MiningCard({
-  isAuthenticated,
-  onRequireAuth,
-}) {
-  return (
-    <div
-      style={{
-        background:
-          "linear-gradient(135deg, #fff5e1 80%, #e9d5ff 100%)",
-        borderRadius: 18,
-        boxShadow: "0 4px 16px 0 #FF69B4",
-        minWidth: 260,
-        maxWidth: 320,
-        padding: "1.2rem",
-        textAlign: "center",
-        color: "#800000",
-        margin: "0 auto",
-      }}
-      onClick={() => {
-        if (!isAuthenticated) {
-          onRequireAuth();
-        } else {
-          // Start mining logic here
+ import { useState } from "react";
+import {
+  Box,
+  Text,
+  Button,
+  Spinner,
+  useToast,
+} from "@chakra-ui/react";
+import Counter from "./Counter";
+
+export default function MiningCard() {
+  const [session, setSession] = useState(null);
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
+
+  // Timer state
+  const [timer, setTimer] = useState("00:00:00");
+  let timerInterval = null;
+
+  // Start mining handler
+  const startMining = async () => {
+    setLoading(true);
+    setStatus("");
+    try {
+      const wallet =
+        JSON.parse(localStorage.getItem("mazol_user"))?.user
+          ?.wallet || "";
+      if (!wallet) {
+        setStatus("Please login first.");
+        setLoading(false);
+        return;
+      }
+      const res = await fetch("/api/mining", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ wallet }),
+      });
+      const data = await res.json();
+      setStatus(data.message || data.error || "");
+      if (data.session) {
+        setSession(data.session);
+        // Start timer
+        const start = new Date(
+          data.session.start,
+        ).getTime();
+        function updateMiningTimer() {
+          const now = Date.now();
+          let diff = Math.max(0, now - start);
+          const hours = String(
+            Math.floor(diff / 3600000),
+          ).padStart(2, "0");
+          const mins = String(
+            Math.floor((diff % 3600000) / 60000),
+          ).padStart(2, "0");
+          const secs = String(
+            Math.floor((diff % 60000) / 1000),
+          ).padStart(2, "0");
+          setTimer(`${hours}:${mins}:${secs}`);
         }
-      }}
+        updateMiningTimer();
+        timerInterval = setInterval(
+          updateMiningTimer,
+          1000,
+        );
+      }
+      toast({
+        title: data.message || data.error || "",
+        status: data.error ? "error" : "success",
+      });
+    } catch (err) {
+      setStatus("Error starting mining.");
+      toast({
+        title: "Error starting mining.",
+        status: "error",
+      });
+    }
+    setLoading(false);
+  };
+
+  // Show speed
+  const speedLabel =
+    session?.speed === 3
+      ? "Gold 🥇"
+      : session?.speed === 1
+        ? "Silver 🥈"
+        : "—";
+
+  return (
+    <Box
+      bg="maroon.700"
+      color="cream.100"
+      borderRadius="lg"
+      boxShadow="lg"
+      p={6}
+      mb={4}
     >
-      <h3 style={{ margin: 0, color: "#1DE9B6" }}>
-        Start Free Mining
-      </h3>
-      <div
-        style={{
-          fontSize: "2rem",
-          fontWeight: "bold",
-          margin: "1rem 0",
-          color: "#FF69B4",
-          textShadow: "0 2px 8px #e9d5ff",
-        }}
+      <Text fontSize="lg" fontWeight="bold" mb={2}>
+        Mining
+      </Text>
+      <Counter
+        label="Session Time"
+        value={session ? timer : "00:00:00"}
+        color="pink.500"
+      />
+      <Button
+        variant="lilac"
+        onClick={startMining}
+        isLoading={loading}
+        w="100%"
+        mt={4}
       >
-        00:00:00
-      </div>
-      <button
-        style={{
-          background: "#1DE9B6",
-          color: "#800000",
-          border: "none",
-          borderRadius: 12,
-          padding: "0.8rem 2rem",
-          fontSize: "1.1rem",
-          fontWeight: "bold",
-          boxShadow: "0 2px 8px #d8b4fe",
-          cursor: isAuthenticated
-            ? "pointer"
-            : "not-allowed",
-          opacity: isAuthenticated ? 1 : 0.7,
-        }}
-        disabled={!isAuthenticated}
-      >
-        START FREE MINING
-      </button>
-    </div>
+        Start Mining
+      </Button>
+      {status && (
+        <Text
+          mt={2}
+          color={
+            status.includes("success")
+              ? "turquoise.500"
+              : "pink.500"
+          }
+        >
+          {status}
+        </Text>
+      )}
+    </Box>
   );
 }
