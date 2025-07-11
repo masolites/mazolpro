@@ -1,4 +1,9 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+ import {
+  Box,
+  SimpleGrid,
+  Center,
+  Button,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -13,20 +18,35 @@ export default function Home() {
 
   return (
     <Box minH="100vh" bg="maroon.800">
-      <Header />
-      <Box maxW="1200px" mx="auto" py={8} px={4}>
+      <Header onAuth={() => setAuthModalOpen(true)} />
+      <Box
+        maxW="100vw"
+        mx="auto"
+        py={{ base: 2, md: 4 }}
+        px={{ base: 1, md: 4 }}
+      >
         <LandingIntro />
+        <Center mb={4}>
+          <Button
+            variant="turquoise"
+            size="lg"
+            onClick={() => setAuthModalOpen(true)}
+          >
+            Sign In
+          </Button>
+        </Center>
         <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3 }}
-          spacing={8}
+          columns={{ base: 2, md: 3 }}
+          spacing={{ base: 2, md: 4 }}
           justifyItems="center"
+          minChildWidth="140px"
         >
-          <Box maxW="320px" w="100%">
+          <Box maxW="180px" w="100%">
             <FeatureCard>
               <PrivateSaleCard />
             </FeatureCard>
           </Box>
-          <Box maxW="320px" w="100%">
+          <Box maxW="180px" w="100%">
             <FeatureCard>
               <MiningCard />
             </FeatureCard>
@@ -42,4 +62,3 @@ export default function Home() {
     </Box>
   );
 }
-
