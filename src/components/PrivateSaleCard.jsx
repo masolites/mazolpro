@@ -2,7 +2,6 @@
 import {
   Box,
   Text,
-  Flex,
   Button,
   Input,
   Select,
@@ -100,44 +99,44 @@ export default function PrivateSaleCard() {
 
   if (loading) {
     return (
-      <Box
-        minH="220px"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Box textAlign="center" py={8}>
         <Spinner color="turquoise.500" />
       </Box>
     );
   }
 
   return (
-    <Box>
-      <Text fontWeight="bold" fontSize="xl" mb={2}>
+    <Box
+      bg="maroon.700"
+      color="cream.100"
+      borderRadius="lg"
+      boxShadow="lg"
+      p={6}
+      mb={4}
+    >
+      <Text fontSize="lg" fontWeight="bold" mb={2}>
         Private Sale
       </Text>
-      <Text mb={2} color="maroon.700">
+      <Text mb={2}>
         Token Price: <b>₦{status?.tokenPrice || "0.00"}</b>
       </Text>
-      <Flex gap={4} mb={4}>
-        <Counter
-          label="Tokens Sold"
-          value={status?.totalSold?.toLocaleString() || "0"}
-          color="turquoise.500"
-        />
-        <Counter
-          label="Goal"
-          value={status?.goal?.toLocaleString() || "0"}
-          color="lilac.200"
-        />
-        <Counter
-          label="Time Left"
-          value={timer}
-          color="pink.500"
-        />
-      </Flex>
+      <Counter
+        label="Tokens Sold"
+        value={status?.totalSold?.toLocaleString() || "0"}
+        color="turquoise.500"
+      />
+      <Counter
+        label="Goal"
+        value={status?.goal?.toLocaleString() || "0"}
+        color="lilac.200"
+      />
+      <Counter
+        label="Time Left"
+        value={timer}
+        color="pink.500"
+      />
       <form onSubmit={handleBuy}>
-        <VStack align="stretch" spacing={2}>
+        <VStack spacing={3} mt={4}>
           <Input
             placeholder="Amount"
             type="number"
@@ -157,32 +156,32 @@ export default function PrivateSaleCard() {
             <option value="fixed">
               Fixed Amount (Seniors)
             </option>
-            <option value="flexible">
+            <option value="flex">
               Flexible Amount (Flex)
             </option>
           </Select>
           <Button
-            variant="maroon"
             type="submit"
+            variant="turquoise"
             isLoading={buying}
-            loadingText="Processing..."
+            w="100%"
           >
             Buy Now
           </Button>
+          {result && (
+            <Text
+              mt={2}
+              color={
+                result.includes("success")
+                  ? "turquoise.500"
+                  : "pink.500"
+              }
+            >
+              {result}
+            </Text>
+          )}
         </VStack>
       </form>
-      {result && (
-        <Text
-          mt={2}
-          color={
-            result.includes("success")
-              ? "turquoise.500"
-              : "red.500"
-          }
-        >
-          {result}
-        </Text>
-      )}
     </Box>
   );
 }
