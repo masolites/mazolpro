@@ -1,4 +1,4 @@
- import {
+import {
   Box,
   SimpleGrid,
   Heading,
@@ -12,6 +12,7 @@ import Footer from "../components/Footer";
 import FeatureCard from "../components/FeatureCard";
 import PrivateSaleCard from "../components/PrivateSaleCard";
 import MiningCard from "../components/MiningCard";
+import AuthModal from "../components/AuthModal";
 
 export default function Dashboard() {
   const { user, loading } = useAuth();
@@ -47,10 +48,14 @@ export default function Dashboard() {
           <FeatureCard>
             <MiningCard />
           </FeatureCard>
-          {/* Add more FeatureCards as you build more features */}
+          {/* Add more FeatureCards here as you build more features */}
         </SimpleGrid>
       </Box>
       <Footer />
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
     </Box>
   );
 }
