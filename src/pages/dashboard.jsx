@@ -1,4 +1,4 @@
-import {
+ import {
   Box,
   SimpleGrid,
   Heading,
@@ -29,25 +29,34 @@ export default function Dashboard() {
 
   return (
     <Box minH="100vh" bg="maroon.800">
-      <Header onAuth={() => setAuthModalOpen(true)} />
+      <Header />
       <Box maxW="1200px" mx="auto" py={8} px={4}>
-        <Heading mb={2} color="cream.100">
-          Welcome, {user.email || user.wallet}
+        <Heading
+          mb={2}
+          color="cream.100"
+          textAlign="center"
+        >
+          Welcome, {user.email}
         </Heading>
-        <Text mb={8} color="cream.200">
+        <Text mb={8} color="cream.200" textAlign="center">
           Your Mazol Pro dashboard. All your features in one
           place.
         </Text>
         <SimpleGrid
           columns={{ base: 1, md: 2, lg: 3 }}
           spacing={8}
+          justifyItems="center"
         >
-          <FeatureCard>
-            <PrivateSaleCard />
-          </FeatureCard>
-          <FeatureCard>
-            <MiningCard />
-          </FeatureCard>
+          <Box maxW="320px" w="100%">
+            <FeatureCard>
+              <PrivateSaleCard />
+            </FeatureCard>
+          </Box>
+          <Box maxW="320px" w="100%">
+            <FeatureCard>
+              <MiningCard />
+            </FeatureCard>
+          </Box>
           {/* Add more FeatureCards here as you build more features */}
         </SimpleGrid>
       </Box>
