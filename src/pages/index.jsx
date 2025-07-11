@@ -6,16 +6,20 @@ import AuthOverlay from "../components/AuthOverlay";
 export default function Home() {
   const [isAuthenticated, setIsAuthenticated] =
     useState(false);
+  const [showOverlay, setShowOverlay] = useState(true);
 
   // Simulate authentication (replace with real logic)
-  const handleAuth = () => setIsAuthenticated(true);
+  const handleAuth = () => {
+    setIsAuthenticated(true);
+    setShowOverlay(false);
+  };
 
   return (
     <div
       style={{
         minHeight: "100vh",
         position: "relative",
-        background: "#1a0000",
+        background: "#7a1420",
       }}
     >
       {/* Header */}
@@ -31,6 +35,7 @@ export default function Home() {
             fontWeight: 700,
             fontSize: "2.5rem",
             letterSpacing: "0.05em",
+            color: "#fff5e1",
           }}
         >
           Mazol Pro
@@ -40,6 +45,7 @@ export default function Home() {
             margin: 0,
             fontWeight: 400,
             fontSize: "1.2rem",
+            color: "#e9d5ff",
           }}
         >
           E-commerce & Blockchain
@@ -61,7 +67,7 @@ export default function Home() {
       >
         <MiningCard
           isAuthenticated={isAuthenticated}
-          onRequireAuth={() => setIsAuthenticated(false)}
+          onRequireAuth={() => setShowOverlay(true)}
         />
       </div>
 
@@ -71,7 +77,7 @@ export default function Home() {
       </footer>
 
       {/* Auth Overlay */}
-      {!isAuthenticated && (
+      {showOverlay && !isAuthenticated && (
         <AuthOverlay onAuth={handleAuth} />
       )}
     </div>
