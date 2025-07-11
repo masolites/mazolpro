@@ -1,50 +1,37 @@
-import {
-  Flex,
-  Box,
-  Button,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
+ import { Flex, Box, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { useAuth } from "../contexts/AuthContext";
 
-export default function Header({ onAuth }) {
-  const { user, logout } = useAuth();
-
+export default function Header() {
   return (
     <Flex
       as="header"
+      direction="column"
       align="center"
-      justify="space-between"
+      justify="center"
       px={6}
-      py={4}
+      py={6}
       bg="maroon.900"
       color="cream.100"
       boxShadow="md"
     >
-      <Box>
-        <Link href="/" passHref>
-          <Text
-            fontWeight="bold"
-            fontSize="xl"
-            letterSpacing="wide"
-          >
-            Mazol Pro E-commerce & Blockchain Admin
-          </Text>
-        </Link>
-      </Box>
-      <Spacer />
-      <Box>
-        {user ? (
-          <Button variant="turquoise" onClick={logout}>
-            Logout
-          </Button>
-        ) : (
-          <Button variant="pink" onClick={onAuth}>
-            Sign In
-          </Button>
-        )}
-      </Box>
+      <Link href="/" passHref>
+        <Text
+          fontWeight="bold"
+          fontSize={{ base: "3xl", md: "5xl", lg: "6xl" }}
+          letterSpacing="wide"
+          textAlign="center"
+        >
+          Mazol Pro
+        </Text>
+      </Link>
+      <Text
+        fontSize={{ base: "md", md: "lg" }} // This matches the "Token Price" font size
+        color="cream.200"
+        mt={2}
+        textAlign="center"
+      >
+        E-commerce & Blockchain Solutions
+      </Text>
     </Flex>
   );
 }
