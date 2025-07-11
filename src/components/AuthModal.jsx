@@ -1,4 +1,4 @@
- import {
+import {
   Modal,
   ModalOverlay,
   ModalContent,
@@ -50,6 +50,8 @@ export default function AuthModal({ isOpen, onClose }) {
           status: "success",
         });
       }
+      setEmail("");
+      setWallet("");
       onClose();
     } catch (err) {
       toast({
