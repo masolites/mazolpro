@@ -7,19 +7,19 @@ export default function LandingIntro() {
       color="cream.100"
       borderRadius="lg"
       boxShadow="lg"
-      p={6}
-      mb={8}
+      p={{ base: 3, md: 4 }}
+      mb={4}
       textAlign="center"
-      maxW="700px"
+      maxW="400px"
       mx="auto"
     >
       <Heading fontSize="2xl" mb={2}>
         Welcome to Mazol Pro
       </Heading>
       <Text
-        fontSize={{ base: "lg", md: "xl" }}
-        color="cream.100"
-        maxW="600px"
+        fontSize={{ base: "md", md: "lg" }} // matches subtitle in header
+        color="cream.200"
+        maxW="350px"
         mx="auto"
       >
         Mazol-Pro is a Blockchain supported Platform
