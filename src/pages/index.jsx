@@ -6,28 +6,29 @@ import AuthModal from "../components/AuthModal";
 import Footer from "../components/Footer";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const [authOpen, setAuthOpen] = useState(false);
   const router = useRouter();
 
-  if (user && typeof window !== "undefined") {
-    router.replace("/dashboard");
-    return null;
-  }
+  // If user is logged in, redirect to dashboard
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
+    }
+  }, [user, router]);
 
   return (
-    <Box minH="100vh" bg="maroon.800">
+    <Box minH="100vh" bg="maroon.500">
       <Header onAuth={() => setAuthOpen(true)} />
-      <Container maxW="container.md" py={12}>
+      <Container maxW="container.md" py={8}>
         <LandingIntro />
-        {!user && !loading && (
+        {!user && (
           <Button
-            variant="maroon"
-            mt={8}
-            size="lg"
-            boxShadow="md"
+            colorScheme="blue"
+            mt={6}
             onClick={() => setAuthOpen(true)}
           >
             Sign Up / Sign In
