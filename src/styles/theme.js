@@ -36,9 +36,34 @@ const theme = extendTheme({
   },
   styles: {
     global: {
+      html: {
+        minHeight: "100%",
+        bg: "maroon.800",
+      },
       body: {
+        minHeight: "100%",
         bg: "maroon.800",
         color: "cream.100",
+        fontFamily:
+          "'Inter', 'Segoe UI', Arial, sans-serif",
+        margin: 0,
+        padding: 0,
+      },
+      a: {
+        color: "turquoise.500",
+        textDecoration: "none",
+        _hover: {
+          color: "pink.500",
+          textDecoration: "underline",
+        },
+      },
+      "::-webkit-scrollbar": {
+        width: "8px",
+        background: "maroon.500",
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: "pink.500",
+        borderRadius: "4px",
       },
     },
   },
