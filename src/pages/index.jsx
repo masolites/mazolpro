@@ -13,19 +13,24 @@ export default function Home() {
 
   return (
     <Box minH="100vh" bg="maroon.800">
-      <Header onAuth={() => setAuthModalOpen(true)} />
+      <Header />
       <Box maxW="1200px" mx="auto" py={8} px={4}>
         <LandingIntro />
         <SimpleGrid
           columns={{ base: 1, md: 2, lg: 3 }}
           spacing={8}
+          justifyItems="center"
         >
-          <FeatureCard>
-            <PrivateSaleCard />
-          </FeatureCard>
-          <FeatureCard>
-            <MiningCard />
-          </FeatureCard>
+          <Box maxW="320px" w="100%">
+            <FeatureCard>
+              <PrivateSaleCard />
+            </FeatureCard>
+          </Box>
+          <Box maxW="320px" w="100%">
+            <FeatureCard>
+              <MiningCard />
+            </FeatureCard>
+          </Box>
           {/* Add more FeatureCards here as you build more features */}
         </SimpleGrid>
       </Box>
