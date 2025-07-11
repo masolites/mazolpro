@@ -1,4 +1,6 @@
- export default function AuthCard({ onAuth }) {
+ // src/components/AuthCard.jsx
+
+export default function AuthCard({ onAuth }) {
   return (
     <div
       style={{
