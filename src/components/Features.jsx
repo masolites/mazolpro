@@ -7,7 +7,9 @@
         margin: "0 auto",
       }}
     >
-      <h2 style={{ textAlign: "center" }}>Features</h2>
+      <h2 style={{ textAlign: "center", color: "#FF69B4" }}>
+        Features
+      </h2>
       <ul
         style={{
           listStyle: "none",
@@ -17,6 +19,7 @@
           flexWrap: "wrap",
           justifyContent: "center",
           gap: "2rem",
+          color: "#4d0000",
         }}
       >
         <li>🔒 Secure Blockchain Integration</li>
