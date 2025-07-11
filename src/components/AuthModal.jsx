@@ -1,4 +1,4 @@
-import {
+ import {
   Modal,
   ModalOverlay,
   ModalContent,
@@ -25,6 +25,17 @@ export default function AuthModal({ isOpen, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+
+    // Require at least one field
+    if (!email && !wallet) {
+      toast({
+        title: "Please enter an email or wallet address.",
+        status: "error",
+      });
+      setSubmitting(false);
+      return;
+    }
+
     try {
       if (isSignup) {
         await signup(email, wallet);
@@ -64,12 +75,11 @@ export default function AuthModal({ isOpen, onClose }) {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
                 bg="cream.100"
                 color="maroon.800"
               />
               <Input
-                placeholder="Wallet Address (optional)"
+                placeholder="Wallet Address"
                 value={wallet}
                 onChange={(e) => setWallet(e.target.value)}
                 bg="cream.100"
