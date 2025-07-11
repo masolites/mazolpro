@@ -1,25 +1,24 @@
  html, body {
   min-height: 100%;
-  background: #7a1420; /* Lighter maroon */
-  color: #fff5e1;
+  background: #e6d3b3; /* light coffee brown */
+  color: #4d0000;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Prevent scrolling */
 }
 
 a {
-  color: #1DE9B6;
+  color: #1DE9B6; /* Turquoise */
   text-decoration: none;
 }
 a:hover {
-  color: #FF69B4;
+  color: #FF69B4; /* Deep pink */
   text-decoration: underline;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
-  background: #b22234;
+  background: #fff5e1;
 }
 ::-webkit-scrollbar-thumb {
   background: #FF69B4;
@@ -30,8 +29,8 @@ a:hover {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: #7a1420;
-  color: #fff5e1;
+  background: #fff5e1;
+  color: #4d0000;
   z-index: 10;
   padding: 1rem 0;
   box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
