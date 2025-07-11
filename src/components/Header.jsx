@@ -1,5 +1,11 @@
- import Link from "next/link";
-// ...other imports
+ import {
+  Flex,
+  Heading,
+  Spacer,
+  Button,
+} from "@chakra-ui/react";
+import Link from "next/link";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Header({ onAuth }) {
   const { user, admin, logout } = useAuth();
