@@ -1,8 +1,4 @@
-import { useState } from "react";
-
-export default function AuthOverlay({ onAuth }) {
-  const [showSignIn, setShowSignIn] = useState(false);
-
+ export default function AuthOverlay({ onAuth }) {
   return (
     <div
       style={{
@@ -11,62 +7,51 @@ export default function AuthOverlay({ onAuth }) {
         left: 0,
         right: 0,
         bottom: 60,
-        background: "rgba(255,255,255,0.85)",
+        background: "rgba(255,255,255,0.10)", // very transparent
+        backdropFilter: "blur(12px) saturate(180%)", // glass effect
+        WebkitBackdropFilter: "blur(12px) saturate(180%)",
         zIndex: 100,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backdropFilter: "blur(2px)",
       }}
     >
       <div
         style={{
-          background: "rgba(255,255,255,0.95)",
-          borderRadius: 16,
+          background: "rgba(255,245,225,0.25)", // cream glass
+          borderRadius: 24,
           padding: "2rem",
-          boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
           minWidth: 320,
           maxWidth: "90vw",
           textAlign: "center",
+          border: "1px solid rgba(255,255,255,0.18)",
+          backdropFilter: "blur(8px) saturate(180%)",
+          WebkitBackdropFilter: "blur(8px) saturate(180%)",
         }}
       >
-        <h2>Mazol Pro</h2>
-        <p>
+        <h2 style={{ color: "#800000" }}>Mazol Pro</h2>
+        <p style={{ color: "#4d0000" }}>
           Sign up or sign in to start mining and unlock all
           features!
         </p>
-        {/* Replace below with your actual auth logic */}
         <button
           style={{
             margin: "1rem 0",
             padding: "0.75rem 2rem",
             borderRadius: 8,
             border: "none",
-            background: "#0070f3",
-            color: "#fff",
+            background: "#800000",
+            color: "#fff5e1",
             fontWeight: "bold",
             fontSize: "1rem",
             cursor: "pointer",
           }}
           onClick={onAuth}
         >
-          {showSignIn ? "Sign In" : "Sign Up"}
+          Sign Up / Sign In
         </button>
-        <div>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              setShowSignIn(!showSignIn);
-            }}
-            style={{ color: "#0070f3", fontSize: "0.9rem" }}
-          >
-            {showSignIn
-              ? "Need an account? Sign Up"
-              : "Already have an account? Sign In"}
-          </a>
-        </div>
         <div style={{ marginTop: "2rem" }}>
           <button
             style={{
