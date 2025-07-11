@@ -1,4 +1,4 @@
- import {
+import {
   Box,
   SimpleGrid,
   Heading,
@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Feature from "../components/FeatureCard";
 import PrivateSaleCard from "../components/PrivateSaleCard";
 import MiningCard from "../components/MiningCard";
 
@@ -40,12 +39,24 @@ export default function Dashboard() {
           columns={{ base: 1, md: 2, lg: 3 }}
           spacing={8}
         >
-          <FeatureCard>
+          <Box
+            bg="cream.100"
+            color="maroon.800"
+            borderRadius="lg"
+            boxShadow="lg"
+            p={6}
+          >
             <PrivateSaleCard />
-          </FeatureCard>
-          <FeatureCard>
+          </Box>
+          <Box
+            bg="cream.100"
+            color="maroon.800"
+            borderRadius="lg"
+            boxShadow="lg"
+            p={6}
+          >
             <MiningCard />
-          </FeatureCard>
+          </Box>
           {/* Add more cards here as you build more features */}
         </SimpleGrid>
       </Box>
