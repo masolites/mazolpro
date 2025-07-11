@@ -15,7 +15,7 @@ export default function Home() {
       style={{
         minHeight: "100vh",
         position: "relative",
-        background: "#f5f5f5",
+        background: "#1a0000",
       }}
     >
       {/* Header */}
@@ -25,7 +25,16 @@ export default function Home() {
           padding: "2rem 0 1rem 0",
         }}
       >
-        <h1 style={{ margin: 0 }}>Mazol Pro</h1>
+        <h1
+          style={{
+            margin: 0,
+            fontWeight: 700,
+            fontSize: "2.5rem",
+            letterSpacing: "0.05em",
+          }}
+        >
+          Mazol Pro
+        </h1>
         <h2
           style={{
             margin: 0,
@@ -52,15 +61,13 @@ export default function Home() {
       >
         <MiningCard
           isAuthenticated={isAuthenticated}
-          onRequireAuth={() => setShowOverlay(true)}
+          onRequireAuth={() => setIsAuthenticated(false)}
         />
       </div>
 
       {/* Footer */}
       <footer className="footer">
-        <p style={{ textAlign: "center" }}>
-          © 2025 Mazol Pro
-        </p>
+        <p>© 2025 Mazol Pro</p>
       </footer>
 
       {/* Auth Overlay */}
