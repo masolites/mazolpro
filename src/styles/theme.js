@@ -8,11 +8,11 @@ const theme = extendTheme({
       200: "#ea99a5",
       300: "#e17082",
       400: "#d9475e",
-      500: "#800000",
-      600: "#660000",
-      700: "#4d0000",
-      800: "#1a0000", // deep maroon for background
-      900: "#0d0000", // almost black
+      500: "#b22234", // lighter, dark red maroon
+      600: "#a11a2b",
+      700: "#8b1625",
+      800: "#7a1420", // new background
+      900: "#4d0000",
     },
     cream: {
       100: "#fff5e1",
@@ -23,10 +23,17 @@ const theme = extendTheme({
     },
     pink: {
       500: "#FF69B4",
+      600: "#e75480",
     },
     lilac: {
       200: "#e9d5ff",
       300: "#d8b4fe",
+    },
+    orange: {
+      400: "#FFA726",
+    },
+    lemon: {
+      400: "#D4FF00",
     },
     white: "#fff",
   },
@@ -48,73 +55,7 @@ const theme = extendTheme({
           "'Inter', 'Segoe UI', Arial, sans-serif",
         margin: 0,
         padding: 0,
-      },
-      a: {
-        color: "turquoise.500",
-        textDecoration: "none",
-        _hover: {
-          color: "pink.500",
-          textDecoration: "underline",
-        },
-      },
-      "::-webkit-scrollbar": {
-        width: "8px",
-        background: "maroon.500",
-      },
-      "::-webkit-scrollbar-thumb": {
-        background: "pink.500",
-        borderRadius: "4px",
-      },
-    },
-  },
-  components: {
-    Card: {
-      baseStyle: {
-        bg: "cream.100",
-        color: "maroon.800",
-        borderRadius: "lg",
-        boxShadow: "lg",
-        p: 4,
-      },
-    },
-    Button: {
-      baseStyle: {
-        fontWeight: "bold",
-      },
-      variants: {
-        maroon: {
-          bg: "maroon.500",
-          color: "cream.100",
-          _hover: { bg: "maroon.600" },
-        },
-        turquoise: {
-          bg: "turquoise.500",
-          color: "maroon.800",
-          _hover: { bg: "turquoise.500", opacity: 0.85 },
-        },
-        pink: {
-          bg: "pink.500",
-          color: "maroon.800",
-          _hover: { bg: "pink.500", opacity: 0.85 },
-        },
-        lilac: {
-          bg: "lilac.200",
-          color: "maroon.800",
-          _hover: { bg: "lilac.300" },
-        },
-        cream: {
-          bg: "cream.100",
-          color: "maroon.800",
-          _hover: { bg: "cream.200" },
-        },
-      },
-    },
-    Input: {
-      baseStyle: {
-        field: {
-          bg: "cream.100",
-          color: "maroon.800",
-        },
+        overflow: "hidden", // Prevent scrolling
       },
     },
   },
