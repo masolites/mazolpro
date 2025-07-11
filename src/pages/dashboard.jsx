@@ -1,4 +1,4 @@
-import {
+ import {
   Box,
   SimpleGrid,
   Heading,
@@ -6,15 +6,17 @@ import {
 } from "@chakra-ui/react";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import FeatureCard from "../components/FeatureCard";
 import PrivateSaleCard from "../components/PrivateSaleCard";
 import MiningCard from "../components/MiningCard";
 
 export default function Dashboard() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -26,12 +28,12 @@ export default function Dashboard() {
 
   return (
     <Box minH="100vh" bg="maroon.800">
-      <Header />
-      <Box maxW="container.xl" mx="auto" py={10} px={4}>
-        <Heading size="lg" color="cream.100" mb={2}>
+      <Header onAuth={() => setAuthModalOpen(true)} />
+      <Box maxW="1200px" mx="auto" py={8} px={4}>
+        <Heading mb={2} color="cream.100">
           Welcome, {user.email || user.wallet}
         </Heading>
-        <Text color="cream.100" mb={8} fontSize="lg">
+        <Text mb={8} color="cream.200">
           Your Mazol Pro dashboard. All your features in one
           place.
         </Text>
@@ -39,25 +41,13 @@ export default function Dashboard() {
           columns={{ base: 1, md: 2, lg: 3 }}
           spacing={8}
         >
-          <Box
-            bg="cream.100"
-            color="maroon.800"
-            borderRadius="lg"
-            boxShadow="lg"
-            p={6}
-          >
+          <FeatureCard>
             <PrivateSaleCard />
-          </Box>
-          <Box
-            bg="cream.100"
-            color="maroon.800"
-            borderRadius="lg"
-            boxShadow="lg"
-            p={6}
-          >
+          </FeatureCard>
+          <FeatureCard>
             <MiningCard />
-          </Box>
-          {/* Add more cards here as you build more features */}
+          </FeatureCard>
+          {/* Add more FeatureCards as you build more features */}
         </SimpleGrid>
       </Box>
       <Footer />
