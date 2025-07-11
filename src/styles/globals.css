@@ -1,47 +1,39 @@
  html, body {
   min-height: 100%;
-  background: #1a0000; /* Deepest maroon */
+  background: #7a1420; /* Lighter maroon */
   color: #fff5e1;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
+  overflow: hidden; /* Prevent scrolling */
 }
 
 a {
-  color: #1DE9B6; /* Turquoise blue for links */
+  color: #1DE9B6;
   text-decoration: none;
 }
-
 a:hover {
-  color: #FF69B4; /* Pink on hover */
+  color: #FF69B4;
   text-decoration: underline;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
-  background: #800000; /* Maroon */
+  background: #b22234;
 }
 ::-webkit-scrollbar-thumb {
-  background: #FF69B4; /* Pink */
+  background: #FF69B4;
   border-radius: 4px;
 }
 
-/* Footer always at the bottom, maroon background */
 .footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: #1a0000; /* Match maroon background */
+  background: #7a1420;
   color: #fff5e1;
   z-index: 10;
   padding: 1rem 0;
   box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
   text-align: center;
-}
-
-/* Optional: Glassmorphism utility class for overlays */
-.glass-overlay {
-  background: rgba(255,255,255,0.10);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
