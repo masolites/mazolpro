@@ -1,4 +1,4 @@
- import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -42,3 +42,4 @@ export default function Home() {
     </Box>
   );
 }
+
