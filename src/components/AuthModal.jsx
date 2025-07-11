@@ -52,8 +52,8 @@ export default function AuthModal({ isOpen, onClose }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader bg="maroon.800" color="cream.100">
+      <ModalContent bg="maroon.700" color="cream.100">
+        <ModalHeader>
           {isSignup ? "Sign Up" : "Sign In"}
         </ModalHeader>
         <ModalCloseButton />
@@ -79,6 +79,7 @@ export default function AuthModal({ isOpen, onClose }) {
                 colorScheme={
                   isSignup ? "pink" : "turquoise"
                 }
+                variant={isSignup ? "pink" : "turquoise"}
                 type="submit"
                 w="100%"
                 isLoading={submitting}
@@ -90,7 +91,7 @@ export default function AuthModal({ isOpen, onClose }) {
               >
                 {isSignup ? "Sign Up" : "Sign In"}
               </Button>
-              <Text fontSize="sm">
+              <Text>
                 {isSignup
                   ? "Already have an account?"
                   : "Don't have an account?"}{" "}
