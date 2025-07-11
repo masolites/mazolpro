@@ -1,38 +1,27 @@
  html, body {
   min-height: 100%;
-  background: #e6d3b3; /* light coffee brown */
-  color: #4d0000;
+  background: #1a0000; /* Deepest maroon */
+  color: #fff5e1;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 a {
-  color: #1DE9B6; /* Turquoise */
+  color: #1DE9B6; /* Turquoise blue for links */
   text-decoration: none;
 }
+
 a:hover {
-  color: #FF69B4; /* Deep pink */
+  color: #FF69B4; /* Pink on hover */
   text-decoration: underline;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
-  background: #fff5e1;
+  background: #800000; /* Maroon */
 }
 ::-webkit-scrollbar-thumb {
-  background: #FF69B4;
+  background: #FF69B4; /* Pink */
   border-radius: 4px;
-}
-
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #fff5e1;
-  color: #4d0000;
-  z-index: 10;
-  padding: 1rem 0;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
-  text-align: center;
 }
