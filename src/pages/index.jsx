@@ -1,45 +1,72 @@
  import { useState } from "react";
-import { Box, Container, Button } from "@chakra-ui/react";
-import Header from "../components/Header";
-import LandingIntro from "../components/LandingIntro";
-import AuthModal from "../components/AuthModal";
-import Footer from "../components/Footer";
-import { useAuth } from "../contexts/AuthContext";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import Features from "../components/Features";
+import MiningCard from "../components/MiningCard";
+import AuthOverlay from "../components/AuthOverlay";
 
 export default function Home() {
-  const { user } = useAuth();
-  const [authOpen, setAuthOpen] = useState(false);
-  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] =
+    useState(false);
 
-  // If user is logged in, redirect to dashboard
-  useEffect(() => {
-    if (user) {
-      router.push("/dashboard");
-    }
-  }, [user, router]);
+  // Simulate authentication (replace with real logic)
+  const handleAuth = () => setIsAuthenticated(true);
 
   return (
-    <Box minH="100vh" bg="maroon.500">
-      <Header onAuth={() => setAuthOpen(true)} />
-      <Container maxW="container.md" py={8}>
-        <LandingIntro />
-        {!user && (
-          <Button
-            colorScheme="blue"
-            mt={6}
-            onClick={() => setAuthOpen(true)}
-          >
-            Sign Up / Sign In
-          </Button>
-        )}
-      </Container>
-      <Footer />
-      <AuthModal
-        isOpen={authOpen}
-        onClose={() => setAuthOpen(false)}
-      />
-    </Box>
+    <div
+      style={{
+        minHeight: "100vh",
+        position: "relative",
+        background: "#f5f5f5",
+      }}
+    >
+      {/* Header */}
+      <header
+        style={{
+          textAlign: "center",
+          padding: "2rem 0 1rem 0",
+        }}
+      >
+        <h1 style={{ margin: 0 }}>Mazol Pro</h1>
+        <h2
+          style={{
+            margin: 0,
+            fontWeight: 400,
+            fontSize: "1.2rem",
+          }}
+        >
+          E-commerce & Blockchain
+        </h2>
+      </header>
+
+      {/* Features Section */}
+      <Features />
+
+      {/* Mining Card at Bottom */}
+      <div
+        style={{
+          position: "fixed",
+          left: 0,
+          right: 0,
+          bottom: 60,
+          zIndex: 5,
+        }}
+      >
+        <MiningCard
+          isAuthenticated={isAuthenticated}
+          onRequireAuth={() => setShowOverlay(true)}
+        />
+      </div>
+
+      {/* Footer */}
+      <footer className="footer">
+        <p style={{ textAlign: "center" }}>
+          © 2025 Mazol Pro
+        </p>
+      </footer>
+
+      {/* Auth Overlay */}
+      {!isAuthenticated && (
+        <AuthOverlay onAuth={handleAuth} />
+      )}
+    </div>
   );
 }
