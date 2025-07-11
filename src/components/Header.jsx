@@ -1,53 +1,50 @@
  import {
   Flex,
-  Heading,
-  Spacer,
+  Box,
   Button,
+  Spacer,
+  Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Header({ onAuth }) {
-  const { user, admin, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <Flex
       as="header"
-      p={4}
-      bg="maroon.800"
       align="center"
-      boxShadow="sm"
+      justify="space-between"
+      px={6}
+      py={4}
+      bg="maroon.900"
+      color="cream.100"
+      boxShadow="md"
     >
-      <Heading size="lg" color="cream.100">
-        Mazol Pro
-      </Heading>
+      <Box>
+        <Link href="/" passHref>
+          <Text
+            fontWeight="bold"
+            fontSize="xl"
+            letterSpacing="wide"
+          >
+            Mazol Pro E-commerce & Blockchain Admin
+          </Text>
+        </Link>
+      </Box>
       <Spacer />
-      <Heading
-        size="sm"
-        color="cream.100"
-        fontWeight="normal"
-        mr={6}
-      >
-        E-commerce & Blockchain
-      </Heading>
-      <Link href="/admin">
-        <Button colorScheme="pink" mr={3}>
-          Admin
-        </Button>
-      </Link>
-      {user ? (
-        <Button
-          onClick={logout}
-          colorScheme="red"
-          variant="outline"
-        >
-          Logout
-        </Button>
-      ) : (
-        <Button onClick={onAuth} colorScheme="turquoise">
-          Sign In
-        </Button>
-      )}
+      <Box>
+        {user ? (
+          <Button variant="turquoise" onClick={logout}>
+            Logout
+          </Button>
+        ) : (
+          <Button variant="pink" onClick={onAuth}>
+            Sign In
+          </Button>
+        )}
+      </Box>
     </Flex>
   );
 }
