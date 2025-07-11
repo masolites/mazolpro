@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import FeatureCard from "../components/FeatureCard";
+import Feature from "../components/FeatureCard";
 import PrivateSaleCard from "../components/PrivateSaleCard";
 import MiningCard from "../components/MiningCard";
 
