@@ -26,6 +26,7 @@ a:hover {
   border-radius: 4px;
 }
 
+/* Footer always at the bottom, maroon background */
 .footer {
   position: fixed;
   bottom: 0;
@@ -36,4 +37,11 @@ a:hover {
   padding: 1rem 0;
   box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
   text-align: center;
+}
+
+/* Optional: Glassmorphism utility class for overlays */
+.glass-overlay {
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
