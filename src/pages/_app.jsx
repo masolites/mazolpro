@@ -1,25 +1,19 @@
- // pages/_app.jsx
-
-import { useState } from "react";
-import { ChakraProvider } from "@chakra-ui/react";
-import { AuthProvider } from "../contexts/AuthContext";
-import { ThirdwebProvider } from "thirdweb/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../styles/theme";
-import "../styles/globals.css";
+import { ThirdwebProvider } from "thirdweb/react";
+import { AuthProvider } from "../contexts/AuthContext";
 
 export default function App({ Component, pageProps }) {
-  const [queryClient] = useState(() => new QueryClient());
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThirdwebProvider clientId="71e20f4fe4537525ee7c766d094b27b1">
-        <ChakraProvider theme={theme}>
-          <AuthProvider>
-            <Component {...pageProps} />
-          </AuthProvider>
-        </ChakraProvider>
+    <ChakraProvider theme={theme}>
+      <ThirdwebProvider
+        clientId="71e20f4fe4537525ee7c766d094b27b1" // Your actual thirdweb clientId
+        activeChain="binance" // BEP-20 (Binance Smart Chain)
+      >
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
       </ThirdwebProvider>
-    </QueryClientProvider>
+    </ChakraProvider>
   );
 }
