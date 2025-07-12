@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThirdwebProvider>
+      <ThirdwebProvider clientId="71e20f4fe4537525ee7c766d094b27b1">
         <ChakraProvider theme={theme}>
           <AuthProvider>
             <Component {...pageProps} />
