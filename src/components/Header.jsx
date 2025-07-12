@@ -1,37 +1,19 @@
- import { Flex, Box, Text } from "@chakra-ui/react";
-import Link from "next/link";
+ import { ConnectButton } from "thirdweb/react";
 
-export default function Header() {
+export default function Header({ onAuthClick }) {
   return (
-    <Flex
-      as="header"
-      direction="column"
-      align="center"
-      justify="center"
-      px={6}
-      py={6}
-      bg="maroon.900"
-      color="cream.100"
-      boxShadow="md"
-    >
-      <Link href="/" passHref>
-        <Text
-          fontWeight="bold"
-          fontSize={{ base: "3xl", md: "5xl", lg: "6xl" }}
-          letterSpacing="wide"
-          textAlign="center"
-        >
-          Mazol Pro
-        </Text>
-      </Link>
-      <Text
-        fontSize={{ base: "md", md: "lg" }} // This matches the "Token Price" font size
-        color="cream.200"
-        mt={2}
-        textAlign="center"
-      >
-        E-commerce & Blockchain Solutions
-      </Text>
-    </Flex>
+    <header>
+      <h1>Mazol Pro</h1>
+      <h2>E-commerce & Blockchain</h2>
+      <p>
+        Mazol-Pro is a Blockchain supported Platform
+        promoting a Better Society Together by offering
+        Trusted Systems, Goods & Services to people
+      </p>
+      <ConnectButton />
+      <button onClick={onAuthClick}>
+        Sign Up / Sign In
+      </button>
+    </header>
   );
 }
