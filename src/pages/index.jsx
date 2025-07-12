@@ -1,59 +1,33 @@
  import { useState } from "react";
-import { ConnectButton } from "thirdweb/react";
-import AuthForm from "../components/AuthForm";
-import PrivateSale from "../components/PrivateSale";
-import Mining from "../components/Mining";
-import Voting from "../components/Voting";
-import ServiceCard from "../components/ServiceCard";
-import UserProfile from "../components/UserProfile";
-import "../styles/glassmorphism.css";
+import { AuthProvider } from "../contexts/AuthContext";
+import Header from "../components/Header";
+import AuthModal from "../components/AuthModal";
+import PrivateSaleCard from "../components/PrivateSaleCard";
+import MiningCard from "../components/MiningCard";
+import VotingCard from "../components/VotingCard";
+import DepositCard from "../components/DepositCard";
+import WithdrawalCard from "../components/WithdrawalCard";
+import EscrowCard from "../components/EscrowCard";
+// ... import other cards as needed
 
 export default function Home() {
   const [showAuth, setShowAuth] = useState(false);
 
   return (
-    <div className="glass-bg">
-      <header className="header">
-        <h1>Mazol Pro</h1>
-        <h2>E-commerce & Blockchain</h2>
-        <p className="intro">
-          Mazol-Pro is a Blockchain supported Platform
-          promoting a Better Society Together by offering
-          Trusted Systems, Goods & Services to people
-        </p>
-        <ConnectButton className="glass-btn" />
-        <button
-          className="glass-btn"
-          onClick={() => setShowAuth(true)}
-        >
-          Sign Up / Sign In
-        </button>
-      </header>
-
+    <AuthProvider>
+      <Header onAuthClick={() => setShowAuth(true)} />
       {showAuth && (
-        <AuthForm onClose={() => setShowAuth(false)} />
+        <AuthModal onClose={() => setShowAuth(false)} />
       )}
-
       <main>
-        <PrivateSale />
-        <Mining />
-        <Voting />
-        <section className="services">
-          <ServiceCard title="Deposit" />
-          <ServiceCard title="Withdrawal" />
-          <ServiceCard title="Escrow Buy & Sell" />
-          <ServiceCard title="Send/Receive Token" />
-          <ServiceCard title="My Commission" />
-          <ServiceCard title="Swap User" />
-          <ServiceCard title="Staking" />
-        </section>
-        <UserProfile />
+        <PrivateSaleCard />
+        <MiningCard />
+        <VotingCard />
+        <DepositCard />
+        <WithdrawalCard />
+        <EscrowCard />
+        {/* Add Send/Receive, My Commission, Swap User, Staking cards here */}
       </main>
-
-      <footer>
-        <a href="/admin">Admin Dashboard</a> &nbsp;|&nbsp;
-        &copy; 2024 Mazol Pro
-      </footer>
-    </div>
+    </AuthProvider>
   );
 }
