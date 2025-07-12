@@ -49,12 +49,23 @@ const theme = extendTheme({
     heading: `'Inter', sans-serif`,
     body: `'Inter', sans-serif`,
   },
+  radii: {
+    none: "0",
+    sm: "0.125rem",
+    base: "0.5rem",
+    md: "0.75rem",
+    lg: "1rem",
+    xl: "1.5rem",
+    "2xl": "2rem",
+    full: "9999px",
+  },
   styles: {
     global: {
       body: {
         bg: "maroon.800",
         color: "cream.100",
         minHeight: "100vh",
+        fontFamily: "'Inter', sans-serif",
       },
       a: {
         color: "turquoise.500",
@@ -75,13 +86,23 @@ const theme = extendTheme({
       baseStyle: {
         bg: "cream.100",
         color: "maroon.800",
-        borderRadius: "lg",
+        borderRadius: "xl",
         boxShadow: "lg",
         p: 4,
       },
+      variants: {
+        maroonCard: {
+          bg: "maroon.900",
+          color: "cream.100",
+        },
+        gradientCard: {
+          bgGradient: "linear(to-br, maroon.700, lilac.200)",
+          color: "cream.100",
+        },
+      },
     },
     Button: {
-      baseStyle: { fontWeight: "bold" },
+      baseStyle: { fontWeight: "bold", borderRadius: "xl" },
       variants: {
         maroon: {
           bg: "maroon.500",
@@ -108,6 +129,26 @@ const theme = extendTheme({
           color: "maroon.800",
           _hover: { bg: "cream.200" },
         },
+        orange: {
+          bg: "orange.300",
+          color: "maroon.900",
+          _hover: { bg: "orange.400" },
+        },
+        green: {
+          bg: "green.400",
+          color: "white",
+          _hover: { bg: "green.500" },
+        },
+        deepPink: {
+          bg: "deepPink.400",
+          color: "white",
+          _hover: { bg: "pink.500" },
+        },
+        primary: {
+          bgGradient: "linear(to-r, turquoise.500, orange.300)",
+          color: "maroon.900",
+          _hover: { bgGradient: "linear(to-r, orange.300, turquoise.500)" },
+        },
       },
     },
     Input: {
@@ -115,6 +156,7 @@ const theme = extendTheme({
         field: {
           bg: "cream.100",
           color: "maroon.800",
+          borderRadius: "xl",
         },
       },
     },
