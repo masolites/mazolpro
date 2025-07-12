@@ -1,4 +1,4 @@
-// pages/_app.jsx
+ // pages/_app.jsx
 
 import { useState } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
