@@ -1,4 +1,4 @@
- import { extendTheme } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   colors: {
@@ -8,19 +8,21 @@ const theme = extendTheme({
       200: "#ea99a5",
       300: "#e17082",
       400: "#d9475e",
-      500: "#800000", // main maroon
+      500: "#800000",
       600: "#660000",
       700: "#4d0000",
-      800: "#1a0000", // deep maroon for background
-      900: "#0d0000", // almost black
+      800: "#1a0000",
+      900: "#0d0000",
     },
     cream: {
-      100: "#fff5e1", // main cream
+      100: "#fff5e1",
       200: "#ffeccc",
-      300: "#e6d8c3", // dark cream for backgrounds
+      300: "#f7e6d4",
+      400: "#e6d3b3",
     },
     turquoise: {
       500: "#1DE9B6",
+      600: "#13b88a",
     },
     pink: {
       500: "#FF69B4",
@@ -28,6 +30,18 @@ const theme = extendTheme({
     lilac: {
       200: "#e9d5ff",
       300: "#d8b4fe",
+      400: "#a78bfa",
+    },
+    orange: {
+      300: "#FFA726",
+      400: "#FF9800",
+    },
+    deepPink: {
+      400: "#FF1493",
+    },
+    green: {
+      400: "#4CAF50",
+      500: "#388E3C",
     },
     white: "#fff",
   },
@@ -40,13 +54,26 @@ const theme = extendTheme({
       body: {
         bg: "maroon.800",
         color: "cream.100",
+        minHeight: "100vh",
+      },
+      a: {
+        color: "turquoise.500",
+        _hover: { color: "pink.500", textDecoration: "underline" },
+      },
+      "::-webkit-scrollbar": {
+        width: "8px",
+        background: "maroon.500",
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: "pink.500",
+        borderRadius: "4px",
       },
     },
   },
   components: {
     Card: {
       baseStyle: {
-        bg: "cream.300",
+        bg: "cream.100",
         color: "maroon.800",
         borderRadius: "lg",
         boxShadow: "lg",
@@ -54,9 +81,7 @@ const theme = extendTheme({
       },
     },
     Button: {
-      baseStyle: {
-        fontWeight: "bold",
-      },
+      baseStyle: { fontWeight: "bold" },
       variants: {
         maroon: {
           bg: "maroon.500",
@@ -66,7 +91,7 @@ const theme = extendTheme({
         turquoise: {
           bg: "turquoise.500",
           color: "maroon.800",
-          _hover: { bg: "turquoise.500", opacity: 0.85 },
+          _hover: { bg: "turquoise.600" },
         },
         pink: {
           bg: "pink.500",
