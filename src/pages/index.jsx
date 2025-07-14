@@ -1,4 +1,4 @@
- import { useState } from "react";
+llimport { useState } from "react";
 import { ConnectButton } from "thirdweb/react";
 
 export default function Home() {
@@ -18,7 +18,17 @@ export default function Home() {
     setUser(data.user);
   };
 
-  // Deposit
+  // Utility functions for actions (deposit, mining, purchase, withdraw, set email/PIN)
+  const refreshUser = async () => {
+    const res = await fetch("/api/user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ wallet }),
+    });
+    const data = await res.json();
+    setUser(data.user);
+  };
+
   const handleDeposit = async (amount, method) => {
     const res = await fetch("/api/deposit", {
       method: "POST",
@@ -30,7 +40,6 @@ export default function Home() {
     if (data.message) refreshUser();
   };
 
-  // Mining
   const handleMining = async () => {
     const res = await fetch("/api/mining", {
       method: "POST",
@@ -41,7 +50,6 @@ export default function Home() {
     setResult(data.message || data.error);
   };
 
-  // Fixed Purchase (MLM)
   const handleFixedPurchase = async (amount, referrer) => {
     const res = await fetch("/api/purchase_fixed", {
       method: "POST",
@@ -53,7 +61,6 @@ export default function Home() {
     if (data.message) refreshUser();
   };
 
-  // Flexible Purchase (Affiliate)
   const handleFlexPurchase = async (amount, affiliate) => {
     const res = await fetch("/api/purchase_flex", {
       method: "POST",
@@ -65,7 +72,6 @@ export default function Home() {
     if (data.message) refreshUser();
   };
 
-  // Withdraw
   const handleWithdraw = async (amount, pin) => {
     const res = await fetch("/api/withdraw", {
       method: "POST",
@@ -77,7 +83,6 @@ export default function Home() {
     if (data.message) refreshUser();
   };
 
-  // Set Email/PIN
   const handleSetEmailPin = async (email, pin) => {
     const res = await fetch("/api/user_update", {
       method: "POST",
@@ -87,17 +92,6 @@ export default function Home() {
     const data = await res.json();
     setResult(data.message || data.error);
     if (data.message) refreshUser();
-  };
-
-  // Refresh user data
-  const refreshUser = async () => {
-    const res = await fetch("/api/user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ wallet }),
-    });
-    const data = await res.json();
-    setUser(data.user);
   };
 
   // Simple forms for demo
@@ -129,7 +123,18 @@ export default function Home() {
         promoting a Better Society Together by offering
         Trusted Systems, Goods & Services to people
       </p>
-      <ConnectButton onConnect={handleConnect} />
+      {!wallet && (
+        <div
+          style={{ margin: "32px 0", textAlign: "center" }}
+        >
+          <h3>Create or Connect a Wallet</h3>
+          <ConnectButton onConnect={handleConnect} />
+          <p style={{ color: "#FFA726", marginTop: 8 }}>
+            You can create a new wallet or connect an
+            existing one to get started.
+          </p>
+        </div>
+      )}
       {user && (
         <>
           <div style={{ margin: "16px 0" }}>
