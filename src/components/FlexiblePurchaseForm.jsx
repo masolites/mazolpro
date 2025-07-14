@@ -1,4 +1,4 @@
-import { useState } from "react";
+ import { useState } from "react";
 
 export default function FlexiblePurchaseForm({ wallet }) {
   const [amount, setAmount] = useState("");
