@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+ import { useEffect, useState } from "react";
 
 export default function PlatformWalletCard({ wallet }) {
   const [balance, setBalance] = useState(0);
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Fetch platform wallet balance
   useEffect(() => {
     async function fetchBalance() {
       if (!wallet) return;
@@ -27,7 +26,6 @@ export default function PlatformWalletCard({ wallet }) {
     fetchBalance();
   }, [wallet, result]);
 
-  // Deposit to platform wallet (via Flutterwave/manual)
   const handleDeposit = async (type) => {
     setLoading(true);
     setResult("");
@@ -39,7 +37,7 @@ export default function PlatformWalletCard({ wallet }) {
           wallet,
           amount: 1000,
           type,
-        }), // Example: deposit ₦1000
+        }),
       });
       const data = await res.json();
       setResult(data.message || data.error || "");
@@ -49,8 +47,7 @@ export default function PlatformWalletCard({ wallet }) {
     setLoading(false);
   };
 
-  // Buy tokens from platform wallet
-  const handleBuyFromWallet = async (type) => {
+  const handleBuyFromWallet = async () => {
     setLoading(true);
     setResult("");
     try {
@@ -61,7 +58,7 @@ export default function PlatformWalletCard({ wallet }) {
           type: "platform",
           wallet,
           amount: 1000,
-        }), // Example: buy ₦1000 tokens
+        }),
       });
       const data = await res.json();
       setResult(data.message || data.error || "");
@@ -99,7 +96,7 @@ export default function PlatformWalletCard({ wallet }) {
       </button>
       <div style={{ marginTop: 12 }}>
         <button
-          onClick={() => handleBuyFromWallet("platform")}
+          onClick={handleBuyFromWallet}
           disabled={loading}
         >
           Buy Tokens from Platform Wallet (₦1000)
