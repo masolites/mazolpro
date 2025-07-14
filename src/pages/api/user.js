@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+ const { MongoClient } = require("mongodb");
 const uri = process.env.MONGODB_URI;
 
 module.exports = async (req, res) => {
@@ -25,6 +25,9 @@ module.exports = async (req, res) => {
         nairaBalance: 0,
         usdtBalance: 0,
         createdAt: new Date(),
+        mining: { lastSession: null, speed: 1 },
+        mlm: { referrer: null, stage: 1, matrix: [] },
+        affiliate: { referredBy: null, totalEarned: 0 },
       });
       user = await db
         .collection("users")
