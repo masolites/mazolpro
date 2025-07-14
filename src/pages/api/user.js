@@ -1,4 +1,6 @@
- const { MongoClient } = require("mongodb");
+ // pages/api/user.js
+
+const { MongoClient } = require("mongodb");
 const uri = process.env.MONGODB_URI;
 
 module.exports = async (req, res) => {
@@ -17,11 +19,13 @@ module.exports = async (req, res) => {
     let user = await db
       .collection("users")
       .findOne({ wallet });
+
     if (!user) {
+      // Create new user with default fields
       await db.collection("users").insertOne({
         wallet,
         email: "",
-        pin: "",
+        pin: "", // PIN will be set later
         nairaBalance: 0,
         usdtBalance: 0,
         createdAt: new Date(),
@@ -33,6 +37,9 @@ module.exports = async (req, res) => {
         .collection("users")
         .findOne({ wallet });
     }
+
+    // Never send PIN hash to frontend
+    if (user.pin !== undefined) delete user.pin;
 
     res.status(200).json({ user });
   } catch (err) {
