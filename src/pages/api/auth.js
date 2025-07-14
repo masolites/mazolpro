@@ -1,14 +1,12 @@
- import { MongoClient } from "mongodb";
+const { MongoClient } = require("mongodb");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const uri = process.env.MONGODB_URI;
 const JWT_SECRET =
   process.env.JWT_SECRET || "mazolpro_secret";
 
-export default async function handler(req, res) {
-  // Dynamically import bcryptjs and jsonwebtoken for Vercel compatibility
-  const bcrypt = (await import("bcryptjs")).default;
-  const jwt = (await import("jsonwebtoken")).default;
-
+module.exports = async function handler(req, res) {
   const client = await MongoClient.connect(uri);
   const db = client.db();
   const users = db.collection("users");
@@ -119,4 +117,4 @@ export default async function handler(req, res) {
 
   client.close();
   res.status(405).json({ error: "Method not allowed." });
-}
+};
