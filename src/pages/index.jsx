@@ -1,4 +1,4 @@
-llimport { useState } from "react";
+import { useState } from "react";
 import { ConnectButton } from "thirdweb/react";
 
 export default function Home() {
