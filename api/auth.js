@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+ const { MongoClient } = require("mongodb");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -14,7 +14,8 @@ module.exports = async (req, res) => {
     const users = db.collection("users");
 
     if (req.method === "POST") {
-      const { action, email, password } = req.body || {};
+      const { action, email, password, token } =
+        req.body || {};
 
       if (action === "register") {
         if (!email || !password) {
@@ -41,12 +42,12 @@ module.exports = async (req, res) => {
           isGold: false,
         };
         await users.insertOne(user);
-        const token = jwt.sign({ email }, JWT_SECRET, {
+        const jwtToken = jwt.sign({ email }, JWT_SECRET, {
           expiresIn: "7d",
         });
         return res
           .status(200)
-          .json({ user: { email }, token });
+          .json({ user: { email }, token: jwtToken });
       }
 
       if (action === "login") {
@@ -72,16 +73,15 @@ module.exports = async (req, res) => {
             .status(401)
             .json({ error: "Invalid password." });
         }
-        const token = jwt.sign({ email }, JWT_SECRET, {
+        const jwtToken = jwt.sign({ email }, JWT_SECRET, {
           expiresIn: "7d",
         });
         return res
           .status(200)
-          .json({ user: { email }, token });
+          .json({ user: { email }, token: jwtToken });
       }
 
       if (action === "getUser") {
-        const { token } = req.body;
         if (!token) {
           return res
             .status(401)
@@ -114,7 +114,6 @@ module.exports = async (req, res) => {
       .status(405)
       .json({ error: "Method not allowed." });
   } catch (err) {
-    // Always return a JSON error
     return res
       .status(500)
       .json({ error: "Server error: " + err.message });
