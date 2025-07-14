@@ -1,12 +1,14 @@
  import { MongoClient } from "mongodb";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 const uri = process.env.MONGODB_URI;
 const JWT_SECRET =
   process.env.JWT_SECRET || "mazolpro_secret";
 
 export default async function handler(req, res) {
+  // Dynamically import bcryptjs and jsonwebtoken for Vercel compatibility
+  const bcrypt = (await import("bcryptjs")).default;
+  const jwt = (await import("jsonwebtoken")).default;
+
   const client = await MongoClient.connect(uri);
   const db = client.db();
   const users = db.collection("users");
