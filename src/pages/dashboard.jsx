@@ -1,4 +1,6 @@
- import {
+ // pages/dashboard.js
+
+import {
   Box,
   SimpleGrid,
   Heading,
@@ -6,26 +8,24 @@
 } from "@chakra-ui/react";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FeatureCard from "../components/FeatureCard";
 import PrivateSaleCard from "../components/PrivateSaleCard";
 import MiningCard from "../components/MiningCard";
-import AuthModal from "../components/AuthModal";
 
 export default function Dashboard() {
-  const { user, loading } = useAuth();
+  const { user, wallet, loading } = useAuth();
   const router = useRouter();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !wallet) {
       router.replace("/");
     }
-  }, [user, loading, router]);
+  }, [wallet, loading, router]);
 
-  if (loading || !user) return null;
+  if (loading || !wallet || !user) return null;
 
   return (
     <Box minH="100vh" bg="maroon.800">
@@ -36,7 +36,7 @@ export default function Dashboard() {
           color="cream.100"
           textAlign="center"
         >
-          Welcome, {user.email}
+          Welcome, {wallet}
         </Heading>
         <Text mb={8} color="cream.200" textAlign="center">
           Your Mazol Pro dashboard. All your features in one
@@ -61,10 +61,6 @@ export default function Dashboard() {
         </SimpleGrid>
       </Box>
       <Footer />
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-      />
     </Box>
   );
 }
