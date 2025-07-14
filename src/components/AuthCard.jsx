@@ -1,6 +1,15 @@
  // src/components/AuthCard.jsx
 
-export default function AuthCard({ onAuth }) {
+import { ConnectButton } from "thirdweb/react";
+import { useState } from "react";
+
+export default function AuthCard({
+  onWalletConnect,
+  onSetPin,
+}) {
+  const [pin, setPin] = useState("");
+  const [email, setEmail] = useState("");
+
   return (
     <div
       style={{
@@ -16,28 +25,57 @@ export default function AuthCard({ onAuth }) {
       }}
     >
       <h3 style={{ color: "#FF69B4", marginBottom: 8 }}>
-        Sign Up / Sign In
+        Connect or Create Wallet
       </h3>
       <p style={{ color: "#4d0000", marginBottom: 24 }}>
-        Create an account or sign in to start mining and
-        access all features.
+        Connect your wallet to access all features.
+        <br />
+        Set a 4-digit PIN for withdrawals and transfers.
+        <br />
+        (Email is optional, for support only)
       </p>
-      <button
-        style={{
-          background: "#1DE9B6",
-          color: "#4d0000",
-          border: "none",
-          borderRadius: 12,
-          padding: "0.75rem 2rem",
-          fontWeight: "bold",
-          fontSize: "1rem",
-          cursor: "pointer",
-          boxShadow: "0 2px 8px #e9d5ff",
+      <ConnectButton onConnect={onWalletConnect} />
+      <form
+        style={{ marginTop: 24 }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSetPin(pin, email);
         }}
-        onClick={onAuth}
       >
-        Sign Up / Sign In
-      </button>
+        <input
+          value={pin}
+          onChange={(e) =>
+            setPin(e.target.value.replace(/\D/g, ""))
+          }
+          placeholder="4-digit PIN"
+          type="password"
+          maxLength={4}
+          style={{ marginRight: 8, marginBottom: 8 }}
+        />
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email (optional)"
+          type="email"
+          style={{ marginRight: 8, marginBottom: 8 }}
+        />
+        <button
+          type="submit"
+          style={{
+            background: "#1DE9B6",
+            color: "#4d0000",
+            border: "none",
+            borderRadius: 12,
+            padding: "0.5rem 1.5rem",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            cursor: "pointer",
+            boxShadow: "0 2px 8px #e9d5ff",
+          }}
+        >
+          Set PIN / Email
+        </button>
+      </form>
     </div>
   );
 }
