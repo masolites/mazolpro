@@ -1,4 +1,6 @@
- const { MongoClient } = require("mongodb");
+// pages/api/user_update.js
+
+const { MongoClient } = require("mongodb");
 const bcrypt = require("bcryptjs");
 const uri = process.env.MONGODB_URI;
 
@@ -17,8 +19,14 @@ module.exports = async (req, res) => {
 
     let update = {};
     if (email !== undefined) update.email = email;
-    if (pin !== undefined && pin.length === 4)
+    if (pin !== undefined) {
+      if (!/^\d{4}$/.test(pin)) {
+        return res
+          .status(400)
+          .json({ error: "PIN must be exactly 4 digits." });
+      }
       update.pin = await bcrypt.hash(pin, 10);
+    }
 
     if (Object.keys(update).length === 0) {
       return res
@@ -29,7 +37,16 @@ module.exports = async (req, res) => {
     await db
       .collection("users")
       .updateOne({ wallet }, { $set: update });
-    res.status(200).json({ message: "User updated." });
+
+    // Return updated user (without PIN)
+    const user = await db
+      .collection("users")
+      .findOne({ wallet });
+    if (user.pin !== undefined) delete user.pin;
+
+    res
+      .status(200)
+      .json({ user, message: "User updated." });
   } catch (err) {
     res
       .status(500)
