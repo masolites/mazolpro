@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+ const { MongoClient } = require("mongodb");
 const bcrypt = require("bcryptjs");
 const uri = process.env.MONGODB_URI;
 
@@ -16,8 +16,15 @@ module.exports = async (req, res) => {
     }
 
     let update = {};
-    if (email) update.email = email;
-    if (pin) update.pin = await bcrypt.hash(pin, 10);
+    if (email !== undefined) update.email = email;
+    if (pin !== undefined && pin.length === 4)
+      update.pin = await bcrypt.hash(pin, 10);
+
+    if (Object.keys(update).length === 0) {
+      return res
+        .status(400)
+        .json({ error: "No update fields provided." });
+    }
 
     await db
       .collection("users")
