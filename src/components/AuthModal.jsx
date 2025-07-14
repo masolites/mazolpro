@@ -1,85 +1,115 @@
- import {
-  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton,
-  Button, Input, VStack, useToast, Text
-} from "@chakra-ui/react";
-import { useState } from "react";
+ import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Input,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 
 export default function AuthModal({ isOpen, onClose }) {
-  const { login, signup } = useAuth();
-  const [isSignup, setIsSignup] = useState(false);
+  const { login } = useAuth();
+  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
-  const [wallet, setWallet] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
+  const handleAuth = async () => {
+    setLoading(true);
     try {
-      if (isSignup) {
-        await signup(email, wallet);
-        toast({ title: "Signup successful!", status: "success" });
-      } else {
-        await login(email, wallet);
-        toast({ title: "Login successful!", status: "success" });
-      }
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: isSignUp ? "register" : "login",
+          email,
+          password,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok)
+        throw new Error(data.error || "Auth failed");
+      login(data.user, data.token);
+      toast({
+        title: isSignUp
+          ? "Sign up successful!"
+          : "Login successful!",
+        status: "success",
+      });
       onClose();
     } catch (err) {
-      toast({ title: err.message || "Error", status: "error" });
+      toast({
+        title: "Error",
+        description: err.message,
+        status: "error",
+      });
     }
-    setSubmitting(false);
+    setLoading(false);
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent bg="maroon.700" color="cream.100">
-        <ModalHeader>{isSignup ? "Sign Up" : "Sign In"}</ModalHeader>
-        <ModalCloseButton />
+      <ModalContent bg="#2d0000" color="#fff5e1">
+        <ModalHeader>
+          {isSignUp ? "Sign Up" : "Sign In"}
+        </ModalHeader>
         <ModalBody>
-          <form onSubmit={handleSubmit}>
-            <VStack spacing={4}>
-              <Input
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                bg="cream.100"
-                color="maroon.800"
-              />
-              <Input
-                placeholder="Wallet Address (optional)"
-                value={wallet}
-                onChange={(e) => setWallet(e.target.value)}
-                bg="cream.100"
-                color="maroon.800"
-              />
-              <Button
-                bgGradient="linear(to-r, turquoise.500, orange.300)"
-                color="maroon.900"
-                type="submit"
-                w="100%"
-                isLoading={submitting}
-                loadingText={isSignup ? "Signing up..." : "Signing in..."}
-                borderRadius="xl"
-              >
-                {isSignup ? "Sign Up" : "Sign In"}
-              </Button>
-              <Text>
-                {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
-                <Button
-                  variant="link"
-                  size="sm"
-                  colorScheme="orange"
-                  onClick={() => setIsSignup(!isSignup)}
-                >
-                  {isSignup ? "Sign In" : "Sign Up"}
-                </Button>
-              </Text>
-            </VStack>
-          </form>
+          <Input
+            placeholder="Email"
+            type="email"
+            mb={3}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            bg="#fff5e1"
+            color="#1a0000"
+          />
+          <Input
+            placeholder="Password"
+            type="password"
+            mb={3}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            bg="#fff5e1"
+            color="#1a0000"
+          />
+          <Text
+            fontSize="sm"
+            color="orange.300"
+            cursor="pointer"
+            onClick={() => setIsSignUp(!isSignUp)}
+          >
+            {isSignUp
+              ? "Already have an account? Sign In"
+              : "New user? Sign Up"}
+          </Text>
         </ModalBody>
+        <ModalFooter>
+          <Button
+            colorScheme="orange"
+            mr={3}
+            onClick={handleAuth}
+            isLoading={loading}
+            bgGradient="linear(to-r, orange.300, turquoise.500)"
+            color="#1a0000"
+          >
+            {isSignUp ? "Sign Up" : "Sign In"}
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={onClose}
+            color="#FFA726"
+          >
+            Cancel
+          </Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );
