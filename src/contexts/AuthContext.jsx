@@ -1,4 +1,4 @@
- // src/contexts/AuthContext.js
+// src/contexts/AuthContext.js
 
 import {
   createContext,
@@ -6,16 +6,16 @@ import {
   useState,
   useEffect,
 } from "react";
-import { useAddress } from "thirdweb/react";
+import { useActiveAccount } from "thirdweb/react";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const wallet = useAddress();
+  const account = useActiveAccount();
+  const wallet = account?.address || null;
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch user info from backend when wallet connects
   useEffect(() => {
     if (!wallet) {
       setUser(null);
