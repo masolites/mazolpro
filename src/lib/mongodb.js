@@ -1,10 +1,21 @@
-// Example stub for MongoDB connection
-const { MongoClient } = require("mongodb");
+// src/lib/mongodb.js
+
+import { MongoClient } from "mongodb";
+
 const uri = process.env.MONGODB_URI;
-let client;
-export default async function dbConnect() {
-  if (!client) client = new MongoClient(uri);
-  if (!client.isConnected()) await client.connect();
-  return client.db();
+if (!uri) {
+  throw new Error(
+    "Please define the MONGODB_URI environment variable inside .env.local",
+  );
 }
 
+let client;
+let clientPromise;
+
+if (!global._mongoClientPromise) {
+  client = new MongoClient(uri);
+  global._mongoClientPromise = client.connect();
+}
+clientPromise = global._mongoClientPromise;
+
+export default clientPromise;
