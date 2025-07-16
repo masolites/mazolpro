@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export default function AdminPanel({ onClose }) {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('amabeth41');
   const [authenticated, setAuthenticated] = useState(false);
   const [deposits, setDeposits] = useState([]);
   const [loading, setLoading] = useState(false);
