@@ -1,4 +1,4 @@
-import { useState } from "react";
+ import { useState } from "react";
 
 export default function BuyModal({
   mode,
@@ -11,7 +11,8 @@ export default function BuyModal({
   );
   const [paymentMethod, setPaymentMethod] =
     useState("flutterwave");
-  const [proof, setProof] = useState(null);
+  const [paymentDateTime, setPaymentDateTime] =
+    useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -23,6 +24,13 @@ export default function BuyModal({
 
     if (mode === "flex" && amount < 200) {
       setMessage("Minimum amount is ₦200");
+      return;
+    }
+
+    if (paymentMethod === "manual" && !paymentDateTime) {
+      setMessage(
+        "Please select the date and time of payment.",
+      );
       return;
     }
 
@@ -43,8 +51,8 @@ export default function BuyModal({
       );
       formData.append("purchaseType", mode);
 
-      if (paymentMethod === "manual" && proof) {
-        formData.append("proof", proof);
+      if (paymentMethod === "manual") {
+        formData.append("paymentDateTime", paymentDateTime);
       }
 
       const response = await fetch(endpoint, {
@@ -182,12 +190,19 @@ export default function BuyModal({
 
         {paymentMethod === "manual" && (
           <div style={{ marginBottom: "15px" }}>
-            <label>Proof of Payment:</label>
+            <label>Date and Time of Payment:</label>
             <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setProof(e.target.files[0])}
-              style={{ width: "100%" }}
+              type="datetime-local"
+              value={paymentDateTime}
+              onChange={(e) =>
+                setPaymentDateTime(e.target.value)
+              }
+              style={{
+                width: "100%",
+                padding: "10px",
+                borderRadius: "5px",
+                border: "none",
+              }}
             />
           </div>
         )}
