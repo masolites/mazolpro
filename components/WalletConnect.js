@@ -1,14 +1,11 @@
- import { useState } from "react";
+ import { useState, useEffect } from "react";
 import {
   useConnect,
   useConnectionStatus,
   useActiveWallet,
   useDisconnect,
 } from "thirdweb/react";
-import {
-  createWallet,
-  metamaskWallet,
-} from "thirdweb/wallets";
+import { metamaskWallet } from "thirdweb/wallets";
 
 export default function WalletConnect({ onConnect }) {
   const connect = useConnect();
@@ -17,20 +14,7 @@ export default function WalletConnect({ onConnect }) {
   const activeWallet = useActiveWallet();
   const [loading, setLoading] = useState(false);
 
-  const handleConnect = async () => {
-    setLoading(true);
-    try {
-      await connect(metamaskWallet());
-      // onConnect will be called in useEffect below
-    } catch (error) {
-      console.error("Connection failed:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Call onConnect when wallet is connected
-  React.useEffect(() => {
+  useEffect(() => {
     if (activeWallet?.address) {
       onConnect({
         walletAddress: activeWallet.address,
@@ -40,6 +24,17 @@ export default function WalletConnect({ onConnect }) {
     }
     // eslint-disable-next-line
   }, [activeWallet?.address]);
+
+  const handleConnect = async () => {
+    setLoading(true);
+    try {
+      await connect(metamaskWallet());
+    } catch (error) {
+      console.error("Connection failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
