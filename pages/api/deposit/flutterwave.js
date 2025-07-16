@@ -11,12 +11,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { walletAddress, amount, purchaseType } = req.body;
+  const formData = await req.formData();
+  const walletAddress = formData.get('walletAddress');
+  const amount = parseFloat(formData.get('amount'));
+  const purchaseType = formData.get('purchaseType');
 
   try {
     const db = await connectToDB();
     
-    // Create transaction record
     const transaction = {
       walletAddress,
       amount,
@@ -29,7 +31,6 @@ export default async function handler(req, res) {
     const result = await db.collection('transactions').insertOne(transaction);
     const transactionId = result.insertedId.toString();
 
-    // Create Flutterwave payment
     const paymentData = {
       tx_ref: `mazolpro-${Date.now()}`,
       amount,
