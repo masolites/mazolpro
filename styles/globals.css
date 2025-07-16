@@ -1,0 +1,17 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent scrolling */
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #3a001a 70%, #e9d5ff 100%);
+  color: #fff5e1;
+}
+
+#__next {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
