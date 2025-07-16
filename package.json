@@ -12,8 +12,7 @@
     "react-dom": "^18.2.0",
     "mongodb": "^5.7.0",
     "flutterwave-node-v3": "^1.0.5",
-    "aws-sdk": "^2.1499.0",
-    "@thirdweb-dev/react": "^3.14.25",
-    "@thirdweb-dev/sdk": "^3.14.25"
+    "@thirdweb-dev/react": "^3.16.5",
+    "@thirdweb-dev/sdk": "^3.16.5"
   }
 }
