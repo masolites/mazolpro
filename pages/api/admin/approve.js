@@ -1,32 +1,26 @@
-import { connectToDB } from '../../../lib/db';
+ import { connectToDB } from '../../../lib/db';
+import { ObjectId } from 'mongodb';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Add proper admin authentication in production
-  // if (req.headers.authorization !== `Bearer ${process.env.ADMIN_SECRET}`) {
-  //   return res.status(401).json({ error: 'Unauthorized' });
-  // }
-
   const { id } = req.body;
 
   try {
     const db = await connectToDB();
-    const transaction = await db.collection('transactions').findOne({ _id: id });
+    const transaction = await db.collection('transactions').findOne({ _id: new ObjectId(id) });
     
     if (!transaction) {
       return res.status(404).json({ error: 'Transaction not found' });
     }
     
-    // Update transaction status
     await db.collection('transactions').updateOne(
-      { _id: id },
+      { _id: new ObjectId(id) },
       { $set: { status: 'approved' } }
     );
     
-    // Update user balance
     await db.collection('users').updateOne(
       { walletAddress: transaction.walletAddress },
       { 
