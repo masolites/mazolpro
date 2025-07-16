@@ -1,12 +1,6 @@
-MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/mazolpro?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/mazolpro
 MONGODB_DBNAME=mazolpro
-
-FLW_PUBLIC_KEY=FLWPUBK_TEST-xxxxxxxxxxxxx-X
-FLW_SECRET_KEY=FLWSECK_TEST-xxxxxxxxxxxxx-X
-
-AWS_ACCESS_KEY_ID=YOUR_AWS_ACCESS_KEY
-AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_KEY
-AWS_REGION=us-east-1
-AWS_BUCKET_NAME=mazolpro-proofs
-
+FLW_PUBLIC_KEY=your_flutterwave_public_key
+FLW_SECRET_KEY=your_flutterwave_secret_key
 ADMIN_PASSWORD=your_admin_password
+BASE_URL=https://your-vercel-app.vercel.app
