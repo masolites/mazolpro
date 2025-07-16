@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+ import { useState, useEffect } from 'react';
 import WalletConnect from '../components/WalletConnect';
 import BuyModal from '../components/BuyModal';
 import MiningCounter from '../components/MiningCounter';
@@ -12,7 +12,6 @@ export default function Home() {
   const [balance, setBalance] = useState(0);
   const [tokens, setTokens] = useState(0);
 
-  // Fetch user balance on wallet connect
   useEffect(() => {
     if (user?.walletAddress) {
       fetchBalance();
@@ -45,7 +44,6 @@ export default function Home() {
       flexDirection: 'column',
       alignItems: 'center'
     }}>
-      {/* Admin Panel Toggle */}
       <button onClick={() => setShowAdmin(!showAdmin)} style={{
         position: 'absolute',
         top: '10px',
@@ -62,7 +60,6 @@ export default function Home() {
       
       {showAdmin && <AdminPanel onClose={() => setShowAdmin(false)} />}
       
-      {/* Header */}
       <div style={{
         width: '100%',
         display: 'flex',
@@ -76,7 +73,6 @@ export default function Home() {
         MAZOL-PRO PRIVATE SALE
       </h1>
 
-      {/* Wallet Balance */}
       {user && (
         <div style={{
           background: 'rgba(77, 0, 0, 0.7)',
@@ -90,7 +86,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Main Grid */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
@@ -98,7 +93,6 @@ export default function Home() {
         width: '100%',
         maxWidth: '600px'
       }}>
-        {/* Private Sale Card */}
         <div style={{
           background: 'linear-gradient(135deg, #4d0000, #FFA726)',
           borderRadius: '15px',
@@ -147,14 +141,11 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Mining Card */}
         <MiningCounter 
           mining={mining} 
           setMining={setMining} 
-          style={{ gridColumn: '1' }}
         />
 
-        {/* Voting Card */}
         <div style={{
           background: 'linear-gradient(135deg, #4d0000, #FF69B4)',
           borderRadius: '15px',
