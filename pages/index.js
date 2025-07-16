@@ -1,5 +1,5 @@
  import { useState, useEffect } from "react";
-import WalletConnect from "../components/WalletConnect";
+import WalletModal from "../components/WalletModal";
 import BuyModal from "../components/BuyModal";
 import MiningCounter from "../components/MiningCounter";
 import AdminPanel from "../components/AdminPanel";
@@ -11,7 +11,8 @@ export default function Home() {
   const [showAdmin, setShowAdmin] = useState(false);
   const [balance, setBalance] = useState(0);
   const [tokens, setTokens] = useState(0);
-  const [walletPrompt, setWalletPrompt] = useState(false);
+  const [showWalletModal, setShowWalletModal] =
+    useState(false);
 
   useEffect(() => {
     if (user?.walletAddress) {
@@ -42,13 +43,9 @@ export default function Home() {
     if (user && user.walletAddress) {
       setBuyModal(mode);
     } else {
-      setWalletPrompt(true);
+      setShowWalletModal(true);
     }
   };
-
-  // Close wallet prompt
-  const handleCloseWalletPrompt = () =>
-    setWalletPrompt(false);
 
   return (
     <div
@@ -95,7 +92,12 @@ export default function Home() {
           marginBottom: "20px",
         }}
       >
-        <WalletConnect onConnect={setUser} />
+        {user && user.walletAddress && (
+          <span>
+            {user.walletAddress.slice(0, 6)}...
+            {user.walletAddress.slice(-4)}
+          </span>
+        )}
       </div>
 
       <h1
@@ -260,73 +262,18 @@ export default function Home() {
         />
       )}
 
-      {/* Wallet connect prompt modal */}
-      {walletPrompt && (
-        <div
-          onClick={handleCloseWalletPrompt}
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: "rgba(0,0,0,0.7)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 9999,
+      {showWalletModal && (
+        <WalletModal
+          onWallet={(wallet) => {
+            setUser({
+              walletAddress: wallet.address,
+              balance: 0,
+              tokens: 0,
+            });
+            setShowWalletModal(false);
           }}
-        >
-          <div
-            style={{
-              background: "#4d0000",
-              color: "#fff5e1",
-              padding: "30px",
-              borderRadius: "15px",
-              textAlign: "center",
-              minWidth: "250px",
-              position: "relative",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={handleCloseWalletPrompt}
-              style={{
-                position: "absolute",
-                top: 10,
-                right: 10,
-                background: "transparent",
-                color: "#fff5e1",
-                border: "none",
-                fontSize: 24,
-                cursor: "pointer",
-                fontWeight: "bold",
-                lineHeight: 1,
-              }}
-              aria-label="Close"
-            >
-              &times;
-            </button>
-            <h3>
-              Please connect your wallet to purchase tokens.
-            </h3>
-            <button
-              onClick={handleCloseWalletPrompt}
-              style={{
-                marginTop: "20px",
-                background: "#FFA726",
-                color: "#1a0000",
-                padding: "10px 20px",
-                borderRadius: "8px",
-                border: "none",
-                fontWeight: "bold",
-                cursor: "pointer",
-              }}
-            >
-              OK
-            </button>
-          </div>
-        </div>
+          onClose={() => setShowWalletModal(false)}
+        />
       )}
     </div>
   );
