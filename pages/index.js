@@ -11,11 +11,13 @@ export default function Home() {
   const [showAdmin, setShowAdmin] = useState(false);
   const [balance, setBalance] = useState(0);
   const [tokens, setTokens] = useState(0);
+  const [walletPrompt, setWalletPrompt] = useState(false);
 
   useEffect(() => {
     if (user?.walletAddress) {
       fetchBalance();
     }
+    // eslint-disable-next-line
   }, [user]);
 
   const fetchBalance = async () => {
@@ -35,10 +37,24 @@ export default function Home() {
     }
   };
 
+  // Only open modal if wallet is connected
+  const handleOpenModal = (mode) => {
+    if (user && user.walletAddress) {
+      setBuyModal(mode);
+    } else {
+      setWalletPrompt(true);
+    }
+  };
+
+  // Close wallet prompt
+  const handleCloseWalletPrompt = () =>
+    setWalletPrompt(false);
+
   return (
     <div
       style={{
         minHeight: "100vh",
+        height: "100vh",
         background:
           "linear-gradient(135deg, #3a001a 70%, #e9d5ff 100%)",
         color: "#fff5e1",
@@ -47,6 +63,7 @@ export default function Home() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        overflow: "hidden",
       }}
     >
       <button
@@ -170,7 +187,7 @@ export default function Home() {
             }}
           >
             <button
-              onClick={() => setBuyModal("fixed")}
+              onClick={() => handleOpenModal("fixed")}
               style={{
                 background:
                   "linear-gradient(90deg, #1DE9B6, #4d0000)",
@@ -184,7 +201,7 @@ export default function Home() {
               Gear 2: Fixed (₦1000)
             </button>
             <button
-              onClick={() => setBuyModal("flex")}
+              onClick={() => handleOpenModal("flex")}
               style={{
                 background:
                   "linear-gradient(90deg, #FF69B4, #FFA726)",
@@ -241,6 +258,75 @@ export default function Home() {
           user={user}
           onPurchase={fetchBalance}
         />
+      )}
+
+      {/* Wallet connect prompt modal */}
+      {walletPrompt && (
+        <div
+          onClick={handleCloseWalletPrompt}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0,0,0,0.7)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              background: "#4d0000",
+              color: "#fff5e1",
+              padding: "30px",
+              borderRadius: "15px",
+              textAlign: "center",
+              minWidth: "250px",
+              position: "relative",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={handleCloseWalletPrompt}
+              style={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+                background: "transparent",
+                color: "#fff5e1",
+                border: "none",
+                fontSize: 24,
+                cursor: "pointer",
+                fontWeight: "bold",
+                lineHeight: 1,
+              }}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <h3>
+              Please connect your wallet to purchase tokens.
+            </h3>
+            <button
+              onClick={handleCloseWalletPrompt}
+              style={{
+                marginTop: "20px",
+                background: "#FFA726",
+                color: "#1a0000",
+                padding: "10px 20px",
+                borderRadius: "8px",
+                border: "none",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
+              OK
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
