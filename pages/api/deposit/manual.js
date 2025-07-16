@@ -1,5 +1,4 @@
-import { connectToDB } from '../../../lib/db';
-import { uploadToS3 } from '../../../lib/s3';
+ import { connectToDB } from '../../../lib/db';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -13,23 +12,21 @@ export default async function handler(req, res) {
     const purchaseType = formData.get('purchaseType');
     const proofFile = formData.get('proof');
     
-    // Upload proof to S3
-    let proofUrl = '';
+    let proofBase64 = '';
     if (proofFile && proofFile.size > 0) {
       const buffer = await proofFile.arrayBuffer();
-      proofUrl = await uploadToS3(Buffer.from(buffer), proofFile.name);
+      proofBase64 = Buffer.from(buffer).toString('base64');
     }
 
     const db = await connectToDB();
     
-    // Create transaction record
     const transaction = {
       walletAddress,
       amount,
       purchaseType,
       status: 'pending',
       method: 'manual',
-      proofUrl,
+      proofBase64,
       createdAt: new Date()
     };
     
