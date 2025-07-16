@@ -1,4 +1,4 @@
-import { useState } from 'react';
+ import { useState } from 'react';
 
 export default function BuyModal({ mode, onClose, user, onPurchase }) {
   const [amount, setAmount] = useState(mode === 'fixed' ? 1000 : '');
@@ -26,50 +26,32 @@ export default function BuyModal({ mode, onClose, user, onPurchase }) {
         ? '/api/deposit/flutterwave' 
         : '/api/deposit/manual';
 
-      const payload = {
-        walletAddress: user.walletAddress,
-        amount: mode === 'fixed' ? 1000 : amount,
-        purchaseType: mode
-      };
+      const formData = new FormData();
+      formData.append('walletAddress', user.walletAddress);
+      formData.append('amount', mode === 'fixed' ? 1000 : amount);
+      formData.append('purchaseType', mode);
 
-      if (paymentMethod === 'manual') {
-        const formData = new FormData();
-        formData.append('walletAddress', user.walletAddress);
-        formData.append('amount', payload.amount);
-        formData.append('purchaseType', mode);
+      if (paymentMethod === 'manual' && proof) {
         formData.append('proof', proof);
-        
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          body: formData
-        });
-        
-        const result = await response.json();
-        if (response.ok) {
-          setMessage('Deposit submitted for admin approval');
-        } else {
-          throw new Error(result.error || 'Deposit failed');
-        }
-      } else {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        
-        const result = await response.json();
-        if (response.ok) {
-          // Redirect to Flutterwave payment page
+      }
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: formData
+      });
+      
+      const result = await response.json();
+      if (response.ok) {
+        if (paymentMethod === 'flutterwave') {
           window.open(result.paymentLink, '_blank');
           setMessage('Payment link opened in new tab');
         } else {
-          throw new Error(result.error || 'Payment failed');
+          setMessage('Deposit submitted for admin approval');
         }
+        if (onPurchase) setTimeout(onPurchase, 3000);
+      } else {
+        throw new Error(result.error || 'Transaction failed');
       }
-      
-      // Refresh balance after successful submission
-      if (onPurchase) setTimeout(onPurchase, 3000);
-      
     } catch (error) {
       setMessage(error.message || 'Transaction failed');
     } finally {
@@ -116,72 +98,72 @@ export default function BuyModal({ mode, onClose, user, onPurchase }) {
         )}
 
         <div style={{ marginBottom: '15px' }}>
-          <label>Payment Method:</label>
-          <select
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-            style={{ width: '100%', padding: '10px', borderRadius: '5px', border: 'none' }}
-          >
-            <option value="flutterwave">Flutterwave</option>
-            <option value="manual">Manual Bank Deposit</option>
-          </select>
-        </div>
-
-        {paymentMethod === 'manual' && (
-          <div style={{ marginBottom: '15px' }}>
-            <label>Proof of Payment:</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setProof(e.target.files[0])}
-              style={{ width: '100%' }}
-            />
+            <label>Payment Method:</label>
+            <select
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              style={{ width: '100%', padding: '10px', borderRadius: '5px', border: 'none' }}
+            >
+              <option value="flutterwave">Flutterwave</option>
+              <option value="manual">Manual Bank Deposit</option>
+            </select>
           </div>
-        )}
 
-        {message && (
-          <p style={{ 
-            color: message.includes('success') ? '#1DE9B6' : '#FF69B4',
-            textAlign: 'center',
-            margin: '10px 0'
-          }}>
-            {message}
-          </p>
-        )}
+          {paymentMethod === 'manual' && (
+            <div style={{ marginBottom: '15px' }}>
+              <label>Proof of Payment:</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setProof(e.target.files[0])}
+                style={{ width: '100%' }}
+              />
+            </div>
+          )}
 
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button
-            onClick={handleSubmit}
-            disabled={loading}
-            style={{
-              background: '#FFA726',
-              color: '#1a0000',
-              padding: '10px',
-              borderRadius: '5px',
-              border: 'none',
-              fontWeight: 'bold',
-              flex: 1,
-              cursor: loading ? 'not-allowed' : 'pointer'
-            }}
-          >
-            {loading ? 'Processing...' : 'Submit'}
-          </button>
-          <button
-            onClick={onClose}
-            style={{
-              background: '#FF69B4',
-              color: 'white',
-              padding: '10px',
-              borderRadius: '5px',
-              border: 'none',
-              fontWeight: 'bold',
-              flex: 1
-            }}
-          >
-            Cancel
-          </button>
+          {message && (
+            <p style={{ 
+              color: message.includes('success') ? '#1DE9B6' : '#FF69B4',
+              textAlign: 'center',
+              margin: '10px 0'
+            }}>
+              {message}
+            </p>
+          )}
+
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              style={{
+                background: '#FFA726',
+                color: '#1a0000',
+                padding: '10px',
+                borderRadius: '5px',
+                border: 'none',
+                fontWeight: 'bold',
+                flex: 1,
+                cursor: loading ? 'not-allowed' : 'pointer'
+              }}
+            >
+              {loading ? 'Processing...' : 'Submit'}
+            </button>
+            <button
+              onClick={onClose}
+              style={{
+                background: '#FF69B4',
+                color: 'white',
+                padding: '10px',
+                borderRadius: '5px',
+                border: 'none',
+                fontWeight: 'bold',
+                flex: 1
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
