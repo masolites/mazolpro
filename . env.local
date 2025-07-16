@@ -1,6 +1,5 @@
-MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/mazolpro
-MONGODB_DBNAME=mazolpro
-FLW_PUBLIC_KEY=FLWPUBK-a0759cfa649b1e7ae3c7c9fa1f185c3b-X
-FLW_SECRET_KEY=FLWSECK-03ad571d0267524dbfcc0b609c88fa1d-19791f7b1devt-X
-ADMIN_PASSWORD=amabeth41
-BASE_URL=https://your-vercel-app.vercel.app
+THIRDWEB_CLIENT_ID=your_thirdweb_client_id
+THIRDWEB_SECRET_KEY=your_thirdweb_secret_key
+MZLX_TOKEN_CONTRACT=your_token_contract_address
+FLUTTERWAVE_SECRET_KEY=your_flutterwave_secret_key
+NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_thirdweb_client_id
