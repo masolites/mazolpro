@@ -1,13 +1,12 @@
- import { useState, useEffect } from "react";
+ import { useEffect, useState } from "react";
 import { useConnect } from "thirdweb/react";
-import {
-  createWallet,
-  embeddedWallet,
-} from "thirdweb/wallets";
+import { createWallet } from "thirdweb/wallets";
 
 export default function WalletConnect({ onConnect }) {
   const [wallet, setWallet] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const connect = useConnect();
 
   useEffect(() => {
     if (wallet && wallet.address) {
@@ -22,42 +21,17 @@ export default function WalletConnect({ onConnect }) {
     // eslint-disable-next-line
   }, [wallet]);
 
-  const connect = useConnect();
-
   const handleConnect = async () => {
     setLoading(true);
     try {
+      // This will open MetaMask immediately
       const connectedWallet = await connect(
         createWallet("io.metamask"),
       );
       setWallet(connectedWallet);
     } catch (error) {
-      console.error("Connection failed:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCreateEmbeddedWallet = async () => {
-    setLoading(true);
-    try {
-      // You can use email or PIN as identifier for embedded wallet
-      const email = prompt(
-        "Enter your email for wallet recovery:",
-      );
-      if (!email) {
-        setLoading(false);
-        return;
-      }
-      const embedded = await connect(
-        embeddedWallet({ email }),
-      );
-      setWallet(embedded);
-    } catch (error) {
-      console.error(
-        "Embedded wallet creation failed:",
-        error,
-      );
+      alert("MetaMask connection failed or was cancelled.");
+      setWallet(null);
     } finally {
       setLoading(false);
     }
@@ -96,38 +70,21 @@ export default function WalletConnect({ onConnect }) {
           </button>
         </div>
       ) : (
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button
-            onClick={handleConnect}
-            disabled={loading}
-            style={{
-              background:
-                "linear-gradient(90deg, #1DE9B6, #4d0000)",
-              color: "white",
-              padding: "10px 15px",
-              borderRadius: "10px",
-              border: "none",
-              fontWeight: "bold",
-            }}
-          >
-            {loading ? "Connecting..." : "Connect Wallet"}
-          </button>
-          <button
-            onClick={handleCreateEmbeddedWallet}
-            disabled={loading}
-            style={{
-              background:
-                "linear-gradient(90deg, #FFA726, #4d0000)",
-              color: "white",
-              padding: "10px 15px",
-              borderRadius: "10px",
-              border: "none",
-              fontWeight: "bold",
-            }}
-          >
-            {loading ? "Creating..." : "Create Wallet"}
-          </button>
-        </div>
+        <button
+          onClick={handleConnect}
+          disabled={loading}
+          style={{
+            background:
+              "linear-gradient(90deg, #1DE9B6, #4d0000)",
+            color: "white",
+            padding: "10px 15px",
+            borderRadius: "10px",
+            border: "none",
+            fontWeight: "bold",
+          }}
+        >
+          {loading ? "Connecting..." : "Connect Wallet"}
+        </button>
       )}
     </div>
   );
