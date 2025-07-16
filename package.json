@@ -1,4 +1,4 @@
-{
+ {
   "name": "mazolpro",
   "version": "1.0.0",
   "scripts": {
@@ -12,7 +12,6 @@
     "react-dom": "^18.2.0",
     "mongodb": "^5.7.0",
     "flutterwave-node-v3": "^1.0.5",
-    "@thirdweb-dev/react": "^3.16.5",
-    "@thirdweb-dev/sdk": "^3.16.5"
+    "thirdweb": "^5.0.0"
   }
 }
