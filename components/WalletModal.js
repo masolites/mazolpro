@@ -22,7 +22,13 @@ export default function WalletModal({ onWallet, onClose }) {
       const wallet = await connect(
         createWallet("io.metamask"),
       );
-      onWallet(wallet);
+      if (wallet && wallet.address) {
+        onWallet(wallet);
+      } else {
+        setError(
+          "MetaMask connection failed or cancelled.",
+        );
+      }
     } catch (e) {
       setError("MetaMask connection failed or cancelled.");
     }
@@ -50,9 +56,13 @@ export default function WalletModal({ onWallet, onClose }) {
       const wallet = await connect(
         embeddedWallet({ email, password: pin }),
       );
-      onWallet(wallet);
+      if (wallet && wallet.address) {
+        onWallet(wallet);
+      } else {
+        setError("Embedded wallet creation failed.");
+      }
     } catch (e) {
-      setError("Wallet creation failed.");
+      setError("Embedded wallet creation failed.");
     }
     setLoading(false);
   };
