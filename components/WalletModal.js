@@ -1,9 +1,8 @@
-import { useState } from "react";
+ import { useState } from "react";
 import { useConnect } from "thirdweb/react";
 import {
   createWallet,
   embeddedWallet,
-  trustWallet,
 } from "thirdweb/wallets";
 
 export default function WalletModal({ onWallet, onClose }) {
@@ -26,21 +25,6 @@ export default function WalletModal({ onWallet, onClose }) {
       onWallet(wallet);
     } catch (e) {
       setError("MetaMask connection failed or cancelled.");
-    }
-    setLoading(false);
-  };
-
-  // Connect Trust Wallet
-  const handleConnectTrust = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const wallet = await connect(trustWallet());
-      onWallet(wallet);
-    } catch (e) {
-      setError(
-        "Trust Wallet connection failed or cancelled.",
-      );
     }
     setLoading(false);
   };
@@ -125,8 +109,8 @@ export default function WalletModal({ onWallet, onClose }) {
               Get Started
             </h2>
             <p style={{ textAlign: "center" }}>
-              Please connect an existing wallet or create a
-              new wallet to continue.
+              Please connect MetaMask or create a new wallet
+              to continue.
             </p>
             <div
               style={{
@@ -153,24 +137,6 @@ export default function WalletModal({ onWallet, onClose }) {
                 {loading
                   ? "Connecting..."
                   : "Connect MetaMask"}
-              </button>
-              <button
-                onClick={handleConnectTrust}
-                disabled={loading}
-                style={{
-                  background: "#FFA726",
-                  color: "#4d0000",
-                  padding: "12px",
-                  borderRadius: "10px",
-                  border: "none",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                }}
-              >
-                {loading
-                  ? "Connecting..."
-                  : "Connect Trust Wallet"}
               </button>
               <button
                 onClick={() => setShowCreate(true)}
