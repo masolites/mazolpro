@@ -1,12 +1,14 @@
- import { useEffect, useState } from "react";
+ import { useState, useEffect } from "react";
 import { useConnect } from "thirdweb/react";
-import { createWallet } from "thirdweb/wallets";
+import {
+  createWallet,
+  embeddedWallet,
+} from "thirdweb/wallets";
 
 export default function WalletConnect({ onConnect }) {
   const [wallet, setWallet] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Listen for wallet changes and update parent
   useEffect(() => {
     if (wallet && wallet.address) {
       onConnect({
@@ -31,6 +33,31 @@ export default function WalletConnect({ onConnect }) {
       setWallet(connectedWallet);
     } catch (error) {
       console.error("Connection failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateEmbeddedWallet = async () => {
+    setLoading(true);
+    try {
+      // You can use email or PIN as identifier for embedded wallet
+      const email = prompt(
+        "Enter your email for wallet recovery:",
+      );
+      if (!email) {
+        setLoading(false);
+        return;
+      }
+      const embedded = await connect(
+        embeddedWallet({ email }),
+      );
+      setWallet(embedded);
+    } catch (error) {
+      console.error(
+        "Embedded wallet creation failed:",
+        error,
+      );
     } finally {
       setLoading(false);
     }
@@ -69,21 +96,38 @@ export default function WalletConnect({ onConnect }) {
           </button>
         </div>
       ) : (
-        <button
-          onClick={handleConnect}
-          disabled={loading}
-          style={{
-            background:
-              "linear-gradient(90deg, #1DE9B6, #4d0000)",
-            color: "white",
-            padding: "10px 15px",
-            borderRadius: "10px",
-            border: "none",
-            fontWeight: "bold",
-          }}
-        >
-          {loading ? "Connecting..." : "Connect Wallet"}
-        </button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={handleConnect}
+            disabled={loading}
+            style={{
+              background:
+                "linear-gradient(90deg, #1DE9B6, #4d0000)",
+              color: "white",
+              padding: "10px 15px",
+              borderRadius: "10px",
+              border: "none",
+              fontWeight: "bold",
+            }}
+          >
+            {loading ? "Connecting..." : "Connect Wallet"}
+          </button>
+          <button
+            onClick={handleCreateEmbeddedWallet}
+            disabled={loading}
+            style={{
+              background:
+                "linear-gradient(90deg, #FFA726, #4d0000)",
+              color: "white",
+              padding: "10px 15px",
+              borderRadius: "10px",
+              border: "none",
+              fontWeight: "bold",
+            }}
+          >
+            {loading ? "Creating..." : "Create Wallet"}
+          </button>
+        </div>
       )}
     </div>
   );
