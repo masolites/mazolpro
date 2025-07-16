@@ -1,40 +1,38 @@
- import { useState, useEffect } from "react";
-import { ConnectButton } from "thirdweb/react";
-import WalletModal from "../components/WalletModal";
+import { useState } from "react";
+import {
+  ConnectButton,
+  useActiveAccount,
+} from "thirdweb/react";
 import BuyModal from "../components/BuyModal";
-import MiningCounter from "../components/MiningCounter";
-import AdminPanel from "../components/AdminPanel";
-
-// ...rest of your code
 
 export default function Home() {
-  // ...your state and logic
+  const [showBuy, setShowBuy] = useState(false);
+  const account = useActiveAccount();
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        height: "100vh",
-        background: "linear-gradient(135deg, #3a001a 70%, #e9d5ff 100%)",
-        color: "#fff5e1",
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        overflow: "hidden",
-      }}
-    >
-      {/* Add ConnectButton at the top right */}
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end",
-          marginBottom: "20px",
-        }}
+    <div style={{ padding: 32 }}>
+      <h1>MAZOL MZLx Private Sale</h1>
+      <ConnectButton
+        clientId={
+          process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID
+        }
+      />
+      <button
+        onClick={() => setShowBuy(true)}
+        style={{ marginTop: 24 }}
       >
-        <ConnectButton clientId="71e20f4fe4537525ee7c766d094b27b1" />
-      </div>
+        Buy Tokens
+      </button>
+      {showBuy && (
+        <BuyModal onClose={() => setShowBuy(false)} />
+      )}
+      {account && (
+        <div style={{ marginTop: 16 }}>
+          Connected: {account.address.slice(0, 6)}...
+          {account.address.slice(-4)}
+        </div>
+      )}
+    </div>
+  );
+}
 
-      {/* ...rest of your UI */}
