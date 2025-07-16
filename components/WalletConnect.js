@@ -1,32 +1,27 @@
- import {
-  useAddress,
-  useDisconnect,
+ import { useState } from "react";
+import {
   useConnect,
+  useConnectionStatus,
+  useActiveWallet,
+  useDisconnect,
 } from "thirdweb/react";
-import { metamaskWallet } from "thirdweb/wallets";
-import { useEffect, useState } from "react";
+import {
+  createWallet,
+  metamaskWallet,
+} from "thirdweb/wallets";
 
 export default function WalletConnect({ onConnect }) {
-  const address = useAddress();
   const connect = useConnect();
-  const disconnectWallet = useDisconnect();
+  const disconnect = useDisconnect();
+  const connectionStatus = useConnectionStatus();
+  const activeWallet = useActiveWallet();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (address) {
-      onConnect({
-        walletAddress: address,
-        balance: 0,
-        tokens: 0,
-      });
-    }
-    // eslint-disable-next-line
-  }, [address]);
 
   const handleConnect = async () => {
     setLoading(true);
     try {
       await connect(metamaskWallet());
+      // onConnect will be called in useEffect below
     } catch (error) {
       console.error("Connection failed:", error);
     } finally {
@@ -34,9 +29,21 @@ export default function WalletConnect({ onConnect }) {
     }
   };
 
+  // Call onConnect when wallet is connected
+  React.useEffect(() => {
+    if (activeWallet?.address) {
+      onConnect({
+        walletAddress: activeWallet.address,
+        balance: 0,
+        tokens: 0,
+      });
+    }
+    // eslint-disable-next-line
+  }, [activeWallet?.address]);
+
   return (
     <div>
-      {address ? (
+      {activeWallet?.address ? (
         <div
           style={{
             display: "flex",
@@ -45,10 +52,11 @@ export default function WalletConnect({ onConnect }) {
           }}
         >
           <span>
-            {address.slice(0, 6)}...{address.slice(-4)}
+            {activeWallet.address.slice(0, 6)}...
+            {activeWallet.address.slice(-4)}
           </span>
           <button
-            onClick={disconnectWallet}
+            onClick={disconnect}
             style={{
               background: "#FF69B4",
               color: "white",
@@ -63,7 +71,9 @@ export default function WalletConnect({ onConnect }) {
       ) : (
         <button
           onClick={handleConnect}
-          disabled={loading}
+          disabled={
+            loading || connectionStatus === "connecting"
+          }
           style={{
             background:
               "linear-gradient(90deg, #1DE9B6, #4d0000)",
@@ -74,7 +84,9 @@ export default function WalletConnect({ onConnect }) {
             fontWeight: "bold",
           }}
         >
-          {loading ? "Connecting..." : "Connect Wallet"}
+          {loading || connectionStatus === "connecting"
+            ? "Connecting..."
+            : "Connect Wallet"}
         </button>
       )}
     </div>
