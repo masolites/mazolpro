@@ -46,7 +46,6 @@ export default function AdminPanel({ onClose }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // In production, verify password with backend
     if (password === process.env.ADMIN_PASSWORD) {
       setAuthenticated(true);
     } else {
@@ -175,10 +174,12 @@ export default function AdminPanel({ onClose }) {
                   <td style={{ padding: '10px' }}>₦{deposit.amount}</td>
                   <td style={{ padding: '10px' }}>{deposit.purchaseType}</td>
                   <td style={{ padding: '10px' }}>
-                    {deposit.proofUrl && (
-                      <a href={deposit.proofUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#1DE9B6' }}>
-                        View
-                      </a>
+                    {deposit.proofBase64 && (
+                      <img 
+                        src={`data:image/jpeg;base64,${deposit.proofBase64}`} 
+                        alt="Proof" 
+                        style={{ width: '100px', height: 'auto' }}
+                      />
                     )}
                   </td>
                   <td style={{ padding: '10px' }}>
