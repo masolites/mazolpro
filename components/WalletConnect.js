@@ -1,5 +1,5 @@
+ import { useAddress, useDisconnect, useMetamask } from '@thirdweb-dev/react';
 import { useState } from 'react';
-import { useAddress, useDisconnect, useMetamask } from '@thirdweb-dev/react';
 
 export default function WalletConnect({ onConnect }) {
   const address = useAddress();
@@ -11,7 +11,6 @@ export default function WalletConnect({ onConnect }) {
     setLoading(true);
     try {
       await connectWithMetamask();
-      // Simulate user creation in DB
       const user = {
         walletAddress: address,
         balance: 0,
