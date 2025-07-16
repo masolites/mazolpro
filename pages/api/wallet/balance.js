@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     const user = await db.collection('users').findOne({ walletAddress });
     
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(200).json({ balance: 0, tokens: 0 });
     }
 
     res.status(200).json({
