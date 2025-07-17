@@ -1,38 +1,31 @@
-import { ThirdwebSDK } from "thirdweb";
+ import { ThirdwebSDK } from "thirdweb";
 import fetch from "node-fetch";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
 
-  const { walletAddress, nairaAmount, mode } = req.body;
+  const { walletAddress, nairaAmount, paymentMethod, paymentReference, paymentDateTime, email } = req.body;
 
-  // 1. (Pseudo) Start and verify Flutterwave payment here
-  // In production, you should verify the paymentReference from Flutterwave webhook or client
-  // For demo, assume payment is always successful
-
-  // 2. Calculate tokens to send
-  let tokensToSend;
-  if (mode === "fixed") {
-    tokensToSend = 1000 * 1000; // e.g., 1 Naira = 1000 tokens, adjust as needed
-  } else {
-    tokensToSend = nairaAmount * 1000;
+  // Validate required fields
+  if (!walletAddress || !nairaAmount) {
+    return res.status(400).json({ error: "Missing required fields." });
   }
 
-  // 3. Transfer tokens from your wallet to buyer
+  // Calculate tokens to send
+  const tokensToSend = nairaAmount * 1000; // Adjust as needed
+
+  // Initialize Thirdweb SDK (server-side only)
   const sdk = new ThirdwebSDK("binance", {
     clientId: process.env.THIRDWEB_CLIENT_ID,
     secretKey: process.env.THIRDWEB_SECRET_KEY,
   });
-  const contract = await sdk.getContract(
-    process.env.MZLX_TOKEN_CONTRACT,
-  );
 
-  const tx = await contract.erc20.transfer(
-    walletAddress,
-    tokensToSend,
-  );
+  const contract = await sdk.getContract(process.env.MZLX_TOKEN_CONTRACT);
 
-  // 4. (Optional) Add MLM/affiliate logic here
-
-  return res.status(200).json({ success: true, tx });
+  try {
+    const tx = await contract.erc20.transfer(walletAddress, tokensToSend);
+    return res.status(200).json({ success: true, tx });
+  } catch (error) {
+    return res.status(500).json({ error: error.message || "Token transfer failed." });
+  }
 }
