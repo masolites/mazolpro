@@ -1,19 +1,17 @@
 // pages/_app.js
 import { ThirdwebProvider } from "thirdweb/react";
 
+// Debug log to check if the env variable is available at build time
+console.log(
+  "DEBUG: NEXT_PUBLIC_THIRDWEB_CLIENT_ID =",
+  process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID,
+);
+
 const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
 
-if (!clientId) {
-  // This will show up in the build log if the env var is missing
-  console.warn(
-    "WARNING: NEXT_PUBLIC_THIRDWEB_CLIENT_ID is not set! The app will not work properly.",
-  );
-}
-
 export default function App({ Component, pageProps }) {
-  // Only render the provider if clientId is present
   if (!clientId) {
-    // Show a simple error message if the env var is missing
+    // Show a clear error in the browser if the env var is missing
     return (
       <div style={{ padding: 32, color: "red" }}>
         <h1>Configuration Error</h1>
