@@ -1,8 +1,5 @@
  import { useState } from "react";
-import {
-  ConnectButton,
-  useActiveAccount,
-} from "thirdweb/react";
+import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import BuyModal from "../components/BuyModal";
 
 export default function Home() {
@@ -12,20 +9,14 @@ export default function Home() {
   return (
     <div style={{ padding: 32 }}>
       <h1>MAZOL MZLx Private Sale</h1>
-      <ConnectButton
-        clientId={
-          process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID
-        }
-      />
+      <ConnectButton clientId="71e20f4fe4537525ee7c766d094b27b1" />
       <button
         onClick={() => setShowBuy(true)}
         style={{ marginTop: 24 }}
       >
         Buy Tokens
       </button>
-      {showBuy && (
-        <BuyModal onClose={() => setShowBuy(false)} />
-      )}
+      {showBuy && <BuyModal onClose={() => setShowBuy(false)} />}
       {account && (
         <div style={{ marginTop: 16 }}>
           Connected: {account.address.slice(0, 6)}...
