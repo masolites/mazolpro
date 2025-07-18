@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
   // 3. Transfer tokens from your wallet to buyer
   const sdk = new ThirdwebSDK("binance", {
-    clientId: "23ca42a52fded0d2d5adb5f79c92030e", // Hardcoded for reliability
+    clientId: process.env.THIRDWEB_CLIENT_ID,
     secretKey: process.env.THIRDWEB_SECRET_KEY,
   });
   const contract = await sdk.getContract(
