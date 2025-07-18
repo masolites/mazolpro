@@ -1,24 +1,41 @@
-import dynamic from "next/dynamic";
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useActiveAccount } from "thirdweb/react";
 
-const ConnectButton = dynamic(
-  () => import("thirdweb/react").then((mod) => mod.ConnectButton),
-  { ssr: false, loading: () => <button disabled>Connecting...</button> }
-);
-
-const BuyModal = dynamic(() => import("../components/BuyModal"), { ssr: false });
+const BuyModal = dynamic(() => import('../components/BuyModal'), {
+  ssr: false,
+  loading: () => <div>Loading purchase interface...</div>
+});
 
 export default function Home() {
+  const [showModal, setShowModal] = useState(false);
+  const account = useActiveAccount();
+
   return (
-    <div style={{ padding: 20 }}>
-      <h1>MAZOL MZLx Private Sale</h1>
-      <ConnectButton />
+    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
+      <h1>MAZOL MZLx Token Sale</h1>
       
-      <button 
-        onClick={() => setShowBuy(true)}
-        style={{ marginTop: 20 }}
-      >
-        Buy Tokens
-      </button>
-    </div>
+      <div style={{ margin: '2rem 0' }}>
+        <ConnectButton />
+      </div>
+
+      {account && (
+        <button 
+          onClick={() => setShowModal(true)}
+          style={{
+            padding: '12px 24px',
+            background: '#3182ce',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Buy MZLx Tokens
+        </button>
+      )}
+
+      {showModal && <BuyModal onClose={() => setShowModal(false)} />}
+    </main>
   );
 }
