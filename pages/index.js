@@ -1,4 +1,4 @@
- import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
 
 const ConnectButton = dynamic(
   () => import("thirdweb/react").then((mod) => mod.ConnectButton),
