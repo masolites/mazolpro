@@ -1,39 +1,26 @@
  import { useState } from "react";
-import {
-  useActiveAccount,
-  ConnectButton,
-} from "thirdweb/react";
+import { useActiveAccount, ConnectButton } from "thirdweb/react";
 import Script from "next/script";
 
 export default function BuyModal({ onClose }) {
   const account = useActiveAccount();
   const [amount, setAmount] = useState("");
   const [email, setEmail] = useState("");
-  const [paymentMethod, setPaymentMethod] =
-    useState("flutterwave");
-  const [paymentDateTime, setPaymentDateTime] =
-    useState("");
+  const [paymentMethod, setPaymentMethod] = useState("flutterwave");
+  const [paymentDateTime, setPaymentDateTime] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Launch Flutterwave modal
-  const startFlutterwavePayment = ({
-    amount,
-    email,
-    onSuccess,
-    onClose,
-  }) => {
-    if (!window.FlutterwaveCheckout) {
-      setMessage(
-        "Flutterwave SDK not loaded. Please try again.",
-      );
+  const startFlutterwavePayment = ({ amount, email, onSuccess, onClose }) => {
+    if (typeof window === 'undefined' || !window.FlutterwaveCheckout) {
+      setMessage("Flutterwave SDK not loaded. Please try again.");
       setLoading(false);
       return;
     }
+    
     window.FlutterwaveCheckout({
-      public_key:
-        process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY,
-      tx_ref: "MZLX-" + Date.now(),
+      public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY,
+      tx_ref: "MZLx-" + Date.now(),
       amount: Number(amount),
       currency: "NGN",
       payment_options: "card,banktransfer,ussd",
@@ -55,7 +42,6 @@ export default function BuyModal({ onClose }) {
     });
   };
 
-  // Handle purchase
   const handleBuy = async () => {
     setMessage("");
     if (!account) {
@@ -71,9 +57,7 @@ export default function BuyModal({ onClose }) {
       return;
     }
     if (paymentMethod === "manual" && !paymentDateTime) {
-      setMessage(
-        "Please select the date and time of payment.",
-      );
+      setMessage("Please select the date and time of payment.");
       return;
     }
 
@@ -84,27 +68,26 @@ export default function BuyModal({ onClose }) {
         amount,
         email,
         onSuccess: async (paymentData) => {
-          // Send payment reference to backend for verification and token transfer
-          const res = await fetch("/api/mazol-purchase", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              walletAddress: account.address,
-              nairaAmount: Number(amount),
-              paymentReference: paymentData.transaction_id,
-              paymentMethod: "flutterwave",
-              email,
-            }),
-          });
-          const data = await res.json();
-          if (res.ok) {
-            setMessage(
-              "Tokens will be sent to your wallet after payment verification.",
-            );
-          } else {
-            setMessage(
-              data.error || "Token transfer failed.",
-            );
+          try {
+            const res = await fetch("/api/mazol-purchase", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                walletAddress: account.address,
+                nairaAmount: Number(amount),
+                paymentReference: paymentData.transaction_id,
+                paymentMethod: "flutterwave",
+                email,
+              }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+              setMessage("Tokens will be sent to your wallet after payment verification.");
+            } else {
+              setMessage(data.error || "Token transfer failed.");
+            }
+          } catch (error) {
+            setMessage("An error occurred during payment processing.");
           }
           setLoading(false);
         },
@@ -114,30 +97,30 @@ export default function BuyModal({ onClose }) {
         },
       });
     } else if (paymentMethod === "manual") {
-      // Send manual deposit info to backend for admin approval
-      const res = await fetch("/api/mazol-purchase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          walletAddress: account.address,
-          nairaAmount: Number(amount),
-          paymentDateTime,
-          paymentMethod: "manual",
-        }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMessage(
-          "Deposit submitted for admin approval. Tokens will be sent after approval.",
-        );
-      } else {
-        setMessage(data.error || "Submission failed.");
+      try {
+        const res = await fetch("/api/mazol-purchase", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            walletAddress: account.address,
+            nairaAmount: Number(amount),
+            paymentDateTime,
+            paymentMethod: "manual",
+          }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          setMessage("Deposit submitted for admin approval. Tokens will be sent after approval.");
+        } else {
+          setMessage(data.error || "Submission failed.");
+        }
+      } catch (error) {
+        setMessage("An error occurred during submission.");
       }
       setLoading(false);
     }
   };
 
-  // Allow clicking the overlay to close the modal
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -146,11 +129,7 @@ export default function BuyModal({ onClose }) {
 
   return (
     <>
-      {/* Flutterwave Inline SDK */}
-      <Script
-        src="https://checkout.flutterwave.com/v3.js"
-        strategy="beforeInteractive"
-      />
+      <Script src="https://checkout.flutterwave.com/v3.js" strategy="beforeInteractive" />
       <div
         onClick={handleOverlayClick}
         style={{
@@ -196,15 +175,9 @@ export default function BuyModal({ onClose }) {
           >
             &times;
           </button>
-          <h2 style={{ textAlign: "center" }}>
-            Buy MAZOL MZLx Tokens
-          </h2>
+          <h2 style={{ textAlign: "center" }}>Buy MAZOL MZLx Tokens</h2>
           <div style={{ marginBottom: 16 }}>
-            <ConnectButton
-              clientId={
-                process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID
-              }
-            />
+            <ConnectButton clientId="71e20f4fe4537525ee7c766d094b27b1" />
           </div>
           <div style={{ marginBottom: 16 }}>
             <label>Amount (₦):</label>
@@ -225,9 +198,7 @@ export default function BuyModal({ onClose }) {
             <label>Payment Method:</label>
             <select
               value={paymentMethod}
-              onChange={(e) =>
-                setPaymentMethod(e.target.value)
-              }
+              onChange={(e) => setPaymentMethod(e.target.value)}
               style={{
                 width: "100%",
                 padding: "10px",
@@ -235,12 +206,8 @@ export default function BuyModal({ onClose }) {
                 border: "1px solid #ccc",
               }}
             >
-              <option value="flutterwave">
-                Flutterwave
-              </option>
-              <option value="manual">
-                Manual Bank Deposit
-              </option>
+              <option value="flutterwave">Flutterwave</option>
+              <option value="manual">Manual Bank Deposit</option>
             </select>
           </div>
           {paymentMethod === "flutterwave" && (
@@ -282,9 +249,7 @@ export default function BuyModal({ onClose }) {
               <input
                 type="datetime-local"
                 value={paymentDateTime}
-                onChange={(e) =>
-                  setPaymentDateTime(e.target.value)
-                }
+                onChange={(e) => setPaymentDateTime(e.target.value)}
                 style={{
                   width: "100%",
                   padding: "10px",
@@ -297,9 +262,7 @@ export default function BuyModal({ onClose }) {
           {message && (
             <div
               style={{
-                color: message.includes("success")
-                  ? "#1DE9B6"
-                  : "#FF69B4",
+                color: message.includes("success") ? "#1DE9B6" : "#FF69B4",
                 marginTop: "15px",
                 textAlign: "center",
               }}
