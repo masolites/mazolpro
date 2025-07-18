@@ -1,33 +1,32 @@
-import { ThirdwebSDK } from "thirdweb";
+ import { ThirdwebSDK } from "thirdweb";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).end();
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
 
   try {
-    const { walletAddress, nairaAmount, paymentMethod } = req.body;
-
-    // Calculate tokens (1 NGN = 1000 tokens)
-    const tokensToSend = nairaAmount * 1000;
-
+    const { walletAddress, amount } = req.body;
+    
     const sdk = new ThirdwebSDK("binance", {
-      clientId: "71e20f4fe4537525ee7c766d094b27b1",
-      secretKey: process.env.THIRDWEB_SECRET_KEY,
+      clientId: process.env.THIRDWEB_CLIENT_ID,
+      secretKey: process.env.THIRDWEB_SECRET_KEY
     });
 
     const contract = await sdk.getContract(process.env.MZLx_TOKEN_CONTRACT);
+    const tokens = amount * 1000; // 1 NGN = 1000 tokens
 
-    const tx = await contract.erc20.transfer(walletAddress, tokensToSend);
+    const tx = await contract.erc20.transfer(walletAddress, tokens);
 
     return res.status(200).json({ 
-      success: true, 
-      txHash: tx.transactionHash,
-      message: `${tokensToSend.toLocaleString()} MZLx tokens sent to your wallet`
+      message: `Success! ${tokens.toLocaleString()} MZLx tokens sent`,
+      txHash: tx.transactionHash
     });
   } catch (error) {
-    console.error("Token transfer error:", error);
+    console.error('Purchase error:', error);
     return res.status(500).json({ 
-      error: "Token transfer failed",
-      details: error.message 
+      message: 'Transaction failed',
+      error: error.message 
     });
   }
 }
