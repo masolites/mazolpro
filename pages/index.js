@@ -1,4 +1,4 @@
-import { useState } from "react";
+ import { useState } from "react";
 import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import dynamic from "next/dynamic";
 
