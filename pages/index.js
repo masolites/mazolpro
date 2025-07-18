@@ -1,6 +1,11 @@
- import { useState } from "react";
+import { useState } from "react";
 import { ConnectButton, useActiveAccount } from "thirdweb/react";
-import BuyModal from "../components/BuyModal";
+import dynamic from "next/dynamic";
+
+// Dynamically import BuyModal to prevent SSR
+const BuyModal = dynamic(() => import("../components/BuyModal"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [showBuy, setShowBuy] = useState(false);
@@ -9,7 +14,7 @@ export default function Home() {
   return (
     <div style={{ padding: 32 }}>
       <h1>MAZOL MZLx Private Sale</h1>
-      <ConnectButton clientId="71e20f4fe4537525ee7c766d094b27b1" />
+      <ConnectButton />
       <button
         onClick={() => setShowBuy(true)}
         style={{ marginTop: 24 }}
