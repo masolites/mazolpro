@@ -1,12 +1,6 @@
-import { ThirdwebProvider } from "thirdweb/react";
+ import { ThirdwebProvider } from "thirdweb/react";
 
-// Debug log to check if the env variable is available at build time
-console.log(
-  "DEBUG: NEXT_PUBLIC_THIRDWEB_CLIENT_ID =",
-  process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID,
-);
-
-const clientId = "23ca42a52fded0d2d5adb5f79c92030e"; // Hardcoded for reliability
+const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
 
 export default function App({ Component, pageProps }) {
   if (!clientId) {
