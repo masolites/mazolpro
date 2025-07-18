@@ -1,10 +1,9 @@
- import { ThirdwebProvider } from "thirdweb/react";
+import { ThirdwebProvider } from "thirdweb/react";
 
 const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
 
 export default function App({ Component, pageProps }) {
   if (!clientId) {
-    // Show a clear error in the browser if the env var is missing
     return (
       <div style={{ padding: 32, color: "red" }}>
         <h1>Configuration Error</h1>
