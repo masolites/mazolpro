@@ -1,12 +1,9 @@
- import { useState } from "react";
+import { useState } from "react";
 import {
   useActiveAccount,
   ConnectButton,
 } from "thirdweb/react";
 import Script from "next/script";
-
-const THIRDWEB_CLIENT_ID =
-  "23ca42a52fded0d2d5adb5f79c92030e";
 
 export default function BuyModal({ onClose }) {
   const account = useActiveAccount();
@@ -203,7 +200,11 @@ export default function BuyModal({ onClose }) {
             Buy MAZOL MZLx Tokens
           </h2>
           <div style={{ marginBottom: 16 }}>
-            <ConnectButton clientId={THIRDWEB_CLIENT_ID} />
+            <ConnectButton
+              clientId={
+                process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID
+              }
+            />
           </div>
           <div style={{ marginBottom: 16 }}>
             <label>Amount (₦):</label>
