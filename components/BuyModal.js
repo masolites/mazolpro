@@ -1,66 +1,44 @@
 import { useActiveAccount } from "thirdweb/react";
-import { useState, useEffect } from "react";
-import Script from "next/script";
-import dynamic from "next/dynamic";
-
-const ConnectButton = dynamic(
-  () => import("thirdweb/react").then((mod) => mod.ConnectButton),
-  { ssr: false }
-);
+import { useState } from 'react';
+import Script from 'next/script';
 
 export default function BuyModal({ onClose }) {
-  const [mounted, setMounted] = useState(false);
   const account = useActiveAccount();
-  const [amount, setAmount] = useState("");
-  const [email, setEmail] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("flutterwave");
-  const [paymentDateTime, setPaymentDateTime] = useState("");
+  const [amount, setAmount] = useState('');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
-
-  const handleBuy = async () => {
-    if (!mounted) return;
-    
-    setMessage("");
+  const handlePurchase = async () => {
     if (!account) {
-      setMessage("Please connect your wallet first.");
-      return;
-    }
-    if (!amount || isNaN(amount) || Number(amount) < 200) {
-      setMessage("Enter a valid amount (min ₦200).");
-      return;
-    }
-    if (paymentMethod === "flutterwave" && !email) {
-      setMessage("Please enter your email.");
-      return;
-    }
-    if (paymentMethod === "manual" && !paymentDateTime) {
-      setMessage("Please select payment date/time.");
+      setMessage('Connect your wallet first');
       return;
     }
 
     setLoading(true);
-    
     try {
-      // Payment handling logic here
+      const response = await fetch('/api/purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          walletAddress: account.address,
+          amount,
+          email
+        })
+      });
+
+      const data = await response.json();
+      setMessage(data.message || 'Purchase initiated');
     } catch (error) {
-      console.error("Payment error:", error);
-      setMessage("An error occurred. Please try again.");
+      setMessage('Transaction failed');
     } finally {
       setLoading(false);
     }
   };
 
-  if (!mounted) return null;
-
   return (
     <>
-      <Script src="https://checkout.flutterwave.com/v3.js" strategy="beforeInteractive" />
+      <Script src="https://checkout.flutterwave.com/v3.js" />
       
       <div style={{
         position: 'fixed',
@@ -68,23 +46,60 @@ export default function BuyModal({ onClose }) {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.7)',
+        background: 'rgba(0,0,0,0.7)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 1000
       }} onClick={onClose}>
         <div style={{
-          backgroundColor: 'white',
-          borderRadius: '12px',
+          background: 'white',
           padding: '2rem',
-          width: '100%',
+          borderRadius: '8px',
           maxWidth: '500px',
-          position: 'relative'
-        }} onClick={(e) => e.stopPropagation()}>
-          {/* Modal content remains the same as before */}
+          width: '100%'
+        }} onClick={e => e.stopPropagation()}>
+          <h2>Purchase MZLx Tokens</h2>
+          
+          <div style={{ margin: '1rem 0' }}>
+            <label>Amount (NGN)</label>
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              style={{ width: '100%', padding: '8px' }}
+            />
+          </div>
+
+          <div style={{ margin: '1rem 0' }}>
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ width: '100%', padding: '8px' }}
+            />
+          </div>
+
+          {message && <p style={{ color: message.includes('failed') ? 'red' : 'green' }}>{message}</p>}
+
+          <button
+            onClick={handlePurchase}
+            disabled={loading}
+            style={{
+              padding: '12px 24px',
+              background: loading ? '#ccc' : '#3182ce',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              marginTop: '1rem'
+            }}
+          >
+            {loading ? 'Processing...' : 'Confirm Purchase'}
+          </button>
         </div>
       </div>
     </>
   );
-}
+    }
