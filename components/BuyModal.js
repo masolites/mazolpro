@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+ import { useState, useEffect } from "react";
 import { useActiveAccount, ConnectButton } from "thirdweb/react";
 import Script from "next/script";
 
@@ -18,3 +18,4 @@ export default function BuyModal({ onClose }) {
 
   // ... rest of the component code remains the same ...
   // Just remove the clientId prop from ConnectButton
+}
