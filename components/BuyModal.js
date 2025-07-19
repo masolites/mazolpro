@@ -1,7 +1,5 @@
- // components/BuyModal.js
-import { useActiveAccount } from "thirdweb/react";
+ import { useActiveAccount } from "thirdweb/react";
 import { useState } from "react";
-import Script from "next/script";
 
 export default function BuyModal({ onClose }) {
   const account = useActiveAccount();
@@ -16,6 +14,7 @@ export default function BuyModal({ onClose }) {
       return;
     }
     setLoading(true);
+    setMessage("");
     try {
       const response = await fetch("/api/purchase", {
         method: "POST",
@@ -36,80 +35,65 @@ export default function BuyModal({ onClose }) {
   };
 
   return (
-    <>
-      <Script src="https://checkout.flutterwave.com/v3.js" />
+    <div
+      style={{
+        position: "fixed",
+        top: 0, left: 0, right: 0, bottom: 0,
+        background: "rgba(0,0,0,0.7)",
+        display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000,
+      }}
+      onClick={onClose}
+    >
       <div
         style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: "rgba(0,0,0,0.7)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 1000,
+          background: "white",
+          padding: "2rem",
+          borderRadius: "8px",
+          maxWidth: "400px",
+          width: "100%",
         }}
-        onClick={onClose}
+        onClick={e => e.stopPropagation()}
       >
-        <div
-          style={{
-            background: "white",
-            padding: "2rem",
-            borderRadius: "8px",
-            maxWidth: "500px",
-            width: "100%",
-          }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <h2>Purchase MZLx Tokens</h2>
-          <div style={{ margin: "1rem 0" }}>
-            <label>Amount (NGN)</label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              style={{ width: "100%", padding: "8px" }}
-            />
-          </div>
-          <div style={{ margin: "1rem 0" }}>
-            <label>Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{ width: "100%", padding: "8px" }}
-            />
-          </div>
-          {message && (
-            <p
-              style={{
-                color: message.includes("failed")
-                  ? "red"
-                  : "green",
-              }}
-            >
-              {message}
-            </p>
-          )}
-          <button
-            onClick={handlePurchase}
-            disabled={loading}
-            style={{
-              padding: "12px 24px",
-              background: loading ? "#ccc" : "#3182ce",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              marginTop: "1rem",
-            }}
-          >
-            {loading ? "Processing..." : "Confirm Purchase"}
-          </button>
+        <h2>Purchase MZLx Tokens</h2>
+        <div style={{ margin: "1rem 0" }}>
+          <label>Amount (NGN)</label>
+          <input
+            type="number"
+            value={amount}
+            onChange={e => setAmount(e.target.value)}
+            style={{ width: "100%", padding: "8px" }}
+          />
         </div>
+        <div style={{ margin: "1rem 0" }}>
+          <label>Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            style={{ width: "100%", padding: "8px" }}
+          />
+        </div>
+        {message && (
+          <p style={{ color: message.includes("failed") ? "red" : "green" }}>
+            {message}
+          </p>
+        )}
+        <button
+          onClick={handlePurchase}
+          disabled={loading}
+          style={{
+            padding: "12px 24px",
+            background: loading ? "#ccc" : "#3182ce",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            marginTop: "1rem",
+          }}
+        >
+          {loading ? "Processing..." : "Confirm Purchase"}
+        </button>
       </div>
-    </>
+    </div>
   );
 }
