@@ -1,13 +1,22 @@
-import { ThirdwebProvider } from "thirdweb/react";
+// /pages/_app.js
 
-export default function App({ Component, pageProps }) {
+import { ThirdwebProvider } from "thirdweb/react";
+import { metamaskWallet, inAppWallet } from "thirdweb/wallets";
+
+function MyApp({ Component, pageProps }) {
   return (
     <ThirdwebProvider
       clientId={process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}
-      activeChain="binance"
-      supportedWallets={["embeddedWallet", "metamask", "coinbase", "walletConnect"]}
+      wallets={[
+        metamaskWallet(),
+        inAppWallet({
+          // You can add config here if needed, or leave empty for defaults
+        }),
+      ]}
     >
       <Component {...pageProps} />
     </ThirdwebProvider>
   );
 }
+
+export default MyApp;
