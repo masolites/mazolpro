@@ -1,30 +1,25 @@
-// pages/api/purchase.js
-import { ThirdwebSDK } from "thirdweb";
+ import { ThirdwebSDK } from "thirdweb";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res
-      .status(405)
-      .json({ message: "Method not allowed" });
+    return res.status(405).json({ message: "Method not allowed" });
   }
 
   try {
     const { walletAddress, amount } = req.body;
+    if (!walletAddress || !amount) {
+      return res.status(400).json({ message: "Missing parameters" });
+    }
 
     const sdk = new ThirdwebSDK("binance", {
-      clientId: process.env.THIRDWEB_CLIENT_ID,
+      clientId: process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID,
       secretKey: process.env.THIRDWEB_SECRET_KEY,
     });
 
-    const contract = await sdk.getContract(
-      process.env.MZLx_TOKEN_CONTRACT,
-    );
-    const tokens = amount * 1000; // 1 NGN = 1000 tokens
+    const contract = await sdk.getContract(process.env.MZLX_TOKEN_CONTRACT);
+    const tokens = Number(amount) * 1000; // 1 NGN = 1000 tokens
 
-    const tx = await contract.erc20.transfer(
-      walletAddress,
-      tokens,
-    );
+    const tx = await contract.erc20.transfer(walletAddress, tokens);
 
     return res.status(200).json({
       message: `Success! ${tokens.toLocaleString()} MZLx tokens sent`,
