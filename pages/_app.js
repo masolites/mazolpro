@@ -1,16 +1,16 @@
 // /pages/_app.js
 
 import { ThirdwebProvider } from "thirdweb/react";
-import { metamaskWallet, inAppWallet } from "thirdweb/wallets";
+import { injectedWallet, inAppWallet } from "thirdweb/wallets";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThirdwebProvider
       clientId={process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}
       wallets={[
-        metamaskWallet(),
+        injectedWallet(), // This supports MetaMask and other browser wallets
         inAppWallet({
-          // You can add config here if needed, or leave empty for defaults
+          // Add your in-app wallet config here if needed
         }),
       ]}
     >
