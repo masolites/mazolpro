@@ -1,7 +1,7 @@
 // /pages/_app.js
 
 import { ThirdwebProvider } from "thirdweb/react";
-import { embeddedWallet, inAppWallet, coinbaseWallet, rainbowWallet, trustWallet } from "thirdweb/wallets";
+import { embeddedWallet, inAppWallet } from "thirdweb/wallets";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -10,9 +10,6 @@ function MyApp({ Component, pageProps }) {
       wallets={[
         embeddedWallet(),
         inAppWallet(),
-        coinbaseWallet(),
-        rainbowWallet(),
-        trustWallet(),
       ]}
     >
       <Component {...pageProps} />
