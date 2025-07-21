@@ -2,16 +2,17 @@
 <html>
 <head>
   <title>MazolPro Wallet</title>
-  <!-- Load Thirdweb Connect SDK -->
-  <script src="https://unpkg.com/@thirdweb-dev/connect@1.1.0/dist/thirdweb-connect.min.js"></script>
+  <!-- Load Thirdweb Connect directly from CDN -->
+  <script src="https://unpkg.com/@thirdweb-dev/auth@3.1.7/dist/thirdweb-auth.min.js"></script>
   <style>
     body {
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
-      background: #f5f5f5;
+      background: #f0f2f5;
+      color: #333;
     }
-    #connect-button {
+    #connectButton {
       background: #0052ff;
       color: white;
       border: none;
@@ -19,49 +20,55 @@
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
-      margin-top: 20px;
+      margin: 20px auto;
+      display: block;
     }
-    .wallet-info {
-      margin-top: 20px;
-      padding: 15px;
+    #walletInfo {
       background: white;
-      border-radius: 10px;
+      padding: 15px;
+      border-radius: 8px;
       max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 20px auto;
       word-break: break-all;
+      display: none;
     }
   </style>
 </head>
 <body>
   <h1>MazolPro Wallet</h1>
   
-  <!-- Button Container -->
-  <div id="wallet-container"></div>
+  <!-- Connect Button -->
+  <button id="connectButton">Connect Wallet</button>
   
   <!-- Wallet Info Display -->
-  <div id="wallet-info" class="wallet-info" style="display: none;"></div>
+  <div id="walletInfo"></div>
 
   <script>
-    // 1. Initialize Thirdweb Connect
-    const connectSDK = new ThirdwebConnect.ConnectSDK({
+    // 1. Initialize Thirdweb Auth
+    const auth = new ThirdwebAuth.Auth({
+      domain: "example.com", // Can be any dummy domain
       clientId: "4a380b99db921d6415e1f86369ca7df9" // REPLACE THIS
     });
 
-    // 2. Create Connect Button
-    const connectButton = ThirdwebConnect.createConnectButton({
-      connectSDK,
-      onConnect: (wallet) => {
-        document.getElementById('wallet-info').style.display = 'block';
-        document.getElementById('wallet-info').innerHTML = `
-          <p><strong>Connected Wallet:</strong></p>
+    // 2. Button Click Handler
+    document.getElementById('connectButton').addEventListener('click', async () => {
+      try {
+        // Connect wallet
+        const wallet = await auth.connect();
+        
+        // Show wallet info
+        document.getElementById('walletInfo').style.display = 'block';
+        document.getElementById('walletInfo').innerHTML = `
+          <h3>Connected Wallet</h3>
           <p>${wallet.address}</p>
         `;
+        
+        // Change button text
+        document.getElementById('connectButton').textContent = "Connected ✔";
+      } catch (error) {
+        alert("Connection failed: " + error.message);
       }
     });
-
-    // 3. Render Button
-    document.getElementById('wallet-container').appendChild(connectButton);
   </script>
 </body>
 </html>
