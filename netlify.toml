@@ -1,15 +1,8 @@
 [build]
-  command = ""
+  command = "echo 'Static site - no build needed'"
   publish = "."
-  functions = "non-existent-folder" # Forces static site
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[dev]
-  autoLaunch = false
-
-[plugins]
-  enabled = false # Disables ALL plugins
