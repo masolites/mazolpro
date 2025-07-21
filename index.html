@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
   <title>MazolPro Wallet</title>
-  <!-- Load Thirdweb Connect directly from CDN -->
-  <script src="https://unpkg.com/@thirdweb-dev/auth@3.1.7/dist/thirdweb-auth.min.js"></script>
+  <!-- Load Thirdweb SDK -->
+  <script src="https://unpkg.com/@thirdweb-dev/sdk@3.1.7/dist/thirdweb-sdk.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,6 +22,10 @@
       cursor: pointer;
       margin: 20px auto;
       display: block;
+      transition: all 0.3s;
+    }
+    #connectButton:hover {
+      background: #0040cc;
     }
     #walletInfo {
       background: white;
@@ -31,6 +35,10 @@
       margin: 20px auto;
       word-break: break-all;
       display: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .loading {
+      opacity: 0.7;
     }
   </style>
 </head>
@@ -44,29 +52,39 @@
   <div id="walletInfo"></div>
 
   <script>
-    // 1. Initialize Thirdweb Auth
-    const auth = new ThirdwebAuth.Auth({
-      domain: "example.com", // Can be any dummy domain
-      clientId: "4a380b99db921d6415e1f86369ca7df9" // REPLACE THIS
+    // Initialize with YOUR CLIENT ID
+    const sdk = new ThirdwebSDK.ThirdwebSDK("https://rpc.ankr.com/eth_sepolia", {
+      clientId: "4a380b99db921d6415e1f86369ca7df9"
     });
 
-    // 2. Button Click Handler
-    document.getElementById('connectButton').addEventListener('click', async () => {
+    const connectButton = document.getElementById('connectButton');
+    const walletInfo = document.getElementById('walletInfo');
+
+    connectButton.addEventListener('click', async () => {
       try {
+        // Show loading state
+        connectButton.classList.add('loading');
+        connectButton.textContent = "Connecting...";
+        
         // Connect wallet
-        const wallet = await auth.connect();
+        const wallet = await sdk.wallet.connect();
         
         // Show wallet info
-        document.getElementById('walletInfo').style.display = 'block';
-        document.getElementById('walletInfo').innerHTML = `
+        walletInfo.style.display = 'block';
+        walletInfo.innerHTML = `
           <h3>Connected Wallet</h3>
-          <p>${wallet.address}</p>
+          <p><strong>Address:</strong> ${wallet.address}</p>
+          <p><strong>Network:</strong> Sepolia Testnet</p>
         `;
         
-        // Change button text
-        document.getElementById('connectButton').textContent = "Connected ✔";
+        // Update button
+        connectButton.textContent = "Connected ✔";
+        connectButton.style.background = "#25d366";
       } catch (error) {
         alert("Connection failed: " + error.message);
+        connectButton.textContent = "Connect Wallet";
+      } finally {
+        connectButton.classList.remove('loading');
       }
     });
   </script>
