@@ -1,3 +1,7 @@
+[build]
+  publish = "."
+  command = "echo 'Skipping build for static site'"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
