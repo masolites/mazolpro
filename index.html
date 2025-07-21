@@ -1,12 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MazolPro - Thirdweb Wallet</title>
+  <title>MazolPro Wallet</title>
+  <!-- Load Thirdweb directly from CDN -->
+  <script src="https://unpkg.com/thirdweb@3.3.0/dist/thirdweb.min.js"></script>
+  <style>
+    body { 
+      font-family: Arial; 
+      text-align: center; 
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .wallet-info { 
+      margin-top: 20px; 
+      padding: 15px;
+      background: #f0f8ff;
+      border-radius: 10px;
+      word-break: break-all;
+    }
+    button {
+      background: #0052ff;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+  <h1>🚀 MazolPro Wallet</h1>
+  <div id="app"></div>
+
+  <script>
+    // 1. Initialize Thirdweb (REPLACE WITH YOUR CLIENT ID)
+    const client = thirdweb.createThirdwebClient({
+      clientId: "YOUR_CLIENT_ID_HERE" 
+    });
+
+    // 2. Render Connect Button
+    const app = document.getElementById('app');
+    const connectBtn = thirdweb.ConnectButton({ client });
+    app.appendChild(connectBtn);
+
+    // 3. Show wallet address when connected
+    thirdweb.useActiveAccount().subscribe(account => {
+      if (account) {
+        const walletInfo = document.createElement('div');
+        walletInfo.className = 'wallet-info';
+        walletInfo.innerHTML = `
+          <p><strong>Connected Wallet:</strong></p>
+          <p>${account.address}</p>
+        `;
+        // Remove old info if it exists
+        const oldInfo = document.querySelector('.wallet-info');
+        if (oldInfo) oldInfo.remove();
+        app.appendChild(walletInfo);
+      }
+    });
+  </script>
 </body>
-</html
+</html>
